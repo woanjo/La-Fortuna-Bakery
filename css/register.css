@@ -77,89 +77,6 @@ a {
     color: var(--gold-soft)
 }
 
-/* Form fields */
-.field {
-    margin-bottom: 22px
-}
-
-.field_label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-weight: 500
-}
-
-.field_box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--field);
-    border-radius: 8px;
-    padding: 0 18px;
-    border: 1px solid transparent
-}
-
-.field_box:focus-within {
-    border-color: var(--maroon-2);
-    background: #fff
-}
-
-.field_box.is-invalid {
-    border-color: #b3261e;
-    background: #fdeceb
-}
-
-.field_box input {
-    flex: 1;
-    min-width: 0;
-    border: 0;
-    background: transparent;
-    padding: 19px 0;
-    font: inherit;
-    font-size: 1.05rem;
-    color: var(--ink);
-    outline: 0
-}
-
-.field_icon {
-    color: var(--muted)
-}
-
-.eye {
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 4px;
-    display: grid
-}
-
-.error {
-    color: #b3261e;
-    font-size: .85rem;
-    margin: 6px 0 0;
-    min-height: 1em
-}
-
-.btn {
-    width: 100%;
-    border: 0;
-    border-radius: 8px;
-    background: var(--maroon);
-    color: #fff;
-    font: inherit;
-    font-size: 1.15rem;
-    font-weight: 500;
-    padding: 20px;
-    cursor: pointer;
-    box-shadow: 0 6px 14px rgba(70, 0, 17, .25);
-    transition: background .2s
-}
-
-.btn:hover {
-    background: #5d0a1d
-}
-
 /* Register page */
 .shell {
     max-width: 100%;
@@ -168,17 +85,19 @@ a {
     display: grid;
     grid-template-columns: 5fr 7fr;
     gap: 30px;
-    align-items: stretch
+    align-items: stretch;
 }
 
 .intro {
     border-radius: 20px;
     padding: 56px 60px;
-    background: linear-gradient(180deg, rgba(232, 220, 220, .95), rgba(220, 205, 205, .95)), url("../images/register-bg.jpg") center/cover;
+    background: 
+        linear-gradient(180deg, #e8dcdcf2, #dccdcdf2),
+        url("../img/register-ibg.png") center/cover;
     box-shadow: 0 12px 30px rgba(70, 0, 17, .08);
     display: flex;
     flex-direction: column;
-    gap: 34px
+    gap: 34px;
 }
 
 .intro_guild {
@@ -194,9 +113,9 @@ a {
 .intro_mark {
     display: grid;
     place-items: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
     background: var(--maroon);
     color: var(--gold-soft);
     font-size: 1.6rem
@@ -204,27 +123,40 @@ a {
 
 .intro_name {
     font-weight: 600;
-    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--maroon)
 }
 
+.intro_sub {
+    color: #554243;
+    font-size: 16px;
+}
+
 .intro h1 {
-    font-size: clamp(3rem, 5vw, 4.6rem);
+    font-size: 69px;
     line-height: 1.02;
     color: var(--maroon);
     letter-spacing: -.02em
 }
 
 .steps {
-    background: rgba(255, 255, 255, .88);
-    border-radius: 14px;
-    padding: 22px 24px
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
 }
 
-.steps__title {
+.steps_title {
     margin: 0 0 18px;
     font-weight: 600;
+    font-size: 14px;
+    color: #1E1B1C;
     letter-spacing: .04em;
     text-transform: uppercase
 }
@@ -247,25 +179,42 @@ a {
     flex: none;
     display: grid;
     place-items: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
     background: #f1ebeb;
-    font-weight: 600
+    font-weight: 800
+}
+
+.steps_n_one {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    color: #FFDEA4;
+    background: #440010;
+    font-weight: 800
 }
 
 .steps h3 {
     font-family: var(--sans);
     font-weight: 500;
-    font-size: 1.35rem;
+    font-size: 18px;
     display: flex;
     gap: 12px;
     align-items: center;
     flex-wrap: wrap
 }
 
+.steps_one {
+    color: #440010;
+}
+
 .steps p {
-    margin: 2px 0 0
+    margin: 2px 0 0;
+    font-size: 14px;
 }
 
 .steps em {
@@ -273,9 +222,9 @@ a {
     font-size: .8rem;
     font-weight: 600;
     background: #fbd9de;
-    color: var(--maroon);
+    color: #440010;
     padding: 4px 12px;
-    border-radius: 999px
+    border-radius: 999px;
 }
 
 .steps .is-current {
@@ -306,15 +255,16 @@ a {
 .pledge_quote {
     margin: 0 0 16px;
     font-style: italic;
-    font-size: 1.3rem;
+    font-size: 17px;
     line-height: 1.6;
-    color: #4a0c18
+    color: #440010;
 }
 
 .pledge_src {
     margin: 0;
     text-align: right;
-    color: #4b3b3d
+    font-size: 14px;
+    color: #554243;
 }
 
 .panel {
@@ -330,50 +280,95 @@ a {
     font-weight: 600;
     letter-spacing: .08em;
     text-transform: uppercase;
-    font-size: .95rem
+    font-size: 13px;
 }
 
 .panel h2 {
-    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-size: 30px;
     color: var(--maroon);
     margin-bottom: 10px
 }
 
 .panel_intro {
-    font-size: 1.3rem;
+    font-size: 17px;
     color: var(--muted);
     margin: 0 0 34px
 }
 
+/* FORM ROW */
 .row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .field {
-    margin-bottom: 18px
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 30px;
 }
 
 .field_label {
-    font-weight: 600;
-    letter-spacing: .04em;
-    font-size: 1.05rem
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #292326;
 }
 
 .field_label b {
     color: #b3261e;
-    margin-left: 4px
 }
 
 .field_box {
-    background: #f9eef0
+    width: 100%;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    background: #FBF1F2;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.field_box input {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: 13px;
+    color: #292326;
+    box-sizing: border-box;
+}
+
+.field_box input::placeholder,
+.field_box1 input::placeholder {
+    color: #A0A9B7;
+}
+
+.eye {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    display: grid
 }
 
 .hint {
     margin: 8px 0 0;
     color: var(--gold);
-    font-size: .95rem
+    font-size: 14px
 }
 
 .hint.is-ok {
@@ -386,50 +381,66 @@ a {
 
 .check {
     display: flex;
-    gap: 12px;
+    gap: 5px;
     align-items: flex-start;
-    margin: 0 0 14px;
-    font-size: 1.1rem;
+    font-size: 14px;
     cursor: pointer
 }
 
 .check input {
     flex: none;
-    width: 24px;
-    height: 24px;
-    margin-top: 2px;
+    width: 14px;
+    height: 14px;
     accent-color: var(--maroon)
 }
 
 .btn {
-    margin-top: 16px
+    width: 50%;
+    border: 0;
+    border-radius: 8px;
+    background: var(--maroon);
+    margin-top: 50px;
+    color: #fff;
+    font: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(70, 0, 17, .25);
+    transition: background .2s
+}
+
+.btn:hover {
+    background: #5d0a1d
 }
 
 .switch {
     text-align: center;
-    margin: 30px 0 0;
-    font-size: 1.1rem;
+    font-size: 15px;
     color: var(--muted)
 }
 
 .directive {
-    max-width: 1420px;
-    margin: 50px auto 0;
-    padding: 34px 40px;
-    border-radius: 14px;
-    background: #f5ecee;
-    display: flex;
-    gap: 26px;
+    width: calc(100% - 92px);
+    max-width: 1250px;
+    margin: 35px auto 45px;
+    padding: 25px 26px;
+    display: grid;
+    grid-template-columns: 50px minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between
+    gap: 18px;
+    background: #f5ecee;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .directive_mark {
     flex: none;
     display: grid;
+    margin-left: 20px;
     place-items: center;
-    width: 72px;
-    height: 72px;
+    width: 50px;
+    height: 50px;
     border-radius: 14px;
     background: var(--maroon);
     color: var(--gold-soft);
@@ -437,19 +448,23 @@ a {
 }
 
 .directive h3 {
-    font-size: 1.5rem;
+    font-size: 20px;
+    margin-left: 30px;
     color: var(--maroon);
     margin-bottom: 6px
 }
 
 .directive p {
     margin: 0;
+    margin-left: 30px;
+    font-size: 13px;
     max-width: 62ch;
     color: var(--muted)
 }
 
 .directive_lock {
     color: var(--gold);
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: .06em;
     text-transform: uppercase;
@@ -483,8 +498,8 @@ a {
 .footer {
   background: var(--maroon);
   color: #d9c5c8;
-  padding: 20px 30px 30px;
-  margin-top: 100px;
+  padding: 20px 30px 0;
+  margin-top: 60px;
 }
 
 .footer_rule {
@@ -498,6 +513,7 @@ a {
   content: "";
   flex: 1;
   height: 1px;
+  margin: 0 10px;
   background: rgba(255, 255, 255, .25)
 }
 
@@ -505,6 +521,7 @@ a {
   display: grid;
   grid-template-columns: 1fr 1.4fr 1fr;
   gap: 40px;
+  padding: 0 80px 30px;
   align-items: center
 }
 
