@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | La Fortuna Bakeshop</title>
+  <!-- Google Fonts: Playfair Display (Editorial Serif) & DM Sans (Clean Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/admin_dashboard.css">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header (Unblurred) -->
+    <header class="top-header">
+      <div class="brand-area">
+        <div class="brand-logo" aria-hidden="true">
+          <span>La Fortuna</span>
+          <small>BAKESHOP</small>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">LA FORTUNA BAKESHOP</h1>
+          <p class="brand-subtitle">SYSTEM ADMINISTRATION PORTAL</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="header-divider"></div>
+        <div class="admin-badge">
+          <div class="admin-badge-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="admin-badge-info">
+            <span class="admin-role">Administrator</span>
+            <span class="admin-dept">Bakery Operations</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Workspace Container -->
+    <div class="workspace">
+      <!-- Sidebar Navigation (Unblurred) -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav" aria-label="Primary Sidebar Navigation">
+          <a href="#dashboard" class="nav-item active" data-nav="Dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="#bread" class="nav-item" data-nav="Bread Management">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span>Bread Management</span>
+          </a>
+          <a href="#ingredients" class="nav-item" data-nav="Ingredient Management">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Ingredient Management</span>
+          </a>
+          <a href="#feedback" class="nav-item" data-nav="Feedback & Inquiries">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <line x1="8" y1="9" x2="16" y2="9"></line>
+              <line x1="8" y1="13" x2="14" y2="13"></line>
+            </svg>
+            <span>Feedback &amp; Inquiries</span>
+          </a>
+          <a href="#settings" class="nav-item" data-nav="Account Settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Account Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="#logout" class="nav-item" id="logoutNavBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content Wrapper (ONLY this blurs when modal is open) -->
+      <div class="main-wrapper" id="mainWrapper">
+        <main class="main-content" id="mainContent">
+          <div class="page-header">
+            <h2 class="page-title">Admin Dashboard</h2>
+            <p class="page-description">Manage bakery products, product information, user accounts, and recommendation system activity.</p>
+          </div>
+
+          <!-- Top 5 KPI Stat Cards Grid -->
+          <section class="kpi-grid" aria-label="Key Performance Metrics">
+            <!-- KPI 1 -->
+            <article class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon-box kpi-icon-maroon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-bottom">
+                <div class="kpi-number" id="kpiTotalProducts">0</div>
+                <div class="kpi-label">Total Bread<br />Products</div>
+              </div>
+            </article>
+
+            <!-- KPI 2 -->
+            <article class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon-box kpi-icon-gold">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <polyline points="9 12 11 14 15 10"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-bottom">
+                <div class="kpi-number" id="kpiActiveProducts">0</div>
+                <div class="kpi-label">Active<br />Products</div>
+              </div>
+            </article>
+
+            <!-- KPI 3 -->
+            <article class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon-box kpi-icon-crimson">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <span class="kpi-badge-review is-clear" id="kpiReviewBadge">ALL<br />VERIFIED</span>
+              </div>
+              <div class="kpi-bottom">
+                <div class="kpi-number" id="kpiIncompleteProducts">0</div>
+                <div class="kpi-label">Incomplete<br />Products</div>
+              </div>
+            </article>
+
+            <!-- KPI 4 -->
+            <article class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon-box kpi-icon-neutral">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-bottom">
+                <div class="kpi-number" id="kpiRegisteredUsers">0</div>
+                <div class="kpi-label">Registered<br />Users</div>
+              </div>
+            </article>
+
+            <!-- KPI 5 -->
+            <article class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon-box kpi-icon-neutral">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-bottom">
+                <div class="kpi-number" id="kpiUserFeedback">0</div>
+                <div class="kpi-label">User<br />Feedback</div>
+              </div>
+            </article>
+          </section>
+
+          <!-- Asymmetric Two-Column Dashboard Grid -->
+          <div class="dashboard-columns">
+            <!-- Left Column: Bread Categories + Recommendation Activity -->
+            <div class="left-stack">
+              <!-- Card A: Bread Categories -->
+              <section class="panel-card">
+                <div class="panel-header">
+                  <div>
+                    <h3 class="panel-title">Bread Categories</h3>
+                    <p class="panel-subtitle">Product distribution by category.</p>
+                  </div>
+                  <span class="pill-neutral" id="categoryTotalPill">0 Total Items</span>
+                </div>
+
+                <!-- Segmented Distribution Bar -->
+                <div class="segmented-bar" id="categorySegmentedBar" role="img" aria-label="Bread category distribution bar">
+                  <div class="bar-segment" data-cat="hearth" style="width: 25%; background-color: #5b141e;" title="Hearth Breads: 0% (0 items)"></div>
+                  <div class="bar-segment" data-cat="flaky" style="width: 25%; background-color: #8a5a19;" title="Flaky Pastries: 0% (0 items)"></div>
+                  <div class="bar-segment" data-cat="steamed" style="width: 25%; background-color: #7c4d3a;" title="Steamed &amp; Glutinous: 0% (0 items)"></div>
+                  <div class="bar-segment" data-cat="merienda" style="width: 25%; background-color: #e8c882;" title="Sweet Merienda: 0% (0 items)"></div>
+                </div>
+
+                <!-- 2x2 Category Breakdown Tiles -->
+                <div class="category-grid">
+                  <div class="category-tile" data-cat="hearth">
+                    <span class="cat-dot" style="background-color: #5b141e;"></span>
+                    <div>
+                      <div class="cat-name">Hearth Breads</div>
+                      <div class="cat-meta" id="catMetaHearth">0% &bull; 0 items</div>
+                    </div>
+                  </div>
+
+                  <div class="category-tile" data-cat="flaky">
+                    <span class="cat-dot" style="background-color: #8a5a19;"></span>
+                    <div>
+                      <div class="cat-name">Flaky Pastries</div>
+                      <div class="cat-meta" id="catMetaFlaky">0% &bull; 0 items</div>
+                    </div>
+                  </div>
+
+                  <div class="category-tile" data-cat="steamed">
+                    <span class="cat-dot" style="background-color: #7c4d3a;"></span>
+                    <div>
+                      <div class="cat-name">Steamed &amp;<br />Glutinous</div>
+                      <div class="cat-meta" id="catMetaSteamed">0% &bull; 0 items</div>
+                    </div>
+                  </div>
+
+                  <div class="category-tile" data-cat="merienda">
+                    <span class="cat-dot" style="background-color: #e8c882;"></span>
+                    <div>
+                      <div class="cat-name">Sweet Merienda</div>
+                      <div class="cat-meta" id="catMetaMerienda">0% &bull; 0 items</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Card B: Recommendation Activity -->
+              <section class="panel-card">
+                <div class="panel-header">
+                  <div>
+                    <h3 class="panel-title">Recommendation<br />Activity</h3>
+                    <p class="panel-subtitle">Monthly recommendation<br />sessions.</p>
+                  </div>
+                  <span class="date-range-label" id="activityDateRange">—</span>
+                </div>
+
+                <div class="chart-wrapper">
+                  <div class="bars-container" id="activityBars">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <!-- Right Column: Product Information Status -->
+            <section class="panel-card">
+              <div class="panel-header">
+                <div>
+                  <h3 class="panel-title">Product Information<br />Status</h3>
+                  <p class="panel-subtitle">Products with missing or<br />incomplete information.</p>
+                </div>
+                <span class="pill-attention all-complete" id="attentionCountPill">0 ITEMS NEED ATTENTION</span>
+              </div>
+
+              <div class="status-list" id="productStatusList">
+                <!-- Rendered dynamically by JS -->
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <!-- Scoped Modal for Quick Edit / View Product Details -->
+        <div class="modal-backdrop" id="productModal" aria-hidden="true">
+          <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+            <div class="modal-header">
+              <div class="modal-header-left">
+                <div class="modal-monogram" id="modalMonogram">--</div>
+                <div>
+                  <h3 class="modal-title" id="productModalTitle">Product Name</h3>
+                  <p class="modal-subtitle" id="productModalCategory">Category: —</p>
+                </div>
+              </div>
+              <button type="button" class="modal-close-btn" id="closeProductModalBtn" aria-label="Close modal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <form id="productStatusForm" class="modal-body">
+              <div class="modal-meta-banner">
+                <span id="modalIssuePrompt" class="modal-issue-text"></span>
+                <span class="status-tag tag-incomplete" id="modalStatusPill">INCOMPLETE</span>
+              </div>
+
+              <div class="form-group">
+                <label for="productDetailsField" id="productFieldLabel">CATALOG SPECIFICATION DETAILS</label>
+                <textarea id="productDetailsField" class="form-textarea" placeholder="Enter required catalog information to mark product as verified..." required></textarea>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn-cancel" id="cancelProductModalBtn">Close</button>
+                <button type="submit" class="btn-primary" id="saveProductModalBtn">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Verify &amp; Mark Complete</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastNotification" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8ce0b3" stroke-width="2.5">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastMessage">Action completed.</span>
+  </div>
+
+  <script src="../js/admin_dashboard.js"></script>
+</body>
+</html>

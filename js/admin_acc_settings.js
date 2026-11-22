@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Profile State (populate from your backend API / session)
+  const adminProfileState = {
+    fullName: "",
+    username: "",
+    email: "",
+    photoUrl: ""
+  };
+
   // Elements for Modal & Blur Control
   const mainWrapper = document.querySelector(".main-wrapper");
   const editProfileModal = document.getElementById("editProfileModal");
@@ -25,22 +33,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalAvatarInitials = document.getElementById("modalAvatarInitials");
   const modalAvatarImg = document.getElementById("modalAvatarImg");
 
-  // Track saved and temporary avatar URLs
-  let savedPhotoDataUrl = "";
   let tempPhotoDataUrl = "";
 
   // Helper: Generate 2-letter initials from Full Name
   function getInitials(name) {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length === 0 || !parts[0]) return "JB";
+    const clean = (name || "").trim();
+    if (!clean || clean === "—") return "--";
+    const parts = clean.split(/\s+/);
     if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   }
 
+  // Render Main Profile View from State
+  function renderProfile() {
+    const { fullName, username, email, photoUrl } = adminProfileState;
+
+    displayBannerName.textContent = fullName || "—";
+    displayFullName.textContent = fullName || "—";
+    displayUsername.textContent = username || "—";
+    displayEmail.textContent = email || "—";
+
+    mainAvatarInitials.textContent = getInitials(fullName);
+
+    if (photoUrl) {
+      mainAvatarImg.src = photoUrl;
+      mainAvatarImg.hidden = false;
+      mainAvatarInitials.hidden = true;
+    } else {
+      mainAvatarImg.src = "";
+      mainAvatarImg.hidden = true;
+      mainAvatarInitials.hidden = false;
+    }
+  }
+
   // Helper: Sync avatar preview inside modal
   function updateModalAvatarPreview(photoUrl, fullName) {
-    const initials = getInitials(fullName);
-    modalAvatarInitials.textContent = initials;
+    modalAvatarInitials.textContent = getInitials(fullName);
 
     if (photoUrl) {
       modalAvatarImg.src = photoUrl;
@@ -55,12 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Open Modal & Blur Main Content
   function openModal() {
-    // Populate form inputs with current displayed values
-    inputFullName.value = displayFullName.textContent.trim();
-    inputUsername.value = displayUsername.textContent.trim();
-    inputEmail.value = displayEmail.textContent.trim();
+    inputFullName.value = adminProfileState.fullName;
+    inputUsername.value = adminProfileState.username;
+    inputEmail.value = adminProfileState.email;
 
-    tempPhotoDataUrl = savedPhotoDataUrl;
+    tempPhotoDataUrl = adminProfileState.photoUrl;
     updateModalAvatarPreview(tempPhotoDataUrl, inputFullName.value);
 
     mainWrapper.classList.add("modal-open");
@@ -151,27 +178,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!updatedName || !updatedUsername || !updatedEmail) return;
 
-    // Update Main Page Text
-    displayBannerName.textContent = updatedName;
-    displayFullName.textContent = updatedName;
-    displayUsername.textContent = updatedUsername;
-    displayEmail.textContent = updatedEmail;
+    adminProfileState.fullName = updatedName;
+    adminProfileState.username = updatedUsername;
+    adminProfileState.email = updatedEmail;
+    adminProfileState.photoUrl = tempPhotoDataUrl;
 
-    // Update Main Page Avatar
-    savedPhotoDataUrl = tempPhotoDataUrl;
-    const initials = getInitials(updatedName);
-    mainAvatarInitials.textContent = initials;
-
-    if (savedPhotoDataUrl) {
-      mainAvatarImg.src = savedPhotoDataUrl;
-      mainAvatarImg.hidden = false;
-      mainAvatarInitials.hidden = true;
-    } else {
-      mainAvatarImg.src = "";
-      mainAvatarImg.hidden = true;
-      mainAvatarInitials.hidden = false;
-    }
-
+    renderProfile();
     closeModal();
   });
+
+  // Initial Render
+  renderProfile();
 });

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Account Settings | La Fortuna Bakeshop</title>
+  <title>Admin | Account Settings</title>
   <!-- Google Fonts for Editorial Serif & Clean Sans-Serif -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/admin_acc_settings.css" />
+  <link rel="stylesheet" href="../css/admin_acc_settings.css" />
 </head>
 <body>
   <div class="app-shell">
@@ -120,7 +120,7 @@
             <div class="profile-banner">
               <div class="avatar-wrapper">
                 <div class="avatar-box" id="mainAvatarBox">
-                  <span id="mainAvatarInitials">JB</span>
+                  <span id="mainAvatarInitials">--</span>
                   <img id="mainAvatarImg" src="" alt="Administrator Avatar" hidden />
                 </div>
                 <span class="verified-badge" title="Verified Administrator">
@@ -131,7 +131,7 @@
                 </span>
               </div>
               <div class="banner-details">
-                <h4 class="banner-name" id="displayBannerName">Joan Borres</h4>
+                <h4 class="banner-name" id="displayBannerName">—</h4>
                 <span class="role-pill">ADMINISTRATOR</span>
               </div>
             </div>
@@ -140,20 +140,20 @@
             <div class="info-grid">
               <div class="info-tile">
                 <span class="info-label">Full Name</span>
-                <p class="info-value" id="displayFullName">Joan Borres</p>
+                <p class="info-value" id="displayFullName">—</p>
               </div>
               <div class="info-tile">
                 <span class="info-label">Email Address</span>
-                <p class="info-value" id="displayEmail">admin@lafortunabakeshop.ph</p>
+                <p class="info-value" id="displayEmail">—</p>
               </div>
               <div class="info-tile">
                 <span class="info-label">Username</span>
-                <p class="info-value" id="displayUsername">admin_lafortuna</p>
+                <p class="info-value" id="displayUsername">—</p>
               </div>
               <div class="info-tile">
                 <span class="info-label">Account Status</span>
                 <div class="status-wrapper">
-                  <span class="status-pill active">
+                  <span class="status-pill active" id="displayAccountStatus">
                     <span class="status-dot"></span>
                     ACTIVE
                   </span>
@@ -207,7 +207,7 @@
               <div class="photo-panel">
                 <div class="avatar-wrapper">
                   <div class="avatar-box modal-avatar" id="modalAvatarBox">
-                    <span id="modalAvatarInitials">JB</span>
+                    <span id="modalAvatarInitials">--</span>
                     <img id="modalAvatarImg" src="" alt="Preview Avatar" hidden />
                   </div>
                   <span class="verified-badge modal-verified">
@@ -239,11 +239,11 @@
               <div class="form-row">
                 <div class="form-group">
                   <label for="inputFullName">FULL NAME <span class="required">*</span></label>
-                  <input type="text" id="inputFullName" class="form-input" value="Joan Borres" required />
+                  <input type="text" id="inputFullName" class="form-input" placeholder="Enter full name" required />
                 </div>
                 <div class="form-group">
                   <label for="inputUsername">USERNAME <span class="required">*</span></label>
-                  <input type="text" id="inputUsername" class="form-input" value="admin_lafortuna" required />
+                  <input type="text" id="inputUsername" class="form-input" placeholder="Enter username" required />
                 </div>
               </div>
 
@@ -254,7 +254,7 @@
                     <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                   </svg>
-                  <input type="email" id="inputEmail" class="form-input has-icon" value="admin@lafortunabakeshop.ph" required />
+                  <input type="email" id="inputEmail" class="form-input has-icon" placeholder="Enter email address" required />
                 </div>
               </div>
 
@@ -289,6 +289,6 @@
     </div>
   </div>
 
-  <script src="js/admin_acc_settings.js"></script>
+  <script src="../js/admin_acc_settings.js"></script>
 </body>
 </html>
