@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fortuna Bakeshop - System Administration Portal</title>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="../css/admin_login.css">
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+        <div class="header-brand">
+            <div class="brand-logo-circle">
+                <span class="logo-text-top">La Fortuna</span>
+                <span class="logo-text-num">53</span>
+            </div>
+            <div class="brand-text">
+                <h1 class="brand-title">La Fortuna Bakeshop</h1>
+                <p class="brand-subtitle">SYSTEM ADMINISTRATION PORTAL</p>
+            </div>
+        </div>
+
+        <a href="#" id="backToPublicLink" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Public Website</span>
+        </a>
+    </header>
+
+    <!-- Main Content Area / Login Card -->
+    <main class="main-container">
+        <div class="portal-card">
+            
+            <!-- Left Side Banner Panel -->
+            <div class="banner-panel">
+                <div class="decorative-blur"></div>
+
+                <div>
+                    <div class="badge-container">
+                        <div class="badge-icon">
+                            <span class="badge-cn">明 烏 倉</span>
+                            <span class="badge-brand">La Fortuna</span>
+                            <span class="badge-sub">BAKERY<br><span class="badge-est">SINCE 1953</span></span>
+                            <span class="badge-num">53</span>
+                        </div>
+                        <div>
+                            <h2 class="badge-title">LA FORTUNA BAKESHOP</h2>
+                            <p class="badge-location">Est. 1953 • Cebu City, Philippines</p>
+                        </div>
+                    </div>
+
+                    <div class="divider-line"></div>
+
+                    <h2 class="banner-heading">
+                        Administrator<br>Portal
+                    </h2>
+                    
+                    <p class="banner-description">
+                        Sign in to manage bread product records, monitor ingredient information, and oversee allergen tracking across all recipes.
+                    </p>
+                </div>
+
+                <div class="authorized-wrapper">
+                    <div class="authorized-badge">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>AUTHORIZED PERSONNEL EXCLUSIVELY</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Login Form -->
+            <div class="form-panel">
+                <div class="form-wrapper">
+                    <h2 class="form-title">Administrator Login</h2>
+                    <p class="form-subtitle">
+                        Provide your system credentials to access the bakery management console.
+                    </p>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <label for="username" class="input-label">
+                                Username or Email Address <span class="required-star">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <div class="input-icon">
+                                    <i class="fa-regular fa-user"></i>
+                                </div>
+                                <input type="text" id="username" required class="form-input" placeholder="e.g. admin@lafortunabakeshop.com">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="password" class="input-label">
+                                Master Password <span class="required-star">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <div class="input-icon">
+                                    <i class="fa-solid fa-key"></i>
+                                </div>
+                                <input type="password" id="password" required class="form-input input-with-toggle" placeholder="Enter your password...">
+                                <button type="button" id="togglePasswordBtn" class="toggle-password-btn" aria-label="Toggle Password Visibility">
+                                    <i id="eyeIcon" class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="rememberMe" class="checkbox-input">
+                                <span>Remember me</span>
+                            </label>
+                            <button type="button" id="openForgotModalBtn" class="forgot-link">
+                                Forgot Password?
+                            </button>
+                        </div>
+
+                        <div class="submit-wrapper">
+                            <button type="submit" id="loginBtn" class="btn-primary">
+                                <span>Login</span>
+                                <i class="fa-solid fa-arrow-right-to-bracket btn-icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        &copy; 1953 - <span id="currentYear"></span> La Fortuna Bakeshop Inc. All rights reserved.
+    </footer>
+
+    <!-- Interactive Multi-Step Password Reset Modal -->
+    <div id="resetModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            
+            <button type="button" id="closeResetModalBtn" class="modal-close-btn" aria-label="Close Modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header Icon -->
+            <div class="modal-header-icon">
+                <div class="modal-icon-box">
+                    <i id="modalHeaderIcon" class="fa-solid fa-arrow-rotate-left"></i>
+                    <div class="modal-badge-cn">福</div>
+                </div>
+            </div>
+
+            <!-- Step Progress Indicator -->
+            <div class="step-dots">
+                <div id="dot1" class="dot active"></div>
+                <div id="dot2" class="dot"></div>
+                <div id="dot3" class="dot"></div>
+            </div>
+
+            <!-- STEP 1: Enter Email -->
+            <div id="step1" class="workflow-step active">
+                <div class="modal-text-group">
+                    <h3 class="modal-title">Reset Your Password</h3>
+                    <p class="modal-description">
+                        Enter your administrator email address. We'll send a verification code to your email to help you reset your password.
+                    </p>
+                </div>
+
+                <form id="emailForm" class="modal-form">
+                    <div class="input-group">
+                        <label for="resetEmail" class="input-label">
+                            Enter Email Address <span class="required-star">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <div class="input-icon">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <input type="email" id="resetEmail" required class="form-input" placeholder="e.g. admin@lafortunabakeshop.ph">
+                        </div>
+                        <p class="input-help">Must be your registered management email.</p>
+                    </div>
+
+                    <div class="submit-wrapper">
+                        <button type="submit" id="sendCodeBtn" class="btn-primary">
+                            <span>Send Verification Code</span>
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- STEP 2: Verify 6-digit OTP Code -->
+            <div id="step2" class="workflow-step">
+                <div class="modal-text-group">
+                    <h3 class="modal-title">Enter Security Code</h3>
+                    <p class="modal-description">
+                        We sent a 6-digit verification code to <strong id="sentEmailDisplay" class="highlight-email">admin@lafortunabakeshop.ph</strong>.
+                    </p>
+                </div>
+
+                <form id="otpForm" class="modal-form">
+                    <div class="input-group">
+                        <label class="input-label" style="text-align: center;">6-Digit Verification Code</label>
+                        <div class="otp-inputs-container">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                            <input type="text" maxlength="1" class="otp-box" required pattern="[0-9]">
+                        </div>
+                    </div>
+
+                    <div class="resend-text">
+                        Didn't receive code? <button type="button" id="resendOtpBtn" class="link-btn">Resend Code</button>
+                    </div>
+
+                    <div class="submit-wrapper">
+                        <button type="submit" id="verifyOtpBtn" class="btn-primary">
+                            <span>Verify & Continue</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- STEP 3: Create New Password -->
+            <div id="step3" class="workflow-step">
+                <div class="modal-text-group">
+                    <h3 class="modal-title">Create New Password</h3>
+                    <p class="modal-description">
+                        Please choose a strong master password for your administrator account.
+                    </p>
+                </div>
+
+                <form id="newPasswordForm" class="modal-form">
+                    <div class="input-group">
+                        <label for="newPass" class="input-label">New Password <span class="required-star">*</span></label>
+                        <div class="input-wrapper">
+                            <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                            <input type="password" id="newPass" required minlength="8" class="form-input input-with-toggle" placeholder="At least 8 characters">
+                            <button type="button" id="toggleNewPassBtn" class="toggle-password-btn" aria-label="Toggle Password Visibility">
+                                <i id="newPassEye" class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="confirmPass" class="input-label">Confirm New Password <span class="required-star">*</span></label>
+                        <div class="input-wrapper">
+                            <div class="input-icon"><i class="fa-solid fa-check-double"></i></div>
+                            <input type="password" id="confirmPass" required class="form-input" placeholder="Re-enter new password">
+                        </div>
+                    </div>
+
+                    <div class="submit-wrapper">
+                        <button type="submit" id="savePasswordBtn" class="btn-primary">
+                            <span>Reset Password</span>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Application Script -->
+    <script src="../js/admin_login.js"></script>
+</body>
+</html>
