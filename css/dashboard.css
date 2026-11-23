@@ -5,16 +5,6 @@
 }
 
 :root {
-    --maroon: #470011;
-    --maroon-2: #5e1220;
-    --maroon-3: #6b1426;
-    --gold: #7a5600;
-    --gold-soft: #f3c969;
-    --cream: #fdf7f7;
-    --blush: #f9f0f1;
-    --line: #ecdcdd;
-    --ink: #2b1d1f;
-    --muted: #6f5a5d;
     --serif: "Playfair Display", Georgia, serif;
     --sans: "Figtree", system-ui, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -24,7 +14,7 @@ body {
     margin: 0;
     font-family: var(--sans);
     color: var(--ink);
-    background: var(--cream);
+    background: #fdf7f7;
     line-height: 1.5
 }
 
@@ -58,8 +48,8 @@ body.is-locked {
 
 /* Top bar */
 .topbar {
-    background: var(--maroon);
-    color: var(--gold-soft);
+    background: #470011;
+    color: #f3c969;
     display: flex;
     justify-content: space-between;
     gap: 16px;
@@ -87,7 +77,7 @@ body.is-locked {
 }
 
 .topbar_gold {
-    color: var(--gold-soft)
+    color: #f3c969;
 }
 
 /* Header */
@@ -117,8 +107,8 @@ body.is-locked {
     width: 46px;
     height: 46px;
     border-radius: 11px;
-    background: var(--maroon-3);
-    color: var(--gold-soft);
+    background: #6b1426;
+    color: #f3c969;
     font-size: 1.2rem
 }
 
@@ -128,14 +118,14 @@ body.is-locked {
     font-weight: 600;
     font-size: 1.4rem;
     line-height: 1.15;
-    color: var(--maroon-3);
+    color: #6b1426;
     letter-spacing: .01em;
     text-transform: uppercase
 }
 
 .brand_tag {
     display: block;
-    color: var(--gold);
+    color: #7a5600;
     font-weight: 600;
     letter-spacing: .1em;
     text-transform: uppercase;
@@ -155,7 +145,7 @@ body.is-locked {
     white-space: nowrap;
     letter-spacing: .02em;
     text-transform: uppercase;
-    color: var(--maroon-3);
+    color: #6b1426;
     line-height: 1.2;
     border-bottom: 3px solid transparent;
     border-radius: 4px;
@@ -163,19 +153,19 @@ body.is-locked {
 }
 
 .nav a:hover {
-    background: var(--blush)
+    background: #f9f0f1;
 }
 
 .nav a.is-active {
     background: #f6e9eb;
-    border-bottom-color: var(--maroon-3)
+    border-bottom-color: #6b1426;
 }
 
 .profile {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: var(--maroon-3);
+    background: #6b1426;
     color: #fff;
     border-radius: 999px;
     padding: 5px 22px 5px 5px;
@@ -190,7 +180,7 @@ body.is-locked {
     border-radius: 50%;
     font-size: .85rem;
     background: #e8cfd3 center/cover;
-    color: var(--maroon-3);
+    color: #6b1426;
     font-weight: 600
 }
 
@@ -215,7 +205,7 @@ body.is-locked {
 }
 
 .welcome {
-    background: var(--blush);
+    background: #f9f0f1;
     border-radius: 18px;
     padding: 38px 48px 40px;
     margin-bottom: 22px
@@ -225,7 +215,7 @@ body.is-locked {
     font-family: var(--serif);
     font-weight: 500;
     font-size: clamp(2rem, 3.6vw, 2.8rem);
-    color: var(--maroon);
+    color: #470011;
     margin-bottom: 10px;
     line-height: 1.15
 }
@@ -233,7 +223,7 @@ body.is-locked {
 .welcome p {
     max-width: 520px;
     font-size: 1.1rem;
-    color: var(--muted);
+    color: #6f5a5d;
     line-height: 1.6
 }
 
@@ -242,7 +232,7 @@ body.is-locked {
     flex-wrap: wrap;
     gap: 16px 36px;
     margin-top: 26px;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .welcome_stats li {
@@ -257,11 +247,11 @@ body.is-locked {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--gold)
+    background: #7a5600;
 }
 
 .welcome_stats .is-strong {
-    color: var(--ink);
+    color: #2b1d1f;
     font-weight: 600;
     text-transform: uppercase
 }
@@ -293,7 +283,7 @@ body.is-locked {
     height: 40px;
     border-radius: 9px;
     background: #f3eced;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .prefs h2 {
@@ -302,7 +292,7 @@ body.is-locked {
 }
 
 .prefs_head p {
-    color: var(--muted);
+    color: #6f5a5d;
     font-size: .92rem
 }
 
@@ -313,7 +303,7 @@ body.is-locked {
 }
 
 .pref {
-    background: var(--blush);
+    background: #f9f0f1;
     border-radius: 10px;
     padding: 18px 20px;
     min-height: 128px
@@ -333,7 +323,7 @@ body.is-locked {
 }
 
 .pref_icon {
-    color: var(--gold);
+    color: #7a5600;
     font-size: 1.05rem
 }
 
@@ -384,14 +374,14 @@ body.is-locked {
     justify-content: space-between;
     gap: 12px;
     font-size: 12px;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .goals dd {
     font-family: var(--mono);
     font-size: 12px;
     font-weight: 700;
-    color: var(--maroon)
+    color: #470011
 }
 
 /* Buttons */
@@ -410,7 +400,7 @@ body.is-locked {
 }
 
 .btn-dark {
-    background: var(--maroon);
+    background: #470011;
     color: #fff
 }
 
@@ -429,7 +419,7 @@ body.is-locked {
     font-weight: 500;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--gold)
+    color: #7a5600;
 }
 
 .pill {
@@ -456,13 +446,13 @@ body.is-locked {
     font-family: var(--serif);
     font-weight: 500;
     font-size: 2.2rem;
-    color: var(--maroon)
+    color: #470011
 }
 
 .rec_all {
     font-size: 1rem;
     font-weight: 500;
-    color: var(--maroon)
+    color: #470011
 }
 
 .rec_all:hover {
@@ -495,7 +485,7 @@ body.is-locked {
     left: 14px;
     top: 14px;
     background: rgba(255, 248, 240, .92);
-    color: var(--maroon-3);
+    color: #6b1426;
     font-weight: 600;
     padding: 3px 11px;
     border-radius: 5px;
@@ -506,7 +496,7 @@ body.is-locked {
     position: absolute;
     right: 0;
     bottom: 0;
-    background: var(--maroon);
+    background: #470011;
     color: #fff;
     font-family: var(--mono);
     font-weight: 700;
@@ -528,12 +518,12 @@ body.is-locked {
     font-size: .8rem;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .bcard_meta b {
     font-family: var(--mono);
-    color: var(--maroon);
+    color: #470011;
     letter-spacing: 0
 }
 
@@ -542,12 +532,12 @@ body.is-locked {
     font-weight: 500;
     font-size: 1.45rem;
     line-height: 1.3;
-    color: var(--maroon);
+    color: #470011;
     margin: 6px 0 8px
 }
 
 .bcard p {
-    color: var(--muted);
+    color: #6f5a5d;
     font-size: .92rem;
     flex: 1;
     margin-bottom: 18px
@@ -573,7 +563,7 @@ body.is-locked {
 
 /* Footer */
 .footer {
-  background: var(--maroon);
+  background: #470011;
   color: #d9c5c8;
   padding: 20px 30px 0;
 }
@@ -581,7 +571,7 @@ body.is-locked {
 .footer_rule {
   display: flex;
   align-items: center;
-  color: var(--gold-soft);
+  color: #f3c969;
 }
 
 .footer_rule::before,
@@ -608,7 +598,7 @@ body.is-locked {
 
 .footer_brand {
   font-family: var(--serif);
-  color: var(--gold-soft);
+  color: #f3c969;
   font-size: 16px;
   letter-spacing: .06em;
   text-transform: uppercase
@@ -655,7 +645,7 @@ body.is-locked {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--maroon);
+    background: #470011;
     padding: 13px 19px;
     position: sticky;
     top: 0
@@ -673,7 +663,7 @@ body.is-locked {
     border: 0;
     border-radius: 10px;
     background: #f3eced;
-    color: var(--maroon);
+    color: #470011;
     font-size: 1.5rem;
     line-height: 1
 }
@@ -688,8 +678,8 @@ body.is-locked {
 .mcard {
     display: flex;
     gap: 20px;
-    background: var(--blush);
-    border: 1px solid var(--line);
+    background: #f9f0f1;
+    border: 1px solid #ecdcdd;;
     border-radius: 12px;
     padding: 16px
 }
@@ -720,14 +710,14 @@ body.is-locked {
     font-weight: 600;
     letter-spacing: .04em;
     text-transform: uppercase;
-    color: var(--gold)
+    color: #7a5600;
 }
 
 .mcard h3 {
     font-family: var(--serif);
     font-weight: 600;
     font-size: 22px;
-    color: var(--maroon-3);
+    color: #6b1426;
     line-height: 1.2
 }
 
@@ -735,7 +725,7 @@ body.is-locked {
     font-family: var(--serif);
     font-weight: 600;
     font-size: 1.2rem;
-    color: var(--gold);
+    color: #7a5600;
     margin: 2px 0
 }
 
@@ -748,11 +738,11 @@ body.is-locked {
     font-family: var(--sans);
     font-weight: 400;
     font-size: .85rem;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .mcard_desc {
-    color: var(--muted);
+    color: #6f5a5d;
     font-size: 13px
 }
 
@@ -765,7 +755,7 @@ body.is-locked {
 
 .stats div {
     background: #f6edef;
-    border: 1px solid var(--line);
+    border: 1px solid #ecdcdd;;
     border-radius: 6px;
     padding: 16px 8px;
     text-align: center
@@ -776,24 +766,24 @@ body.is-locked {
     font-size: .74rem;
     text-transform: uppercase;
     letter-spacing: .04em;
-    color: var(--muted)
+    color: #6f5a5d;
 }
 
 .stats b {
     display: block;
     font-family: var(--mono);
     font-size: 1.05rem;
-    color: var(--maroon)
+    color: #470011
 }
 
 .stats small {
-    color: var(--muted);
+    color: #6f5a5d;
     font-size: .82rem
 }
 
 .why {
     border: 1px solid #d9bfa5;
-    background: var(--blush);
+    background: #f9f0f1;
     border-radius: 10px;
     padding: 16px 20px;
     margin-bottom: 15px
@@ -805,7 +795,7 @@ body.is-locked {
     font-weight: 600;
     letter-spacing: .02em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: #7a5600;
 }   
 
 .why li {
@@ -820,33 +810,33 @@ body.is-locked {
     width: 15px;
     height: 17px;
     margin-right: 10px;
-    border: 1.5px solid var(--gold);
+    border: 1.5px solid #7a5600;;
     border-radius: 50%;
     font-size: 11px;
-    color: var(--gold)
+    color: #7a5600;
 }
 
 .why_note {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid #ecdcdd;;
     margin-top: 10px;
     padding-top: 10px;
-    color: var(--muted);
+    color: #6f5a5d;
     font-size: 12px
 }
 
 .info {
-    border: 1px solid var(--line);
+    border: 1px solid #ecdcdd;
     border-radius: 10px;
     padding: 16px 20px
 }
 
 .info h4 {
-    color: var(--maroon-3);
+    color: #6b1426;
     margin-bottom: 12px
 }
 
 .info_box {
-    background: var(--blush);
+    background: #f9f0f1;
     border-radius: 6px;
     padding: 14px 16px;
     margin-bottom: 12px
@@ -860,7 +850,7 @@ body.is-locked {
     font-size: .78rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: var(--maroon-3)
+    color: #6b1426
 }
 
 .info_box p {
@@ -873,11 +863,11 @@ body.is-locked {
     gap: 20px;
     margin: 0 30px;
     padding: 20px 10px 26px;
-    border-top: 1px solid var(--line)
+    border-top: 1px solid #ecdcdd;
 }
 
 .btn-fav {
-    background: var(--maroon-3);
+    background: #6b1426;
     color: #fff
 }
 
@@ -887,14 +877,14 @@ body.is-locked {
 
 .btn-fav[aria-pressed="true"] {
     background: #fff;
-    color: var(--maroon-3);
-    box-shadow: inset 0 0 0 2px var(--maroon-3)
+    color: #6b1426;
+    box-shadow: inset 0 0 0 2px #6b1426
 }
 
 .btn-ghost {
     background: #f3eced;
-    color: var(--maroon-3);
-    box-shadow: inset 0 0 0 1px var(--line)
+    color: #6b1426;
+    box-shadow: inset 0 0 0 1px #ecdcdd;
 }
 
 @media (max-width:1200px) {
