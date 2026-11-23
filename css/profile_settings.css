@@ -45,111 +45,117 @@ body {
   background-color: var(--white);
 }
 
-/* 1. Top Announcement Bar */
-.announcement-bar {
-  height: 34px;
-  background-color: var(--maroon-deep);
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.85px;
-  padding: 0 32px;
+/* 1. Topbar (Copied from dashboard.css) */
+.topbar {
+  background: #470011;
+  color: #f3c969;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 30px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-.announcement-left,
-.announcement-right {
+.topbar_brand,
+.topbar_meta {
   display: flex;
   align-items: center;
   gap: 8px;
-  white-space: nowrap;
 }
 
-.announcement-right {
-  letter-spacing: 0.4px;
-  font-weight: 500;
-  font-size: 11px;
+.topbar_meta {
+  flex-wrap: wrap;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #fff;
 }
 
-.announcement-right .gold-highlight {
-  color: #f3d299;
-  font-weight: 600;
-}
-
-/* 2. Main White Navigation Bar */
-.main-navbar {
-  height: 74px;
-  background-color: var(--white);
-  border-bottom: 1px solid var(--border-soft);
-  padding: 0 32px;
+/* 2. Main Navigation Bar (Copied from dashboard.css) */
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  padding: 12px 40px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(70, 0, 17, 0.06);
 }
 
-.brand-group {
+.brand {
   display: flex;
   align-items: center;
   gap: 14px;
+  white-space: nowrap;
   text-decoration: none;
-  flex-shrink: 0;
 }
 
-.brand-badge {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: var(--maroon-deep);
-  color: #f3d299;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 3px 8px rgba(74, 4, 17, 0.2);
+.brand_mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background: #6b1426;
+  color: #f3c969;
+  font-size: 1.2rem;
 }
 
-.brand-name {
+.brand_name {
+  display: block;
   font-family: var(--font-serif);
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--maroon-deep);
-  letter-spacing: 0.3px;
-  line-height: 1.1;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  color: #6b1426;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
-.brand-tagline {
-  font-size: 9.5px;
-  font-weight: 700;
-  color: var(--gold-accent);
-  letter-spacing: 1.3px;
-  margin-top: 3px;
+.brand_tag {
+  display: block;
+  color: #7a5600;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
 }
 
-.nav-links {
+.nav {
   display: flex;
+  gap: 6px;
   align-items: center;
-  gap: 28px;
 }
 
-.nav-link {
-  text-decoration: none;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.7px;
-  color: #463739;
-  transition: color 0.2s;
+.nav a {
+  padding: 9px 16px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #6b1426;
+  line-height: 1.2;
+  border-bottom: 3px solid transparent;
+  border-radius: 4px;
   text-align: center;
-  line-height: 1.25;
+  text-decoration: none;
 }
 
-.nav-link:hover {
-  color: var(--maroon-deep);
+.nav a:hover {
+  background: #f9f0f1;
 }
 
+.nav a.is-active {
+  background: #f6e9eb;
+  border-bottom-color: #6b1426;
+}
+
+/* Profile Pill (Preserved from profile_settings.css) */
 .user-pill-badge {
   background-color: var(--maroon-deep);
   color: var(--white);
@@ -1663,8 +1669,7 @@ body {
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
-  .nav-links,
-  .announcement-right {
+  .nav {
     display: none;
   }
   .dietary-modal-body {
@@ -1677,8 +1682,8 @@ body {
     grid-template-columns: 1fr;
     padding: 20px;
   }
-  .announcement-bar,
-  .main-navbar,
+  .topbar,
+  .header,
   .profile-hero,
   .site-footer {
     padding-left: 20px;
