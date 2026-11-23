@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fortuna Bakeshop - Bread Collection &amp; Comparison</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/bread_comparison.css">
+</head>
+<body>
+
+    <!-- Top Utility Strip -->
+    <div class="top-strip">
+        <span><i class="fa-solid fa-croissant"></i> LA FORTUNA BAKESHOP &bull; TRADITIONAL CHINESE-FILIPINO BAKERY &bull; CEBU CITY &bull; EST. 1953</span>
+        <span><i class="fa-solid fa-location-dot"></i> Osme&ntilde;a Blvd, Cebu City</span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=120" alt="La Fortuna Logo" class="brand-logo">
+            <div class="brand-info">
+                <h1>LA FORTUNA BAKESHOP</h1>
+                <p>TRADITION SINCE 1953 &bull; CEBU</p>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="nav-item">DASHBOARD</a>
+            <a href="#" class="nav-item active" id="navCollectionTab">BREAD COLLECTION &amp; COMPARISON</a>
+            <a href="#" class="nav-item">RECOMMENDATIONS</a>
+            <a href="#" class="nav-item">FAVORITES</a>
+        </nav>
+        <div class="user-profile">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Maria Santos" class="avatar">
+            <div class="user-info">
+                <span class="user-name">Maria Santos</span>
+                <span class="user-role">My Profile</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Bread Collection View -->
+        <div id="collectionView">
+            <div class="collection-header">
+                <div class="header-titles">
+                    <span class="store-tag"><i class="fa-solid fa-store"></i> LA FORTUNA BAKESHOP &bull; OSME&Ntilde;A BLVD</span>
+                    <h2>Bread Collection</h2>
+                    <p class="subtitle">Browse breads and pastries, view product details, and compare your favorites.</p>
+                </div>
+                <div class="active-selection-badge">
+                    <span class="badge-label">ACTIVE SELECTION</span>
+                    <span class="badge-count" id="selectionBadgeText">0 selected for comparison</span>
+                </div>
+            </div>
+
+            <!-- Controls Bar -->
+            <section class="controls-card">
+                <div class="controls-top">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search bread or pastry name...">
+                    </div>
+                    <div class="sort-box">
+                        <label for="sortSelect">SORT BY:</label>
+                        <select id="sortSelect">
+                            <option value="az">Alphabetical (A-Z)</option>
+                            <option value="za">Alphabetical (Z-A)</option>
+                            <option value="cal-low">Lowest Calories</option>
+                            <option value="sugar-low">Lowest Sugar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="controls-bottom">
+                    <div class="category-pills">
+                        <button class="pill active" data-cat="all">All Breads</button>
+                        <button class="pill" data-cat="breads">Breads</button>
+                        <button class="pill" data-cat="hopia">Hopia</button>
+                        <button class="pill" data-cat="rice">Rice Cakes &amp; Glutinous</button>
+                        <button class="pill" data-cat="pastries">Pastries</button>
+                    </div>
+                    <div class="products-count" id="showingCount">Showing 2 products</div>
+                </div>
+            </section>
+
+            <!-- 2-Product Grid -->
+            <section class="products-grid" id="productsGrid"></section>
+        </div>
+
+        <!-- Comparison Section (Hidden until COMPARE SELECTED is clicked) -->
+        <section class="comparison-section" id="comparisonSection" style="display: none;">
+            <div class="comp-top-bar">
+                <button class="back-btn" id="backToCollectionBtn">
+                    <i class="fa-solid fa-arrow-left"></i> BACK TO COLLECTION
+                </button>
+                <span class="comp-hint">
+                    <i class="fa-regular fa-circle-check"></i> Select at least 2 products to compare. Maximum 4 products allowed.
+                </span>
+            </div>
+
+            <div class="comp-header">
+                <div class="comp-title-group">
+                    <span class="sub-header"><i class="fa-solid fa-scale-balanced"></i> BREAD COMPARISON</span>
+                    <h3>Compare Breads</h3>
+                    <p>Compare product details and nutritional information to find the bread that suits your preferences.</p>
+                </div>
+                <div class="comp-actions-top">
+                    <span class="status-pill" id="compStatusText">0 OF 4 BREADS SELECTED</span>
+                    <button class="btn-text" id="resetAllBtn"><i class="fa-solid fa-rotate"></i> RESET ALL</button>
+                    <button class="btn-primary" id="addAnotherBreadBtn"><i class="fa-solid fa-circle-plus"></i> ADD ANOTHER BREAD (0/4 SELECTED)</button>
+                </div>
+            </div>
+
+            <div class="comp-table-wrapper">
+                <table class="comp-table" id="comparisonTable"></table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Sticky Selection Bar -->
+    <div class="bottom-bar" id="bottomBar" style="display: none;">
+        <div class="bottom-bar-left">
+            <div class="icon-circle"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="bar-info">
+                <span class="bar-title" id="bottomBarTitle">0 ITEMS SELECTED FOR COMPARISON <span class="bar-max">(Max 4)</span></span>
+                <div class="chips-list" id="selectedChips"></div>
+            </div>
+        </div>
+        <div class="bottom-bar-right">
+            <button class="btn-clear" id="clearAllBtn">CLEAR ALL</button>
+            <button class="btn-compare-now" id="compareSelectedBtn">
+                COMPARE SELECTED <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Details Modal Pop Up -->
+    <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Bread Details</h3>
+                <button class="close-btn" id="closeModalBtn" aria-label="Close Modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn-fav-large" id="modalFavBtn">
+                    <i class="fa-regular fa-heart"></i> ADD TO FAVORITES
+                </button>
+                <button class="btn-modal-close" id="modalCloseFooterBtn">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>LA FORTUNA BAKESHOP</h4>
+            <p>Est. 1953. Cebu City, Philippines</p>
+        </div>
+        <div class="footer-col text-center">
+            <p><i class="fa-solid fa-location-dot"></i> <strong>Flagship Bakery</strong></p>
+            <p>Osme&ntilde;a Blvd, Cebu City, Cebu, Philippines</p>
+        </div>
+        <div class="footer-col text-right">
+            <p>&copy; 1953-2026 La Fortuna Bakeshop Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/bread_comparison.js" defer></script>
+</body>
+</html>
