@@ -292,7 +292,7 @@ body.is-locked {
     border-radius: var(--radius-md);
     padding: 20px;
     box-shadow: var(--shadow-sm);
-    margin-bottom: 28px;
+    margin-bottom: 48px;
 }
 
 .controls-top {
@@ -1370,6 +1370,7 @@ body.is-locked {
   background: #470011;
   color: #d9c5c8;
   padding: 20px 30px 0;
+  margin-top: 54px
 }
 
 .footer_rule {
