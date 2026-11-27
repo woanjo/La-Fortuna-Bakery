@@ -1,149 +1,149 @@
 const productsData = [
     {
-    id: 'pandesal',
-    name: 'Traditional Pan de Sal',
-    categoryLabel: 'Breads',
-    categoryTag: 'HEARTH ROLLS & BREAKFAST',
-    category: 'breads',
-    chineseTag: '傳統麵包',
-    price: '₱85.00',
-    unit: '/ dozen (12 rolls)',
-    shortUnit: '/ dozen',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
-    description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
-    calories: '140 kcal',
-    caloriesNum: 140,
-    caloriesSub: 'Lowest energy density',
-    sugar: '3g',
-    sugarNum: 3,
-    sugarSub: 'Ideal for daily glycemic management.',
-    lowSugar: true,
-    serving: '1 Roll',
-    servingSub: '(approx. 35g)',
-    matchReasons: [
-        'Matches low-sugar preference',
-        'Nut-free safeguard'
-    ],
-    ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
-    allergenBadges: [
-        { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-        { text: 'Nut-Free', type: 'safe', icon: '' },
-        { text: 'Dairy-Free', type: 'safe', icon: '' }
-    ],
-    allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
-    allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
+        id: 'pandesal',
+        name: 'Traditional Pan de Sal',
+        categoryLabel: 'Breads',
+        categoryTag: 'HEARTH ROLLS & BREAKFAST',
+        category: 'breads',
+        chineseTag: '傳統麵包',
+        price: '₱85.00',
+        unit: '/ dozen (12 rolls)',
+        shortUnit: '/ dozen',
+        image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
+        description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
+        calories: '140 kcal',
+        caloriesNum: 140,
+        caloriesSub: 'Lowest energy density',
+        sugar: '3g',
+        sugarNum: 3,
+        sugarSub: 'Ideal for daily glycemic management.',
+        lowSugar: true,
+        serving: '1 Roll',
+        servingSub: '(approx. 35g)',
+        matchReasons: [
+            'Matches low-sugar preference',
+            'Nut-free safeguard'
+        ],
+        ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
+        allergenBadges: [
+            { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+            { text: 'Nut-Free', type: 'safe', icon: '' },
+            { text: 'Dairy-Free', type: 'safe', icon: '' }
+        ],
+        allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
+        allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
     },
     {
-    id: 'hopia',
-    name: 'Special Munggo Hopia',
-    categoryLabel: 'Hopia',
-    categoryTag: 'CEBUANO-CHINESE HEARTH',
-    category: 'hopia',
-    chineseTag: '綠豆餅',
-    price: '₱120.00',
-    unit: '/ box of 10',
-    shortUnit: '/ box of 10',
-    image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
-    description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
-    calories: '185 kcal',
-    caloriesNum: 185,
-    caloriesSub: 'Slow-cooked bean core',
-    sugar: '11g',
-    sugarNum: 11,
-    sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
-    lowSugar: false,
-    serving: '1 Piece',
-    servingSub: '(approx. 45g)',
-    matchReasons: [
-        'Authentic heritage Cebuano recipe',
-        'Peanut-free safeguard'
-    ],
-    ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
-    allergenBadges: [
-        { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-        { text: 'Sesame Seeds', type: 'warn', icon: '' },
-        { text: 'Tree Nut-Free', type: 'safe', icon: '' }
-    ],
-    allergenSummary: 'Free from Tree Nuts and Peanuts.',
-    allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
+        id: 'hopia',
+        name: 'Special Munggo Hopia',
+        categoryLabel: 'Hopia',
+        categoryTag: 'CEBUANO-CHINESE HEARTH',
+        category: 'hopia',
+        chineseTag: '綠豆餅',
+        price: '₱120.00',
+        unit: '/ box of 10',
+        shortUnit: '/ box of 10',
+        image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
+        description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
+        calories: '185 kcal',
+        caloriesNum: 185,
+        caloriesSub: 'Slow-cooked bean core',
+        sugar: '11g',
+        sugarNum: 11,
+        sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
+        lowSugar: false,
+        serving: '1 Piece',
+        servingSub: '(approx. 45g)',
+        matchReasons: [
+            'Authentic heritage Cebuano recipe',
+            'Peanut-free safeguard'
+        ],
+        ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
+        allergenBadges: [
+            { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+            { text: 'Sesame Seeds', type: 'warn', icon: '' },
+            { text: 'Tree Nut-Free', type: 'safe', icon: '' }
+        ],
+        allergenSummary: 'Free from Tree Nuts and Peanuts.',
+        allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
     },
     {
-    id: 'peanutbread',
-    name: 'Peanut Bread',
-    categoryLabel: 'Breads',
-    categoryTag: 'HEARTH ROLLS & BREAKFAST',
-    category: 'breads',
-    chineseTag: '傳統麵包',
-    price: '₱85.00',
-    unit: '/ dozen (12 rolls)',
-    shortUnit: '/ dozen',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
-    description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
-    calories: '140 kcal',
-    caloriesNum: 140,
-    caloriesSub: 'Lowest energy density',
-    sugar: '3g',
-    sugarNum: 3,
-    sugarSub: 'Ideal for daily glycemic management.',
-    lowSugar: true,
-    serving: '1 Roll',
-    servingSub: '(approx. 35g)',
-    matchReasons: [
-        'Matches low-sugar preference',
-        'Nut-free safeguard'
-    ],
-    ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
-    allergenBadges: [
-        { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-        { text: 'Nut-Free', type: 'safe', icon: '' },
-        { text: 'Dairy-Free', type: 'safe', icon: '' }
-    ],
-    allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
-    allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
+        id: 'peanutbread',
+        name: 'Peanut Bread',
+        categoryLabel: 'Breads',
+        categoryTag: 'HEARTH ROLLS & BREAKFAST',
+        category: 'breads',
+        chineseTag: '傳統麵包',
+        price: '₱85.00',
+        unit: '/ dozen (12 rolls)',
+        shortUnit: '/ dozen',
+        image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
+        description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
+        calories: '140 kcal',
+        caloriesNum: 140,
+        caloriesSub: 'Lowest energy density',
+        sugar: '3g',
+        sugarNum: 3,
+        sugarSub: 'Ideal for daily glycemic management.',
+        lowSugar: true,
+        serving: '1 Roll',
+        servingSub: '(approx. 35g)',
+        matchReasons: [
+            'Matches low-sugar preference',
+            'Nut-free safeguard'
+        ],
+        ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
+        allergenBadges: [
+            { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+            { text: 'Nut-Free', type: 'safe', icon: '' },
+            { text: 'Dairy-Free', type: 'safe', icon: '' }
+        ],
+        allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
+        allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
     },
     {
-    id: 'starbread',
-    name: 'Star Bread',
-    categoryLabel: 'Bread',
-    categoryTag: 'CEBUANO-CHINESE HEARTH',
-    category: 'bread',
-    chineseTag: '綠豆餅',
-    price: '₱120.00',
-    unit: '/ box of 10',
-    shortUnit: '/ box of 10',
-    image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
-    description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
-    calories: '185 kcal',
-    caloriesNum: 185,
-    caloriesSub: 'Slow-cooked bean core',
-    sugar: '11g',
-    sugarNum: 11,
-    sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
-    lowSugar: false,
-    serving: '1 Piece',
-    servingSub: '(approx. 45g)',
-    matchReasons: [
-        'Authentic heritage Cebuano recipe',
-        'Peanut-free safeguard'
-    ],
-    ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
-    allergenBadges: [
-        { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-        { text: 'Sesame Seeds', type: 'warn', icon: '' },
-        { text: 'Tree Nut-Free', type: 'safe', icon: '' }
-    ],
-    allergenSummary: 'Free from Tree Nuts and Peanuts.',
-    allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
+        id: 'starbread',
+        name: 'Star Bread',
+        categoryLabel: 'Bread',
+        categoryTag: 'CEBUANO-CHINESE HEARTH',
+        category: 'bread',
+        chineseTag: '綠豆餅',
+        price: '₱120.00',
+        unit: '/ box of 10',
+        shortUnit: '/ box of 10',
+        image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
+        description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
+        calories: '185 kcal',
+        caloriesNum: 185,
+        caloriesSub: 'Slow-cooked bean core',
+        sugar: '11g',
+        sugarNum: 11,
+        sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
+        lowSugar: false,
+        serving: '1 Piece',
+        servingSub: '(approx. 45g)',
+        matchReasons: [
+            'Authentic heritage Cebuano recipe',
+            'Peanut-free safeguard'
+        ],
+        ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
+        allergenBadges: [
+            { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+            { text: 'Sesame Seeds', type: 'warn', icon: '' },
+            { text: 'Tree Nut-Free', type: 'safe', icon: '' }
+        ],
+        allergenSummary: 'Free from Tree Nuts and Peanuts.',
+        allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
     }
 ];
 
-// Starts empty so nothing is compared until selected & COMPARE SELECTED is clicked
 let selectedForCompare = [];
 let favorites = [];
 let isComparisonOpen = false;
 let activeCategory = 'all';
 let searchQuery = '';
 let sortOrder = 'az';
+let currentModalBreadId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
@@ -462,88 +462,65 @@ function updateSelectionUI() {
 }
 
 function openProductModal(id) {
-    const item = productsData.find(p => p.id === id);
+    const item = productsData.find(b => b.id === id);
     if (!item) return;
 
-    const modalBody = document.getElementById('modalBody');
-    if (modalBody) {
-        modalBody.innerHTML = `
-            <div class="modal-grid">
-                <div class="modal-product-summary">
-                    <div class="modal-img-container">
-                        <img src="${item.image}" alt="${item.name}">
-                        <span class="cn-overlay-tag">${item.chineseTag}</span>
-                    </div>
-                    <div class="modal-prod-info">
-                        <span class="modal-cat-tag">${item.categoryTag}</span>
-                        <h4>${item.name}</h4>
-                        <div class="modal-price">${item.price} <span class="unit">${item.unit}</span></div>
-                        <p class="modal-desc">${item.description}</p>
-                    </div>
-                </div>
+    currentModalBreadId = id;
 
-                <div class="modal-match-card">
-                    <div class="modal-match-title">
-                        <i class="fa-solid fa-shield-halved"></i> WHY THIS MATCHES
-                    </div>
-                    <ul class="match-list">
-                        ${item.matchReasons.map(r => `<li><i class="fa-solid fa-circle-check"></i> ${r}</li>`).join('')}
-                    </ul>
-                    <div class="modal-disclaimer">
-                        <i class="fa-solid fa-circle-info"></i> Allergen information is verified by bakery records. If allergen information is incomplete, please verify with the bakery before consuming.
-                    </div>
-                </div>
-            </div>
+    const mImg = document.getElementById('mImg');
+    if (mImg) mImg.style.backgroundImage = `url('${item.image}')`;
 
-            <div class="modal-metrics-row">
-                <div class="metric-card">
-                    <span class="metric-label">CALORIES</span>
-                    <div class="metric-val">${item.caloriesNum} <span class="unit">kcal</span></div>
-                    <span class="metric-sub">${item.calories.includes('roll') ? 'per roll' : 'per piece'}</span>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-label">SUGAR</span>
-                    <div class="metric-val">${item.sugar}</div>
-                    <span class="metric-sub">${item.lowSugar ? 'low sugar' : item.sugarSub}</span>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-label">SERVING</span>
-                    <div class="metric-val">${item.serving}</div>
-                    <span class="metric-sub">${item.servingSub}</span>
-                </div>
-            </div>
+    document.getElementById('mZh').textContent = item.chineseTag;
+    document.getElementById('mCat').textContent = item.categoryTag;
+    document.getElementById('mName').textContent = item.name;
+    document.getElementById('mPrice').textContent = item.price;
+    document.getElementById('mYield').textContent = item.shortUnit;
+    document.getElementById('mDesc').textContent = item.description;
 
-            <div class="modal-info-card">
-                <div class="modal-sec-title">
-                    <i class="fa-regular fa-folder-open"></i> PRODUCT INFORMATION
-                </div>
-                <div class="info-block">
-                    <label>INGREDIENTS</label>
-                    <div class="info-box-text">${item.ingredients}</div>
-                </div>
-                <div class="info-block">
-                    <label>ALLERGENS</label>
-                    <div class="info-box-text">${item.allergens}</div>
-                </div>
-            </div>
-        `;
+    document.getElementById('mKcal').textContent = item.calories;
+    document.getElementById('mKcalNote').textContent = item.caloriesSub;
+    document.getElementById('mSugar').textContent = item.sugar;
+    document.getElementById('mSugarNote').textContent = item.sugarSub;
+    document.getElementById('mServing').textContent = item.serving;
+    document.getElementById('mServingNote').textContent = item.servingSub;
+
+    const mWhy = document.getElementById('mWhy');
+    if (mWhy) {
+        mWhy.innerHTML = (item.matchReasons || []).map(reason => `<li>${reason}</li>`).join('');
     }
 
-    const modalFavBtn = document.getElementById('modalFavBtn');
-    if (modalFavBtn) {
-        modalFavBtn.setAttribute('data-product-id', item.id);
+    document.getElementById('mIng').textContent = item.ingredients;
+    document.getElementById('mAll').textContent = item.allergens;
+
+    const favBtn = document.getElementById('favBtn');
+    if (favBtn) {
+        favBtn.setAttribute('data-product-id', item.id);
         syncModalFavButton(item.id);
     }
 
-    const modal = document.getElementById('productModal');
-    if (modal) modal.classList.add('active');
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.hidden = false;
+        modal.classList.add('active');
+    }
+    document.body.classList.add('is-locked');
+}
+
+function closeBreadModal() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.hidden = true;
+    }
+    document.body.classList.remove('is-locked');
+    currentModalBreadId = null;
 }
 
 function syncModalFavButton(id) {
-    const modalFavBtn = document.getElementById('modalFavBtn');
+    const modalFavBtn = document.getElementById('favBtn');
     if (!modalFavBtn || modalFavBtn.getAttribute('data-product-id') !== id) return;
     const isFav = favorites.includes(id);
-    modalFavBtn.innerHTML = `<i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'SAVED IN FAVORITES' : 'ADD TO FAVORITES'}`;
+    modalFavBtn.innerHTML = `<i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> <span id="favText">${isFav ? 'SAVED IN FAVORITES' : 'ADD TO FAVORITES'}</span>`;
 }
 
 function clearAllSelections() {
@@ -556,20 +533,20 @@ function clearAllSelections() {
 }
 
 function setupEventListeners() {
-    const modal = document.getElementById('productModal');
-    const closeBtn = document.getElementById('closeModalBtn');
-    const closeFooterBtn = document.getElementById('modalCloseFooterBtn');
-    const modalFavBtn = document.getElementById('modalFavBtn');
+    const modal = document.getElementById('modal');
+    
+    // Listen for clicks on any element with data-close attribute
+    document.querySelectorAll('[data-close]').forEach(element => {
+        element.addEventListener('click', closeBreadModal);
+    });
 
-    if (modal && closeBtn) {
-        const closeModal = () => modal.classList.remove('active');
-        closeBtn.addEventListener('click', closeModal);
-        if (closeFooterBtn) closeFooterBtn.addEventListener('click', closeModal);
+    if (modal) {
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
+            if (e.target === modal) closeBreadModal();
         });
     }
 
+    const modalFavBtn = document.getElementById('favBtn');
     if (modalFavBtn) {
         modalFavBtn.addEventListener('click', () => {
             const id = modalFavBtn.getAttribute('data-product-id');
@@ -582,14 +559,6 @@ function setupEventListeners() {
 
     const backToCollectionBtn = document.getElementById('backToCollectionBtn');
     if (backToCollectionBtn) backToCollectionBtn.addEventListener('click', closeComparisonView);
-
-    const navCollectionTab = document.getElementById('navCollectionTab');
-    if (navCollectionTab) {
-        navCollectionTab.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeComparisonView();
-        });
-    }
 
     const addAnotherBreadBtn = document.getElementById('addAnotherBreadBtn');
     if (addAnotherBreadBtn) addAnotherBreadBtn.addEventListener('click', closeComparisonView);
