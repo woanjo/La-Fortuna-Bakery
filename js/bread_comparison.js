@@ -1,75 +1,139 @@
-/* ==========================================================================
-   LA FORTUNA BAKESHOP - COLLECTION, MODAL & ON-DEMAND COMPARISON
-   ========================================================================== */
-
 const productsData = [
     {
-        id: 'pandesal',
-        name: 'Traditional Pan de Sal',
-        categoryLabel: 'Breads',
-        categoryTag: 'HEARTH ROLLS & BREAKFAST',
-        category: 'breads',
-        chineseTag: '傳統麵包',
-        price: '₱85.00',
-        unit: '/ dozen (12 rolls)',
-        shortUnit: '/ dozen',
-        image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
-        description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
-        calories: '140 kcal',
-        caloriesNum: 140,
-        caloriesSub: 'Lowest energy density',
-        sugar: '3g',
-        sugarNum: 3,
-        sugarSub: 'Ideal for daily glycemic management.',
-        lowSugar: true,
-        serving: '1 Roll',
-        servingSub: '(approx. 35g)',
-        matchReasons: [
-            'Matches low-sugar preference',
-            'Nut-free safeguard'
-        ],
-        ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
-        allergenBadges: [
-            { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-            { text: 'Nut-Free', type: 'safe', icon: '' },
-            { text: 'Dairy-Free', type: 'safe', icon: '' }
-        ],
-        allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
-        allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
+    id: 'pandesal',
+    name: 'Traditional Pan de Sal',
+    categoryLabel: 'Breads',
+    categoryTag: 'HEARTH ROLLS & BREAKFAST',
+    category: 'breads',
+    chineseTag: '傳統麵包',
+    price: '₱85.00',
+    unit: '/ dozen (12 rolls)',
+    shortUnit: '/ dozen',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
+    description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
+    calories: '140 kcal',
+    caloriesNum: 140,
+    caloriesSub: 'Lowest energy density',
+    sugar: '3g',
+    sugarNum: 3,
+    sugarSub: 'Ideal for daily glycemic management.',
+    lowSugar: true,
+    serving: '1 Roll',
+    servingSub: '(approx. 35g)',
+    matchReasons: [
+        'Matches low-sugar preference',
+        'Nut-free safeguard'
+    ],
+    ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
+    allergenBadges: [
+        { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+        { text: 'Nut-Free', type: 'safe', icon: '' },
+        { text: 'Dairy-Free', type: 'safe', icon: '' }
+    ],
+    allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
+    allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
     },
     {
-        id: 'hopia',
-        name: 'Special Munggo Hopia',
-        categoryLabel: 'Hopia',
-        categoryTag: 'CEBUANO-CHINESE HEARTH',
-        category: 'hopia',
-        chineseTag: '綠豆餅',
-        price: '₱120.00',
-        unit: '/ box of 10',
-        shortUnit: '/ box of 10',
-        image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
-        description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
-        calories: '185 kcal',
-        caloriesNum: 185,
-        caloriesSub: 'Slow-cooked bean core',
-        sugar: '11g',
-        sugarNum: 11,
-        sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
-        lowSugar: false,
-        serving: '1 Piece',
-        servingSub: '(approx. 45g)',
-        matchReasons: [
-            'Authentic heritage Cebuano recipe',
-            'Peanut-free safeguard'
-        ],
-        ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
-        allergenBadges: [
-            { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
-            { text: 'Sesame Seeds', type: 'warn', icon: '' },
-            { text: 'Tree Nut-Free', type: 'safe', icon: '' }
-        ],
-        allergenSummary: 'Free from Tree Nuts and Peanuts.',
-        allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
+    id: 'hopia',
+    name: 'Special Munggo Hopia',
+    categoryLabel: 'Hopia',
+    categoryTag: 'CEBUANO-CHINESE HEARTH',
+    category: 'hopia',
+    chineseTag: '綠豆餅',
+    price: '₱120.00',
+    unit: '/ box of 10',
+    shortUnit: '/ box of 10',
+    image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
+    description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
+    calories: '185 kcal',
+    caloriesNum: 185,
+    caloriesSub: 'Slow-cooked bean core',
+    sugar: '11g',
+    sugarNum: 11,
+    sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
+    lowSugar: false,
+    serving: '1 Piece',
+    servingSub: '(approx. 45g)',
+    matchReasons: [
+        'Authentic heritage Cebuano recipe',
+        'Peanut-free safeguard'
+    ],
+    ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
+    allergenBadges: [
+        { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+        { text: 'Sesame Seeds', type: 'warn', icon: '' },
+        { text: 'Tree Nut-Free', type: 'safe', icon: '' }
+    ],
+    allergenSummary: 'Free from Tree Nuts and Peanuts.',
+    allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
+    },
+    {
+    id: 'peanutbread',
+    name: 'Peanut Bread',
+    categoryLabel: 'Breads',
+    categoryTag: 'HEARTH ROLLS & BREAKFAST',
+    category: 'breads',
+    chineseTag: '傳統麵包',
+    price: '₱85.00',
+    unit: '/ dozen (12 rolls)',
+    shortUnit: '/ dozen',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600',
+    description: 'Artisan wood-fired rolls baked with traditional slow-fermentation methods for a soft, pillowy crumb and golden crust.',
+    calories: '140 kcal',
+    caloriesNum: 140,
+    caloriesSub: 'Lowest energy density',
+    sugar: '3g',
+    sugarNum: 3,
+    sugarSub: 'Ideal for daily glycemic management.',
+    lowSugar: true,
+    serving: '1 Roll',
+    servingSub: '(approx. 35g)',
+    matchReasons: [
+        'Matches low-sugar preference',
+        'Nut-free safeguard'
+    ],
+    ingredients: 'Enriched wheat flour, spring water, cane sugar, sea salt, sourdough starter, vegetable shortening, breadcrumbs.',
+    allergenBadges: [
+        { text: 'Contains Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+        { text: 'Nut-Free', type: 'safe', icon: '' },
+        { text: 'Dairy-Free', type: 'safe', icon: '' }
+    ],
+    allergenSummary: 'Free from Tree Nuts, Peanuts, and Dairy.',
+    allergens: 'Contains Wheat (Gluten). Free from Tree Nuts, Peanuts, and Dairy.'
+    },
+    {
+    id: 'starbread',
+    name: 'Star Bread',
+    categoryLabel: 'Bread',
+    categoryTag: 'CEBUANO-CHINESE HEARTH',
+    category: 'bread',
+    chineseTag: '綠豆餅',
+    price: '₱120.00',
+    unit: '/ box of 10',
+    shortUnit: '/ box of 10',
+    image: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&q=80&w=600',
+    description: 'Flaky layered pastry crust with sweet yellow mung bean filling, baked following Cebuano-Chinese hearth traditions.',
+    calories: '185 kcal',
+    caloriesNum: 185,
+    caloriesSub: 'Slow-cooked bean core',
+    sugar: '11g',
+    sugarNum: 11,
+    sugarSub: 'Natural yellow mung bean sweetness with cane syrup.',
+    lowSugar: false,
+    serving: '1 Piece',
+    servingSub: '(approx. 45g)',
+    matchReasons: [
+        'Authentic heritage Cebuano recipe',
+        'Peanut-free safeguard'
+    ],
+    ingredients: 'Wheat flour, sweet yellow mung bean paste, sugar, vegetable shortening, water, sesame seeds.',
+    allergenBadges: [
+        { text: 'Wheat (Gluten)', type: 'danger', icon: 'fa-triangle-exclamation' },
+        { text: 'Sesame Seeds', type: 'warn', icon: '' },
+        { text: 'Tree Nut-Free', type: 'safe', icon: '' }
+    ],
+    allergenSummary: 'Free from Tree Nuts and Peanuts.',
+    allergens: 'Contains Wheat (Gluten), Sesame Seeds. Free from Tree Nuts and Peanuts.'
     }
 ];
 
@@ -111,10 +175,14 @@ function getFilteredAndSortedProducts() {
 
 function renderCollection() {
     const gridContainer = document.getElementById('productsGrid');
+    if (!gridContainer) return;
+
     const showingCount = document.getElementById('showingCount');
     const filtered = getFilteredAndSortedProducts();
 
-    showingCount.textContent = `Showing ${filtered.length} product${filtered.length === 1 ? '' : 's'}`;
+    if (showingCount) {
+        showingCount.textContent = `Showing ${filtered.length} product${filtered.length === 1 ? '' : 's'}`;
+    }
     gridContainer.innerHTML = '';
 
     if (filtered.length === 0) {
@@ -169,7 +237,6 @@ function toggleCompare(id) {
         selectedForCompare.push(id);
     }
 
-    // If comparison view is open and fewer than 2 items remain, return to collection
     if (isComparisonOpen && selectedForCompare.length < 2) {
         closeComparisonView();
     } else if (isComparisonOpen) {
@@ -200,21 +267,33 @@ function openComparisonView() {
         return;
     }
     isComparisonOpen = true;
-    document.getElementById('collectionView').style.display = 'none';
-    document.getElementById('comparisonSection').style.display = 'block';
+
+    const collectionView = document.getElementById('collectionView');
+    const comparisonSection = document.getElementById('comparisonSection');
+
+    if (collectionView) collectionView.style.display = 'none';
+    if (comparisonSection) comparisonSection.style.display = 'block';
+
     renderComparisonTable();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function closeComparisonView() {
     isComparisonOpen = false;
-    document.getElementById('comparisonSection').style.display = 'none';
-    document.getElementById('collectionView').style.display = 'block';
+
+    const collectionView = document.getElementById('collectionView');
+    const comparisonSection = document.getElementById('comparisonSection');
+
+    if (comparisonSection) comparisonSection.style.display = 'none';
+    if (collectionView) collectionView.style.display = 'block';
+
     updateSelectionUI();
 }
 
 function renderComparisonTable() {
     const table = document.getElementById('comparisonTable');
+    if (!table) return;
+
     const comparedItems = selectedForCompare
         .map(id => productsData.find(p => p.id === id))
         .filter(Boolean);
@@ -230,7 +309,7 @@ function renderComparisonTable() {
                 </div>
                 <h4>${item.name}</h4>
                 <div class="price">${item.price} <span class="unit">${item.shortUnit}</span></div>
-                <button class="btn-remove" onclick="toggleCompare('${item.id}')">&#10005; REMOVE</button>
+                <button class="btn-remove" onclick="toggleCompare('${item.id}')">✕ REMOVE</button>
             </div>
         </th>
     `).join('') + (hasEmptySlot ? `
@@ -247,10 +326,10 @@ function renderComparisonTable() {
     const totalCols = 1 + comparedItems.length + (hasEmptySlot ? 1 : 0);
 
     const descCells = comparedItems.map(item => `<td>${item.description}</td>`).join('') +
-        (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+        (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     const ingCells = comparedItems.map(item => `<td class="ingredients-text">${item.ingredients}</td>`).join('') +
-        (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+        (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     const allergenCells = comparedItems.map(item => {
         const badgesHtml = item.allergenBadges.map(b => `
@@ -264,14 +343,14 @@ function renderComparisonTable() {
                 <div class="allergen-subtext">${item.allergenSummary}</div>
             </td>
         `;
-    }).join('') + (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+    }).join('') + (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     const calCells = comparedItems.map(item => `
         <td>
             <div class="stat-value">${item.caloriesNum} kcal <span class="unit">${item.caloriesSub.toLowerCase().includes('roll') ? 'per roll' : 'per piece'}</span></div>
             <div class="stat-sub">${item.caloriesSub}</div>
         </td>
-    `).join('') + (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+    `).join('') + (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     const sugarCells = comparedItems.map(item => `
         <td>
@@ -281,7 +360,7 @@ function renderComparisonTable() {
             </div>
             <div class="stat-sub">${item.sugarSub}</div>
         </td>
-    `).join('') + (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+    `).join('') + (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     const actionCells = comparedItems.map(item => {
         const isFav = favorites.includes(item.id);
@@ -292,7 +371,7 @@ function renderComparisonTable() {
                 </button>
             </td>
         `;
-    }).join('') + (hasEmptySlot ? `<td class="empty-cell">&mdash;</td>` : '');
+    }).join('') + (hasEmptySlot ? `<td class="empty-cell">—</td>` : '');
 
     table.innerHTML = `
         <thead>
@@ -306,7 +385,8 @@ function renderComparisonTable() {
         </thead>
         <tbody>
             <tr class="section-row">
-                <td colspan="${totalCols}"><i class="fa-regular fa-circle-info"></i> PRODUCT INFORMATION</td>
+                <td colspan="${totalCols}">
+                     <i class="fa-regular fa-folder-open"></i> PRODUCT INFORMATION</td>
             </tr>
             <tr>
                 <td class="row-label">PRODUCT DESCRIPTION</td>
@@ -342,32 +422,43 @@ function renderComparisonTable() {
 function updateSelectionUI() {
     const count = selectedForCompare.length;
 
-    document.getElementById('selectionBadgeText').textContent = `${count} selected for comparison`;
-    document.getElementById('compStatusText').textContent = `${count} OF 4 BREADS SELECTED`;
-    document.getElementById('addAnotherBreadBtn').innerHTML =
-        `<i class="fa-solid fa-circle-plus"></i> ADD ANOTHER BREAD (${count}/4 SELECTED)`;
-    document.getElementById('bottomBarTitle').innerHTML =
-        `${count} ${count === 1 ? 'ITEM' : 'ITEMS'} SELECTED FOR COMPARISON <span class="bar-max">(Max 4)</span>`;
+    const selectionBadgeText = document.getElementById('selectionBadgeText');
+    if (selectionBadgeText) selectionBadgeText.textContent = `${count} selected for comparison`;
+
+    const compStatusText = document.getElementById('compStatusText');
+    if (compStatusText) compStatusText.textContent = `${count} OF 4 BREADS SELECTED`;
+
+    const addAnotherBreadBtn = document.getElementById('addAnotherBreadBtn');
+    if (addAnotherBreadBtn) {
+        addAnotherBreadBtn.innerHTML = `<i class="fa-solid fa-circle-plus"></i> ADD ANOTHER BREAD (${count}/4 SELECTED)`;
+    }
+
+    const bottomBarTitle = document.getElementById('bottomBarTitle');
+    if (bottomBarTitle) {
+        bottomBarTitle.innerHTML = `${count} ${count === 1 ? 'ITEM' : 'ITEMS'} SELECTED FOR COMPARISON <span class="bar-max">(Max 4)</span>`;
+    }
 
     const chipsContainer = document.getElementById('selectedChips');
-    chipsContainer.innerHTML = '';
+    if (chipsContainer) {
+        chipsContainer.innerHTML = '';
+        selectedForCompare.forEach(id => {
+            const item = productsData.find(p => p.id === id);
+            if (item) {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `
+                    ${item.name}
+                    <i class="fa-solid fa-xmark close-chip" onclick="toggleCompare('${id}')"></i>
+                `;
+                chipsContainer.appendChild(chip);
+            }
+        });
+    }
 
-    selectedForCompare.forEach(id => {
-        const item = productsData.find(p => p.id === id);
-        if (item) {
-            const chip = document.createElement('div');
-            chip.className = 'chip';
-            chip.innerHTML = `
-                ${item.name}
-                <i class="fa-solid fa-xmark close-chip" onclick="toggleCompare('${id}')"></i>
-            `;
-            chipsContainer.appendChild(chip);
-        }
-    });
-
-    // Show bottom bar only when items are selected and comparison view isn't already open
     const bottomBar = document.getElementById('bottomBar');
-    bottomBar.style.display = (count > 0 && !isComparisonOpen) ? 'flex' : 'none';
+    if (bottomBar) {
+        bottomBar.style.display = (count > 0 && !isComparisonOpen) ? 'flex' : 'none';
+    }
 }
 
 function openProductModal(id) {
@@ -375,77 +466,82 @@ function openProductModal(id) {
     if (!item) return;
 
     const modalBody = document.getElementById('modalBody');
-    modalBody.innerHTML = `
-        <div class="modal-grid">
-            <div class="modal-product-summary">
-                <div class="modal-img-container">
-                    <img src="${item.image}" alt="${item.name}">
-                    <span class="cn-overlay-tag">${item.chineseTag}</span>
+    if (modalBody) {
+        modalBody.innerHTML = `
+            <div class="modal-grid">
+                <div class="modal-product-summary">
+                    <div class="modal-img-container">
+                        <img src="${item.image}" alt="${item.name}">
+                        <span class="cn-overlay-tag">${item.chineseTag}</span>
+                    </div>
+                    <div class="modal-prod-info">
+                        <span class="modal-cat-tag">${item.categoryTag}</span>
+                        <h4>${item.name}</h4>
+                        <div class="modal-price">${item.price} <span class="unit">${item.unit}</span></div>
+                        <p class="modal-desc">${item.description}</p>
+                    </div>
                 </div>
-                <div class="modal-prod-info">
-                    <span class="modal-cat-tag">${item.categoryTag}</span>
-                    <h4>${item.name}</h4>
-                    <div class="modal-price">${item.price} <span class="unit">${item.unit}</span></div>
-                    <p class="modal-desc">${item.description}</p>
+
+                <div class="modal-match-card">
+                    <div class="modal-match-title">
+                        <i class="fa-solid fa-shield-halved"></i> WHY THIS MATCHES
+                    </div>
+                    <ul class="match-list">
+                        ${item.matchReasons.map(r => `<li><i class="fa-solid fa-circle-check"></i> ${r}</li>`).join('')}
+                    </ul>
+                    <div class="modal-disclaimer">
+                        <i class="fa-solid fa-circle-info"></i> Allergen information is verified by bakery records. If allergen information is incomplete, please verify with the bakery before consuming.
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-match-card">
-                <div class="modal-match-title">
-                    <i class="fa-solid fa-shield-halved"></i> WHY THIS MATCHES
+            <div class="modal-metrics-row">
+                <div class="metric-card">
+                    <span class="metric-label">CALORIES</span>
+                    <div class="metric-val">${item.caloriesNum} <span class="unit">kcal</span></div>
+                    <span class="metric-sub">${item.calories.includes('roll') ? 'per roll' : 'per piece'}</span>
                 </div>
-                <ul class="match-list">
-                    ${item.matchReasons.map(r => `<li><i class="fa-solid fa-circle-check"></i> ${r}</li>`).join('')}
-                </ul>
-                <div class="modal-disclaimer">
-                    <i class="fa-solid fa-circle-info"></i> Allergen information is verified by bakery records. If allergen information is incomplete, please verify with the bakery before consuming.
+                <div class="metric-card">
+                    <span class="metric-label">SUGAR</span>
+                    <div class="metric-val">${item.sugar}</div>
+                    <span class="metric-sub">${item.lowSugar ? 'low sugar' : item.sugarSub}</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">SERVING</span>
+                    <div class="metric-val">${item.serving}</div>
+                    <span class="metric-sub">${item.servingSub}</span>
                 </div>
             </div>
-        </div>
 
-        <div class="modal-metrics-row">
-            <div class="metric-card">
-                <span class="metric-label">CALORIES</span>
-                <div class="metric-val">${item.caloriesNum} <span class="unit">kcal</span></div>
-                <span class="metric-sub">${item.calories.includes('roll') ? 'per roll' : 'per piece'}</span>
+            <div class="modal-info-card">
+                <div class="modal-sec-title">
+                    <i class="fa-regular fa-folder-open"></i> PRODUCT INFORMATION
+                </div>
+                <div class="info-block">
+                    <label>INGREDIENTS</label>
+                    <div class="info-box-text">${item.ingredients}</div>
+                </div>
+                <div class="info-block">
+                    <label>ALLERGENS</label>
+                    <div class="info-box-text">${item.allergens}</div>
+                </div>
             </div>
-            <div class="metric-card">
-                <span class="metric-label">SUGAR</span>
-                <div class="metric-val">${item.sugar}</div>
-                <span class="metric-sub">${item.lowSugar ? 'low sugar' : item.sugarSub}</span>
-            </div>
-            <div class="metric-card">
-                <span class="metric-label">SERVING</span>
-                <div class="metric-val">${item.serving}</div>
-                <span class="metric-sub">${item.servingSub}</span>
-            </div>
-        </div>
-
-        <div class="modal-info-card">
-            <div class="modal-sec-title">
-                <i class="fa-regular fa-folder-open"></i> PRODUCT INFORMATION
-            </div>
-            <div class="info-block">
-                <label>INGREDIENTS</label>
-                <div class="info-box-text">${item.ingredients}</div>
-            </div>
-            <div class="info-block">
-                <label>ALLERGENS</label>
-                <div class="info-box-text">${item.allergens}</div>
-            </div>
-        </div>
-    `;
+        `;
+    }
 
     const modalFavBtn = document.getElementById('modalFavBtn');
-    modalFavBtn.setAttribute('data-product-id', item.id);
-    syncModalFavButton(item.id);
+    if (modalFavBtn) {
+        modalFavBtn.setAttribute('data-product-id', item.id);
+        syncModalFavButton(item.id);
+    }
 
-    document.getElementById('productModal').classList.add('active');
+    const modal = document.getElementById('productModal');
+    if (modal) modal.classList.add('active');
 }
 
 function syncModalFavButton(id) {
     const modalFavBtn = document.getElementById('modalFavBtn');
-    if (modalFavBtn.getAttribute('data-product-id') !== id) return;
+    if (!modalFavBtn || modalFavBtn.getAttribute('data-product-id') !== id) return;
     const isFav = favorites.includes(id);
     modalFavBtn.innerHTML = `<i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'SAVED IN FAVORITES' : 'ADD TO FAVORITES'}`;
 }
@@ -465,29 +561,44 @@ function setupEventListeners() {
     const closeFooterBtn = document.getElementById('modalCloseFooterBtn');
     const modalFavBtn = document.getElementById('modalFavBtn');
 
-    const closeModal = () => modal.classList.remove('active');
+    if (modal && closeBtn) {
+        const closeModal = () => modal.classList.remove('active');
+        closeBtn.addEventListener('click', closeModal);
+        if (closeFooterBtn) closeFooterBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
 
-    closeBtn.addEventListener('click', closeModal);
-    closeFooterBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
+    if (modalFavBtn) {
+        modalFavBtn.addEventListener('click', () => {
+            const id = modalFavBtn.getAttribute('data-product-id');
+            if (id) toggleFavorite(id);
+        });
+    }
 
-    modalFavBtn.addEventListener('click', () => {
-        const id = modalFavBtn.getAttribute('data-product-id');
-        if (id) toggleFavorite(id);
-    });
+    const compareSelectedBtn = document.getElementById('compareSelectedBtn');
+    if (compareSelectedBtn) compareSelectedBtn.addEventListener('click', openComparisonView);
 
-    document.getElementById('compareSelectedBtn').addEventListener('click', openComparisonView);
-    document.getElementById('backToCollectionBtn').addEventListener('click', closeComparisonView);
-    document.getElementById('navCollectionTab').addEventListener('click', (e) => {
-        e.preventDefault();
-        closeComparisonView();
-    });
+    const backToCollectionBtn = document.getElementById('backToCollectionBtn');
+    if (backToCollectionBtn) backToCollectionBtn.addEventListener('click', closeComparisonView);
 
-    document.getElementById('addAnotherBreadBtn').addEventListener('click', closeComparisonView);
-    document.getElementById('resetAllBtn').addEventListener('click', clearAllSelections);
-    document.getElementById('clearAllBtn').addEventListener('click', clearAllSelections);
+    const navCollectionTab = document.getElementById('navCollectionTab');
+    if (navCollectionTab) {
+        navCollectionTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeComparisonView();
+        });
+    }
+
+    const addAnotherBreadBtn = document.getElementById('addAnotherBreadBtn');
+    if (addAnotherBreadBtn) addAnotherBreadBtn.addEventListener('click', closeComparisonView);
+
+    const resetAllBtn = document.getElementById('resetAllBtn');
+    if (resetAllBtn) resetAllBtn.addEventListener('click', clearAllSelections);
+
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    if (clearAllBtn) clearAllBtn.addEventListener('click', clearAllSelections);
 
     document.querySelectorAll('.pill').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -498,13 +609,19 @@ function setupEventListeners() {
         });
     });
 
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        searchQuery = e.target.value.trim().toLowerCase();
-        renderCollection();
-    });
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            renderCollection();
+        });
+    }
 
-    document.getElementById('sortSelect').addEventListener('change', (e) => {
-        sortOrder = e.target.value;
-        renderCollection();
-    });
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            sortOrder = e.target.value;
+            renderCollection();
+        });
+    }
 }
