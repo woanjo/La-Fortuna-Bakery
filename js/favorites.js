@@ -272,13 +272,19 @@ function openBreadModal(id) {
     document.getElementById('favText').textContent = 'SAVED IN FAVORITES';
 
     const modal = document.getElementById('modal');
-    modal.hidden = false;
+    if (modal) {
+        modal.hidden = false;
+        modal.classList.add('active');
+    }
     document.body.classList.add('is-locked');
 }
 
 function closeBreadModal() {
     const modal = document.getElementById('modal');
-    if (modal) modal.hidden = true;
+    if (modal) {
+        modal.classList.remove('active');
+        modal.hidden = true;
+    }
     document.body.classList.remove('is-locked');
     currentModalBreadId = null;
 }
