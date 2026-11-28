@@ -1,461 +1,1265 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Bread Catalog State (populate from your backend API / database)
-  const KEY = "lafortuna:admin-breads:v1";
-  const CATEGORIES = ["Bread (Hearth & Pan)", "Flaky Pastries", "Steamed & Glutinous", "Sweet Merienda"];
-  const ALLERGENS = ["Wheat / Gluten", "Coconut", "Sesame", "Peanuts", "Tree Nuts", "Milk (Dairy)", "Egg", "Soy", "Pork Lard"];
-  const MASTER_INGREDIENTS = ["Unbleached Bread Flour", "Enriched Wheat Flour", "Sprouted Whole Wheat Flour", "Glutinous Rice Flour", "Fresh Grated Coconut",
-    "Raw Muscovado Sugar", "Dark Brown Sugar", "Cane Sugar", "Purified Water", "Active Dry Yeast", "Sourdough Starter", "Ilocos Sea Salt", "Sweet Yellow Mung Bean Paste",
-    "Vegetable Shortening", "Pork Lard", "Butter", "Egg Yolks", "Fresh Milk", "Wintermelon", "Sesame Seeds", "Roasted Peanuts", "Aged Cheese"];
-  const TODAY = "2026-11-23";
 
-  const mk = (o) => ({ sub: "", flag: false, cross: "", verify: "Verified", serving: "1 piece", protein: null, fat: null, fiber: null, sodium: null, status: "Active", ...o });
-  const SEED = [
-    mk({
-      code: "LFB-022",
-      name: "Hopia Munggo",
-      sub: "Classic Mung Filling",
-      cat: "Flaky Pastries",
-      desc: "Flaky layered pastry with sweet yellow mung bean filling.",
-      image: "images/hopia-munggo.jpg",
-      ingredients: ["Enriched Wheat Flour", "Sweet Yellow Mung Bean Paste", "Cane Sugar", "Vegetable Shortening", "Sesame Seeds"],
-      allergens: ["Wheat / Gluten", "Sesame"],
-      cross: "Shared equipment with tree nuts.",
-      kcal: 175,
-      sugar: 4.2,
-      added: "2026-09-02",
-      updated: "2026-11-20"
-    }),
-    mk({
-      code: "LFB-031",
-      name: "Steamed Sourdough Bun",
-      sub: "Wintermelon Infusion",
-      cat: "Steamed & Glutinous",
-      desc: "Slow-fermented sourdough bun steamed with wintermelon.",
-      image: "images/steamed-sourdough-bun.jpg",
-      ingredients: ["Enriched Wheat Flour", "Sourdough Starter", "Wintermelon", "Purified Water"],
-      allergens: ["Wheat / Gluten"],
-      kcal: 140,
-      sugar: 2.1,
-      added: "2026-09-10",
-      updated: "2026-11-19"
-    }),
-    mk({
-      code: "LFB-002",
-      name: "Traditional Hopia Baboy",
-      sub: "",
-      flag: true,
-      cat: "Flaky Pastries",
-      desc: "Savory candied wintermelon and scallion filling.",
-      image: "images/hopia-baboy.jpg",
-      ingredients: ["Enriched Wheat Flour", "Pork Lard", "Wintermelon", "Cane Sugar"],
-      allergens: ["Pork Lard", "Wheat / Gluten"],
-      verify: "Unverified",
-      kcal: 210,
-      sugar: 7.5,
-      added: "2026-08-14",
-      updated: "2026-11-18"
-    }),
-    mk({
-      code: "LFB-009",
-      name: "Masi de Cebu",
-      sub: "Glutinous Peanut Confection",
-      cat: "Steamed & Glutinous",
-      desc: "Steamed glutinous rice dumpling with ground peanut filling.",
-      image: "images/masi-de-cebu.jpg",
-      ingredients: ["Glutinous Rice Flour", "Roasted Peanuts", "Cane Sugar", "Purified Water"],
-      allergens: ["Peanuts"],
-      kcal: 160,
-      sugar: 6.1,
-      added: "2026-08-20",
-      updated: "2026-11-17"
-    }),
-    mk({
-      code: "LFB-001",
-      name: "Pan de Coco Tradisyonal",
-      cat: "Bread (Hearth & Pan)",
-      desc: "Traditional Filipino sweet bread filled with grated coconut and muscovado sugar, with a soft texture and lightly golden crust.",
-      image: "images/pan-de-coco.jpg",
-      imageName: "pan_de_coco_demo.webp",
-      imageMeta: "WebP · 1200×900",
-      ingredients: ["Unbleached Bread Flour", "Fresh Grated Coconut", "Raw Muscovado Sugar", "Purified Water", "Active Dry Yeast", "Ilocos Sea Salt"],
-      allergens: ["Wheat / Gluten", "Coconut"],
-      cross: "Prepared in a bakery handling dairy, eggs, and sesame. Shared equipment and tables may result in cross-contact.",
-      verify: "Unverified",
-      serving: "65 g (1 pc)",
-      kcal: 185,
-      sugar: 6.2,
-      added: "2026-11-10",
-      updated: "2026-11-12"
-    }),
-    mk({
-      code: "LFB-003",
-      name: "Traditional Pan de Sal",
-      cat: "Bread (Hearth & Pan)",
-      desc: "Artisan wood-fired rolls baked with slow fermentation.",
-      image: "images/traditional-pan-de-sal.jpg",
-      ingredients: ["Enriched Wheat Flour", "Purified Water", "Cane Sugar", "Ilocos Sea Salt", "Active Dry Yeast"],
-      allergens: ["Wheat / Gluten"],
-      serving: "35 g (1 roll)",
-      kcal: 140,
-      sugar: 3,
-      added: "2026-06-01",
-      updated: "2026-11-10"
-    }),
-    mk({
-      code: "LFB-004",
-      name: "Sprouted Whole Wheat Pan de Sal",
-      cat: "Bread (Hearth & Pan)",
-      desc: "Cold-milled sprouted grains with low glycemic load.",
-      image: "images/sprouted-pan-de-sal.jpg",
-      ingredients: ["Sprouted Whole Wheat Flour", "Purified Water", "Ilocos Sea Salt", "Sourdough Starter"],
-      allergens: ["Wheat / Gluten"],
-      kcal: 130,
-      sugar: 1.8,
-      added: "2026-06-12",
-      updated: "2026-11-08"
-    }),
-    mk({
-      code: "LFB-005",
-      name: "Traditional Pan de Suelo",
-      cat: "Bread (Hearth & Pan)",
-      desc: "Hearth-floor baked using ancestral leavening techniques.",
-      image: "images/pan-de-suelo.jpg",
-      ingredients: ["Enriched Wheat Flour", "Purified Water", "Ilocos Sea Salt", "Sourdough Starter"],
-      allergens: ["Wheat / Gluten"],
-      kcal: 145,
-      sugar: 2.1,
-      added: "2026-06-20",
-      updated: "2026-11-05"
-    }),
-    mk({
-      code: "LFB-006",
-      name: "Ensaymada Especial Cebuana",
-      cat: "Sweet Merienda",
-      desc: "Butter-rich sweet bread topped with aged cheese.",
-      image: "images/ensaymada-especial.jpg",
-      ingredients: ["Enriched Wheat Flour", "Butter", "Egg Yolks", "Cane Sugar", "Aged Cheese"],
-      allergens: ["Wheat / Gluten", "Milk (Dairy)", "Egg"],
-      kcal: 260,
-      sugar: 12,
-      added: "2026-07-02",
-      updated: "2026-11-02"
-    }),
-    mk({
-      code: "LFB-007",
-      name: "Brown Sugar Tikoy Slices",
-      cat: "Steamed & Glutinous",
-      desc: "Slow-steamed sweet rice cake with dark caramel.",
-      image: "images/brown-sugar-tikoy.jpg",
-      ingredients: ["Glutinous Rice Flour", "Dark Brown Sugar", "Purified Water", "Sesame Seeds"],
-      allergens: ["Sesame"],
-      kcal: 175,
-      sugar: 10.5,
-      added: "2026-07-15",
-      updated: "2026-10-28"
-    }),
-    mk({
-      code: "LFB-008",
-      name: "Mamon Tostado",
-      cat: "Sweet Merienda",
-      desc: "Twice-baked sponge slices.",
-      image: "images/mamon-tostado.jpg",
-      ingredients: ["Enriched Wheat Flour", "Egg Yolks", "Cane Sugar"],
-      allergens: ["Wheat / Gluten", "Egg"],
-      verify: "Unknown",
-      kcal: null,
-      sugar: null,
-      status: "Inactive",
-      added: "2026-05-30",
-      updated: "2026-10-20"
-    }),
-    mk({
-      code: "LFB-010",
-      name: "Siopao Asado",
-      cat: "Steamed & Glutinous",
-      desc: "Steamed bun with sweet-savory pork filling.",
-      image: "images/siopao-asado.jpg",
-      ingredients: ["Enriched Wheat Flour", "Pork Lard", "Cane Sugar", "Active Dry Yeast"],
-      allergens: ["Wheat / Gluten", "Soy", "Pork Lard"],
-      kcal: 290,
-      sugar: 5.5,
-      added: "2026-05-12",
-      updated: "2026-10-15"
-    }),
-  ];
+document.addEventListener("DOMContentLoaded", async () => {
+    // =====================================================
+    // CONFIGURATION
+    // =====================================================
 
-  function load() { try { const v = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(v) && v.length ? v : null; } catch { return null; } }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(products)); } catch { /* storage full/blocked: changes stay in memory */ } }
-  let products = load() || SEED.map((p) => ({ ...p }));
+    const API_BASE = "http://127.0.0.1:5000";
 
-  // ================= Helpers =================
-  const SAVE_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
-  const ICON_EYE = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
-  const ICON_EDIT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>';
-  const $ = (id) => document.getElementById(id);
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const fmtDate = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  const has = (v) => v !== null && v !== undefined && v !== "";
-  const isComplete = (p) => p.ingredients.length > 0 && p.verify === "Verified" && has(p.kcal) && has(p.sugar);
-  const bgStyle = (p) => (p.image ? `background-image:url("${esc(p.image)}"),linear-gradient(135deg,#c79a63,#7a4e2a)` : "background-image:linear-gradient(135deg,#d8c3c6,#b99ea2)");
-  const baseName = (p) => p.imageName || (p.image && !p.image.startsWith("data:") ? p.image.split("/").pop() : "—");
-  const shortAllergen = (a) => a.split(/ [\/(]/)[0];
-  let toastTimer;
-  function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => (t.hidden = true), 2600); }
+    const $ = (id) => document.getElementById(id);
 
-  // ================= List =================
-  const state = { q: "", cat: "all", status: "all", sort: "updated", page: 1 };
-  const PER_PAGE = 6;
-  const sorters = {
-    updated: (a, b) => b.updated.localeCompare(a.updated),
-    name: (a, b) => a.name.localeCompare(b.name),
-    kcal: (a, b) => (a.kcal ?? Infinity) - (b.kcal ?? Infinity),
-    sugar: (a, b) => (a.sugar ?? Infinity) - (b.sugar ?? Infinity),
-  };
+    const SAVE_ICON = `
+        <svg width="15" height="15" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>`;
 
-  function allergenCell(p) {
-    const chips = p.allergens.slice(0, 2).map((a) => `<span class="tag tag--red">Contains ${esc(shortAllergen(a))}</span>`);
-    if (p.allergens.length > 2) chips.push(`<span class="tag tag--grey">+${p.allergens.length - 2} more</span>`);
-    if (!p.allergens.length) chips.push(`<span class="tag tag--grey">${p.verify === "Verified" ? "No known allergens" : "Unverified"}</span>`);
-    else if (p.verify === "Verified" && !p.allergens.includes("Wheat / Gluten")) chips.push('<span class="tag tag--grey">Gluten-Free</span>');
-    return chips.join("");
-  }
+    const ICON_EYE = `
+        <svg width="17" height="17" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        </svg>`;
 
-  function rowHTML(p) {
-    const done = isComplete(p), sub = p.flag ? "Recipe Update Flagged" : p.sub;
-    return `<tr class="${done ? "" : "is-incomplete"}">
-    <td><div class="thumb thumb--sm" style="${bgStyle(p)}"></div></td>
-    <td class="name"><b>${esc(p.name)}</b><small class="${p.flag ? "is-flag" : ""}">#${esc(p.code)}${sub ? ` • ${esc(sub)}` : ""}</small></td>
-    <td><span class="cat">${esc(p.cat)}</span></td>
-    <td class="num-cell">${has(p.kcal) ? `${p.kcal} kcal` : "—"}</td>
-    <td class="num-cell">${has(p.sugar) ? `${p.sugar}g` : "—"}</td>
-    <td>${allergenCell(p)}</td>
-    <td><span class="pill ${done ? "pill--ok" : "pill--bad"}">${done ? "Complete" : "Incomplete"}</span></td>
-    <td><span class="pill ${p.status === "Active" ? "pill--active" : "pill--inactive"}">${p.status}</span></td>
-    <td><div class="actions">
-      <button class="icon-btn" type="button" data-view="${p.code}" aria-label="View ${esc(p.name)}">${ICON_EYE}</button>
-      <button class="icon-btn" type="button" data-edit="${p.code}" aria-label="Edit ${esc(p.name)}">${ICON_EDIT}</button></div></td>
-  </tr>`;
-  }
+    const ICON_EDIT = `
+        <svg width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+        </svg>`;
 
-  function pageList(total, cur) {
-    if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
-    const set = new Set([1, total, cur - 1, cur, cur + 1].filter((n) => n >= 1 && n <= total));
-    const out = []; let prev = 0;
-    [...set].sort((a, b) => a - b).forEach((n) => { if (n - prev > 1) out.push("…"); out.push(n); prev = n; });
-    return out;
-  }
+    const esc = (value) =>
+        String(value ?? "").replace(/[&<>"']/g, (character) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[character]);
 
-  function render() {
-    const total = products.length, complete = products.filter(isComplete).length;
-    $("sTotal").textContent = total; $("sComplete").textContent = complete; $("sIncomplete").textContent = total - complete;
+    const has = (value) =>
+        value !== null && value !== undefined && value !== "";
 
-    const q = state.q.trim().toLowerCase().replace(/^#/, "");
-    const list = products
-      .filter((p) => (state.cat === "all" || p.cat === state.cat) && (state.status === "all" || p.status === state.status) &&
-        (!q || p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q)))
-      .sort(sorters[state.sort]);
+    const fmtDate = (value) => {
+        if (!value) return "—";
 
-    const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
-    state.page = Math.min(state.page, pages);
-    const slice = list.slice((state.page - 1) * PER_PAGE, state.page * PER_PAGE);
+        const date = new Date(`${value}T00:00:00`);
 
-    $("rows").innerHTML = slice.map(rowHTML).join("");
-    $("empty").hidden = list.length > 0;
-    $("showing").innerHTML = `Showing <b>${slice.length}</b> of <b>${list.length}</b> Products`;
-    $("pages").innerHTML = `<button type="button" data-page="${state.page - 1}" aria-label="Previous page" ${state.page === 1 ? "disabled" : ""}>&lsaquo;</button>` +
-      pageList(pages, state.page).map((n) => n === "…" ? "<span>…</span>" : `<button type="button" data-page="${n}" class="${n === state.page ? "is-on" : ""}" ${n === state.page ? 'aria-current="page"' : ""}>${n}</button>`).join("") +
-      `<button type="button" data-page="${state.page + 1}" aria-label="Next page" ${state.page === pages ? "disabled" : ""}>&rsaquo;</button>`;
-  }
+        if (Number.isNaN(date.getTime())) return "—";
 
-  // filters
-  $("fCategory").innerHTML = `<option value="all">All Categories (${CATEGORIES.length})</option>` + CATEGORIES.map((c) => `<option>${esc(c)}</option>`).join("");
-  $("search").addEventListener("input", (e) => { state.q = e.target.value; state.page = 1; render(); });
-  $("fCategory").addEventListener("change", (e) => { state.cat = e.target.value; state.page = 1; render(); });
-  $("fStatus").addEventListener("change", (e) => { state.status = e.target.value; state.page = 1; render(); });
-  $("fSort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
-  $("pages").addEventListener("click", (e) => { const b = e.target.closest("[data-page]"); if (b && !b.disabled) { state.page = +b.dataset.page; render(); } });
-  $("rows").addEventListener("click", (e) => {
-    const v = e.target.closest("[data-view]"), ed = e.target.closest("[data-edit]");
-    if (v) openView(v.dataset.view, v); else if (ed) openForm("edit", ed.dataset.edit, ed);
-  });
-  $("addBtn").addEventListener("click", (e) => openForm("add", null, e.currentTarget));
-
-  // ================= Modal plumbing (scoped to .main-wrapper, like the profile modal) =================
-  const mainWrapper = document.querySelector(".main-wrapper");
-  const openModals = []; // last item = top-most modal
-
-  // Open Modal & Blur Main Content
-  function openModal(el, trigger) {
-    el._opener = trigger;
-    openModals.push(el);
-    mainWrapper.classList.add("modal-open");
-    el.classList.add("is-visible");
-    el.setAttribute("aria-hidden", "false");
-  }
-
-  // Close Modal & Remove Blur
-  function closeModal(el) {
-    el.classList.remove("is-visible");
-    el.setAttribute("aria-hidden", "true");
-    const i = openModals.indexOf(el);
-    if (i > -1) openModals.splice(i, 1);
-    if (!openModals.length) mainWrapper.classList.remove("modal-open");
-    el._opener?.focus?.();
-  }
-
-  // Close via X / Cancel buttons or by clicking outside the dialog (within the blurred main area)
-  document.querySelectorAll(".modal-backdrop").forEach((m) => m.addEventListener("click", (e) => {
-    if (e.target === m || e.target.closest("[data-close]")) closeModal(m);
-  }));
-
-  // Close on Escape key press + keep Tab focus inside the open dialog
-  document.addEventListener("keydown", (e) => {
-    const top = openModals[openModals.length - 1]; if (!top) return;
-    if (e.key === "Escape") return closeModal(top);
-    if (e.key === "Tab") {
-      const f = [...top.querySelectorAll("button,input,select,textarea,a[href]")].filter((x) => !x.disabled && !x.hidden && x.type !== "file" && x.offsetParent !== null);
-      if (!f.length) return;
-      const first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
-  // ================= View modal =================
-  let viewing = null;
-  function openView(code, trigger) {
-    const p = viewing = products.find((x) => x.code === code); if (!p) return;
-    $("vStatus").textContent = p.status; $("vStatus").className = "status-pill-soft" + (p.status === "Active" ? "" : " status-pill-soft--inactive");
-    $("vName").textContent = p.name; $("vCat").textContent = p.cat; $("vDesc").textContent = p.desc || "No description provided.";
-    $("vImg").style.cssText = bgStyle(p);
-    $("vImgName").textContent = baseName(p); $("vImgMeta").textContent = p.imageMeta || "";
-    $("vImgStatus").textContent = p.status === "Active" ? "● Active — Visible on catalog" : "● Inactive — Hidden from catalog";
-    $("vCode").textContent = p.code; $("vAdded").textContent = fmtDate(p.added); $("vUpdated").textContent = fmtDate(p.updated);
-    $("vIngCount").textContent = `${p.ingredients.length} Item${p.ingredients.length === 1 ? "" : "s"}`;
-    $("vIngs").innerHTML = p.ingredients.length ? p.ingredients.map((i) => `<span class="ing">${esc(i)}</span>`).join("") : '<span class="fine">No ingredients recorded.</span>';
-    $("vVerify").className = "status-pill-soft status-pill-soft--grey"; $("vVerify").textContent = `Status: ${p.verify}`; $("vVerify").classList.toggle("is-ok", p.verify === "Verified");
-    $("vAlls").innerHTML = p.allergens.length ? p.allergens.map((a) => `<span class="tagx tagx--red">&#10033; ${esc(a)}</span>`).join("") : '<span class="tagx tagx--none">No allergens recorded</span>';
-    $("vCross").textContent = p.cross || "No cross-contact information recorded.";
-    const m = /^(.*?)\s*\((.*)\)$/.exec(p.serving || "");
-    $("vServ").textContent = m ? m[1] : p.serving || "—"; $("vServSub").textContent = m ? m[2] : "per portion";
-    $("vKcal").textContent = has(p.kcal) ? p.kcal : "—"; $("vSugar").textContent = has(p.sugar) ? `${p.sugar} g` : "—";
-    openModal($("viewModal"), trigger);
-    $("viewModal").querySelector(".modal-close-btn").focus();
-  }
-  $("vEdit").addEventListener("click", () => { const code = viewing.code, opener = $("viewModal")._opener; closeModal($("viewModal")); openForm("edit", code, opener); });
-
-  // ================= Add / Edit form =================
-  const form = $("form");
-  let fs = null; // form state
-  $("fCat").innerHTML = '<option value="">Select bread category</option>' + CATEGORIES.map((c) => `<option>${esc(c)}</option>`).join("");
-  $("fAllSel").innerHTML = '<option value="">Applicable Allergens</option>' + ALLERGENS.map((a) => `<option>${esc(a)}</option>`).join("");
-  $("ingList").innerHTML = MASTER_INGREDIENTS.map((i) => `<option value="${esc(i)}">`).join("");
-  const NUM_IDS = { kcal: "nKcal", sugar: "nSugar", protein: "nProtein", fat: "nFat", fiber: "nFiber", sodium: "nSodium" };
-
-  function renderChips() {
-    $("fIngs").innerHTML = fs.ingredients.length
-      ? fs.ingredients.map((i, k) => `<span class="chip">${esc(i)}<button type="button" data-rm-ing="${k}" aria-label="Remove ${esc(i)}">&times;</button></span>`).join("")
-      : '<span class="empty-note">No ingredients added yet. Select from the master list above.</span>';
-    $("fAlls").innerHTML = fs.allergens.length
-      ? fs.allergens.map((a, k) => `<span class="chip chip--red">&#9888; ${esc(a)}<button type="button" data-rm-all="${k}" aria-label="Remove ${esc(a)}">&times;</button></span>`).join("")
-      : '<span class="empty-note">No allergens selected.</span>';
-  }
-  function renderImage() {
-    const t = $("fThumb");
-    if (fs.image) { t.style.cssText = `background-image:url("${esc(fs.image)}")`; t.innerHTML = ""; }
-    else { t.style.cssText = ""; t.innerHTML = "<span>No photo</span>"; }
-    $("fChoose").innerHTML = fs.image ? "&#8635; Replace" : "&#8682; Choose Image";
-    $("fRemoveImg").hidden = !fs.image;
-    $("fImgInfo").textContent = fs.image ? [fs.imageName, fs.imageMeta].filter(Boolean).join(" · ") : "Supported formats: JPG, PNG, WebP · Max 5MB";
-  }
-  const clearErrors = () => { form.querySelectorAll(".field-error").forEach((e) => (e.textContent = "")); form.querySelectorAll(".is-invalid").forEach((e) => e.classList.remove("is-invalid")); };
-  const setErr = (key, msg, inputId) => { form.querySelector(`[data-err="${key}"]`).textContent = msg; if (inputId) $(inputId).classList.add("is-invalid"); };
-
-  function openForm(mode, code, trigger) {
-    const p = mode === "edit" ? products.find((x) => x.code === code) : null;
-    form.reset(); clearErrors();
-    fs = { mode, code, ingredients: [...(p?.ingredients || [])], allergens: [...(p?.allergens || [])], image: p?.image || "", imageName: p ? baseName(p) !== "—" ? baseName(p) : "" : "", imageMeta: p?.imageMeta || "" };
-    $("fTitle").firstChild.textContent = mode === "edit" ? "Edit Bread Details " : "Add New Bread Product ";
-    $("fSku").hidden = mode !== "edit"; $("fSku").textContent = `SKU #${code}`;
-    $("fSub").textContent = mode === "edit" ? "Update the product information in the bread catalog." : "Add a new product to the bread catalog.";
-    $("fSave").innerHTML = SAVE_ICON + `<span>${mode === "edit" ? "Save Changes" : "Save Product"}</span>`;
-    if (p) {
-      $("fName").value = p.name; $("fCat").value = p.cat; $("fDesc").value = p.desc || ""; $("fCross").value = p.cross || ""; $("fVerify").value = p.verify;
-      $("nServ").value = p.serving || "";
-      Object.entries(NUM_IDS).forEach(([k, id]) => ($(id).value = has(p[k]) ? p[k] : ""));
-      form.querySelector(`[name="status"][value="${p.status}"]`).checked = true;
-    }
-    renderChips(); renderImage();
-    openModal($("formModal"), trigger);
-    $("fName").focus();
-  }
-
-  // chips: ingredients + allergens
-  function addIngredient() {
-    const raw = $("fIngInput").value.trim(); if (!raw) return;
-    const match = MASTER_INGREDIENTS.find((i) => i.toLowerCase() === raw.toLowerCase());
-    if (!match) return toast("Choose an ingredient from the master list.");
-    if (!fs.ingredients.includes(match)) fs.ingredients.push(match);
-    $("fIngInput").value = ""; renderChips(); $("fIngInput").focus();
-  }
-  $("fIngAdd").addEventListener("click", addIngredient);
-  $("fIngInput").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addIngredient(); } });
-  $("fAllAdd").addEventListener("click", () => {
-    const v = $("fAllSel").value; if (!v) return toast("Select an allergen first.");
-    if (!fs.allergens.includes(v)) fs.allergens.push(v);
-    $("fAllSel").value = ""; renderChips();
-  });
-  $("fIngs").addEventListener("click", (e) => { const b = e.target.closest("[data-rm-ing]"); if (b) { fs.ingredients.splice(+b.dataset.rmIng, 1); renderChips(); } });
-  $("fAlls").addEventListener("click", (e) => { const b = e.target.closest("[data-rm-all]"); if (b) { fs.allergens.splice(+b.dataset.rmAll, 1); renderChips(); } });
-
-  // image
-  $("fChoose").addEventListener("click", () => $("fFile").click());
-  $("fRemoveImg").addEventListener("click", () => { fs.image = ""; fs.imageName = ""; fs.imageMeta = ""; $("fFile").value = ""; renderImage(); });
-  $("fFile").addEventListener("change", (e) => {
-    const f = e.target.files[0]; if (!f) return;
-    form.querySelector('[data-err="image"]').textContent = "";
-    if (!["image/jpeg", "image/png", "image/webp"].includes(f.type)) return setErr("image", "Use a JPG, PNG, or WebP image.");
-    if (f.size > 5 * 1024 * 1024) return setErr("image", "Image must be 5MB or smaller.");
-    const reader = new FileReader();
-    reader.onload = () => {
-      fs.image = reader.result; fs.imageName = f.name;
-      fs.imageMeta = `${f.type.split("/")[1].toUpperCase()} · ${f.size > 1048576 ? (f.size / 1048576).toFixed(1) + " MB" : Math.round(f.size / 1024) + " KB"}`;
-      renderImage();
+        return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        });
     };
-    reader.readAsDataURL(f);
-  });
 
-  // save
-  form.addEventListener("submit", (e) => {
-    e.preventDefault(); clearErrors();
-    const name = $("fName").value.trim(), cat = $("fCat").value; let ok = true;
-    if (!name) { setErr("name", "Enter the bread name.", "fName"); ok = false; }
-    else if (products.some((p) => p.name.toLowerCase() === name.toLowerCase() && p.code !== fs.code)) { setErr("name", "A product with this name already exists.", "fName"); ok = false; }
-    if (!cat) { setErr("cat", "Select a category.", "fCat"); ok = false; }
-    const nums = {};
-    for (const [k, id] of Object.entries(NUM_IDS)) {
-      const v = $(id).value.trim();
-      if (v === "") { nums[k] = null; continue; }
-      if (Number.isNaN(Number(v)) || Number(v) < 0) { setErr("nutri", "Nutrition values must be zero or greater.", id); ok = false; } else nums[k] = Number(v);
+    // =====================================================
+    // API REQUEST HELPER
+    // =====================================================
+
+    async function apiRequest(path, options = {}) {
+        const response = await fetch(`${API_BASE}${path}`, {
+            ...options,
+            credentials: "include",
+            headers: {
+                ...(options.body ? { "Content-Type": "application/json" } : {}),
+                ...options.headers
+            }
+        });
+
+        let result;
+
+        try {
+            result = await response.json();
+        } catch {
+            throw new Error("The server returned an invalid response.");
+        }
+
+        if (response.status === 401 || response.status === 403) {
+            window.location.href = "login.html";
+            throw new Error("Administrator authentication required.");
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || `Request failed (${response.status}).`
+            );
+        }
+
+        return result;
     }
-    if (!ok) return form.querySelector(".is-invalid")?.focus();
 
-    const base = fs.mode === "edit" ? products.find((p) => p.code === fs.code) : null;
-    const nextNum = Math.max(0, ...products.map((p) => parseInt(p.code.replace(/\D/g, ""), 10) || 0)) + 1;
-    const rec = {
-      ...(base || { sub: "", flag: false, added: TODAY }),
-      code: base ? base.code : `LFB-${String(nextNum).padStart(3, "0")}`,
-      name, cat, desc: $("fDesc").value.trim(), image: fs.image, imageName: fs.imageName, imageMeta: fs.imageMeta,
-      ingredients: fs.ingredients, allergens: fs.allergens, cross: $("fCross").value.trim(), verify: $("fVerify").value,
-      serving: $("nServ").value.trim(), ...nums, status: form.querySelector('[name="status"]:checked').value, updated: TODAY,
+    // =====================================================
+    // AUTHENTICATION CHECK
+    // =====================================================
+
+    try {
+        await apiRequest("/api/auth/me");
+    } catch (error) {
+        console.error("Administrator authentication failed:", error);
+        return;
+    }
+
+    // =====================================================
+    // PAGE ELEMENTS
+    // =====================================================
+
+    const form = $("form");
+    const mainWrapper = document.querySelector(".main-wrapper");
+
+    if (!form || !mainWrapper) {
+        console.error("Bread Management HTML elements are missing.");
+        return;
+    }
+
+    // =====================================================
+    // STATE
+    // =====================================================
+
+    let products = [];
+    let categories = [];
+    let masterIngredients = [];
+    let masterAllergens = [];
+
+    let viewing = null;
+    let fs = null;
+
+    let toastTimer;
+
+    const state = {
+        q: "",
+        cat: "all",
+        status: "all",
+        sort: "updated",
+        page: 1
     };
-    if (base) { if (rec.verify === "Verified") rec.flag = false; products[products.indexOf(base)] = rec; } else products.push(rec);
-    save();
-    closeModal($("formModal"));
-    state.sort = "updated"; $("fSort").value = "updated"; state.page = 1;
-    render();
-    toast(base ? "Changes saved." : "Product added to the catalog.");
-  });
 
-  render();
+    const PER_PAGE = 6;
+
+    const NUM_IDS = {
+        kcal: "nKcal",
+        sugar: "nSugar",
+        protein: "nProtein",
+        fat: "nFat",
+        fiber: "nFiber",
+        sodium: "nSodium"
+    };
+
+    // =====================================================
+    // TOAST
+    // =====================================================
+
+    function toast(message) {
+        const element = $("toast");
+
+        if (!element) {
+            console.log(message);
+            return;
+        }
+
+        element.textContent = message;
+        element.hidden = false;
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(() => {
+            element.hidden = true;
+        }, 3000);
+    }
+
+    // =====================================================
+    // LOGOUT
+    // =====================================================
+
+    const logoutButton =
+        $("logoutBtn") ||
+        [...document.querySelectorAll("a, button")].find((element) =>
+            element.textContent.trim().toLowerCase() === "logout"
+        );
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            try {
+                await apiRequest("/api/auth/logout", {
+                    method: "POST"
+                });
+
+                window.location.href = "login.html";
+            } catch (error) {
+                toast(error.message);
+            }
+        });
+    }
+
+    // =====================================================
+    // LOAD DATABASE DATA
+    // =====================================================
+
+    async function loadCatalog() {
+        const result = await apiRequest("/api/admin/product-catalog");
+
+        categories = result.categories || [];
+        masterIngredients = result.ingredients || [];
+        masterAllergens = result.allergens || [];
+
+        populateCatalogOptions();
+    }
+
+    async function loadProducts() {
+        const result = await apiRequest("/api/admin/products");
+
+        products = (result.products || []).map((product) => ({
+            ...product,
+            ingredients: product.ingredients || [],
+            allergens: product.allergens || [],
+            status: product.status || "Active"
+        }));
+
+        render();
+    }
+
+    function populateCatalogOptions() {
+        $("fCategory").innerHTML =
+            `<option value="all">All Categories (${categories.length})</option>` +
+            categories.map((category) =>
+                `<option value="${esc(category.name)}">${esc(category.name)}</option>`
+            ).join("");
+
+        $("fCat").innerHTML =
+            '<option value="">Select bread category</option>' +
+            categories.map((category) =>
+                `<option value="${esc(category.name)}">${esc(category.name)}</option>`
+            ).join("");
+
+        $("fAllSel").innerHTML =
+            '<option value="">Applicable Allergens</option>' +
+            masterAllergens.map((allergen) =>
+                `<option value="${esc(allergen.name)}">${esc(allergen.name)}</option>`
+            ).join("");
+
+        $("ingList").innerHTML =
+            masterIngredients.map((ingredient) =>
+                `<option value="${esc(ingredient.name)}"></option>`
+            ).join("");
+    }
+
+    // =====================================================
+    // PRODUCT HELPERS
+    // =====================================================
+
+    function isComplete(product) {
+        return (
+            product.ingredients.length > 0 &&
+            product.verify === "Verified" &&
+            has(product.kcal) &&
+            has(product.sugar)
+        );
+    }
+
+    function baseName(product) {
+        if (product.imageName) return product.imageName;
+
+        if (product.image) {
+            try {
+                return new URL(product.image, window.location.href)
+                    .pathname.split("/").pop() || "—";
+            } catch {
+                return product.image.split("/").pop() || "—";
+            }
+        }
+
+        return "—";
+    }
+
+    function imageStyle(product) {
+        if (!product.image) {
+            return "background-image:linear-gradient(135deg,#d8c3c6,#b99ea2)";
+        }
+
+        return `
+            background-image:
+                url("${esc(product.image)}"),
+                linear-gradient(135deg,#c79a63,#7a4e2a)
+        `;
+    }
+
+    function shortAllergen(allergen) {
+        return allergen.split(/ [\/(]/)[0];
+    }
+
+    // =====================================================
+    // CATALOG RENDERING
+    // =====================================================
+
+    const sorters = {
+        updated: (a, b) =>
+            (b.updated || "").localeCompare(a.updated || ""),
+
+        name: (a, b) =>
+            a.name.localeCompare(b.name),
+
+        kcal: (a, b) =>
+            (a.kcal ?? Infinity) - (b.kcal ?? Infinity),
+
+        sugar: (a, b) =>
+            (a.sugar ?? Infinity) - (b.sugar ?? Infinity)
+    };
+
+    function allergenCell(product) {
+        const chips = product.allergens.slice(0, 2).map((allergen) =>
+            `<span class="tag tag--red">Contains ${esc(shortAllergen(allergen))}</span>`
+        );
+
+        if (product.allergens.length > 2) {
+            chips.push(
+                `<span class="tag tag--grey">+${product.allergens.length - 2} more</span>`
+            );
+        }
+
+        if (!product.allergens.length) {
+            chips.push(
+                `<span class="tag tag--grey">No allergens recorded</span>`
+            );
+        }
+
+        return chips.join("");
+    }
+
+    function rowHTML(product) {
+        const complete = isComplete(product);
+
+        const subtitle = product.flag
+            ? "Recipe Update Flagged"
+            : product.sub;
+
+        return `
+            <tr class="${complete ? "" : "is-incomplete"}">
+                <td>
+                    <div class="thumb thumb--sm"
+                        style="${imageStyle(product)}"></div>
+                </td>
+
+                <td class="name">
+                    <b>${esc(product.name)}</b>
+                    <small class="${product.flag ? "is-flag" : ""}">
+                        #${esc(product.code)}
+                        ${subtitle ? ` · ${esc(subtitle)}` : ""}
+                    </small>
+                </td>
+
+                <td>
+                    <span class="cat">${esc(product.cat || "Uncategorized")}</span>
+                </td>
+
+                <td class="num-cell">
+                    ${has(product.kcal) ? `${product.kcal} kcal` : "—"}
+                </td>
+
+                <td class="num-cell">
+                    ${has(product.sugar) ? `${product.sugar}g` : "—"}
+                </td>
+
+                <td>${allergenCell(product)}</td>
+
+                <td>
+                    <span class="pill ${complete ? "pill--ok" : "pill--bad"}">
+                        ${complete ? "Complete" : "Incomplete"}
+                    </span>
+                </td>
+
+                <td>
+                    <span class="pill ${product.status === "Active"
+                        ? "pill--active"
+                        : "pill--inactive"}">
+                        ${esc(product.status)}
+                    </span>
+                </td>
+
+                <td>
+                    <div class="actions">
+                        <button class="icon-btn" type="button"
+                            data-view="${product.id}"
+                            aria-label="View ${esc(product.name)}">
+                            ${ICON_EYE}
+                        </button>
+
+                        <button class="icon-btn" type="button"
+                            data-edit="${product.id}"
+                            aria-label="Edit ${esc(product.name)}">
+                            ${ICON_EDIT}
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    function pageList(total, current) {
+        if (total <= 5) {
+            return Array.from({ length: total }, (_, index) => index + 1);
+        }
+
+        const set = new Set([
+            1,
+            total,
+            current - 1,
+            current,
+            current + 1
+        ].filter((number) => number >= 1 && number <= total));
+
+        const output = [];
+        let previous = 0;
+
+        [...set].sort((a, b) => a - b).forEach((number) => {
+            if (number - previous > 1) {
+                output.push("...");
+            }
+
+            output.push(number);
+            previous = number;
+        });
+
+        return output;
+    }
+
+    function render() {
+        $("sTotal").textContent = products.length;
+
+        const completeCount = products.filter(isComplete).length;
+
+        $("sComplete").textContent = completeCount;
+        $("sIncomplete").textContent =
+            products.length - completeCount;
+
+        const query = state.q.trim().toLowerCase().replace(/^#/, "");
+
+        const filtered = products
+            .filter((product) =>
+                (state.cat === "all" || product.cat === state.cat) &&
+                (state.status === "all" || product.status === state.status) &&
+                (
+                    !query ||
+                    product.name.toLowerCase().includes(query) ||
+                    product.code.toLowerCase().includes(query)
+                )
+            )
+            .sort(sorters[state.sort] || sorters.updated);
+
+        const totalPages = Math.max(
+            1,
+            Math.ceil(filtered.length / PER_PAGE)
+        );
+
+        state.page = Math.min(state.page, totalPages);
+
+        const pageProducts = filtered.slice(
+            (state.page - 1) * PER_PAGE,
+            state.page * PER_PAGE
+        );
+
+        $("rows").innerHTML = pageProducts.map(rowHTML).join("");
+
+        $("empty").hidden = filtered.length > 0;
+
+        $("showing").innerHTML =
+            `Showing <b>${pageProducts.length}</b> of <b>${filtered.length}</b> Products`;
+
+        $("pages").innerHTML = `
+            <button type="button"
+                data-page="${state.page - 1}"
+                aria-label="Previous page"
+                ${state.page === 1 ? "disabled" : ""}>
+                &lsaquo;
+            </button>
+
+            ${pageList(totalPages, state.page).map((number) =>
+                number === "..."
+                    ? "<span>...</span>"
+                    : `
+                        <button type="button"
+                            data-page="${number}"
+                            class="${number === state.page ? "is-on" : ""}"
+                            ${number === state.page ? 'aria-current="page"' : ""}>
+                            ${number}
+                        </button>
+                    `
+            ).join("")}
+
+            <button type="button"
+                data-page="${state.page + 1}"
+                aria-label="Next page"
+                ${state.page === totalPages ? "disabled" : ""}>
+                &rsaquo;
+            </button>
+        `;
+    }
+
+    // =====================================================
+    // FILTERS AND SEARCH
+    // =====================================================
+
+    $("search").addEventListener("input", (event) => {
+        state.q = event.target.value;
+        state.page = 1;
+        render();
+    });
+
+    $("fCategory").addEventListener("change", (event) => {
+        state.cat = event.target.value;
+        state.page = 1;
+        render();
+    });
+
+    $("fStatus").addEventListener("change", (event) => {
+        state.status = event.target.value;
+        state.page = 1;
+        render();
+    });
+
+    $("fSort").addEventListener("change", (event) => {
+        state.sort = event.target.value;
+        render();
+    });
+
+    $("pages").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-page]");
+
+        if (!button || button.disabled) return;
+
+        state.page = Number(button.dataset.page);
+        render();
+    });
+
+    $("rows").addEventListener("click", (event) => {
+    const viewButton = event.target.closest("[data-view]");
+    const editButton = event.target.closest("[data-edit]");
+
+    console.log("Table click detected:", event.target);
+    console.log("View button:", viewButton);
+    console.log("Edit button:", editButton);
+
+    if (viewButton) {
+        console.log("Opening View modal");
+        openView(Number(viewButton.dataset.view), viewButton);
+    } else if (editButton) {
+        console.log("Opening Edit modal");
+        console.log("Product ID:", editButton.dataset.edit);
+
+        openForm("edit", Number(editButton.dataset.edit), editButton);
+    }
+});
+
+    $("addBtn").addEventListener("click", (event) => {
+        openForm("add", null, event.currentTarget);
+    });
+
+    // =====================================================
+    // MODAL MANAGEMENT
+    // =====================================================
+
+    const openModals = [];
+
+    function openModal(element, trigger) {
+        element._opener = trigger;
+
+        openModals.push(element);
+
+        mainWrapper.classList.add("modal-open");
+
+        element.classList.add("is-visible");
+        element.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal(element) {
+        if (!element) return;
+
+        element.classList.remove("is-visible");
+        element.setAttribute("aria-hidden", "true");
+
+        const index = openModals.indexOf(element);
+
+        if (index > -1) {
+            openModals.splice(index, 1);
+        }
+
+        if (!openModals.length) {
+            mainWrapper.classList.remove("modal-open");
+        }
+
+        element._opener?.focus?.();
+    }
+
+    document.querySelectorAll(".modal-backdrop").forEach((modal) => {
+        modal.addEventListener("click", (event) => {
+            if (
+                event.target === modal ||
+                event.target.closest("[data-close]")
+            ) {
+                closeModal(modal);
+            }
+        });
+    });
+
+    document.addEventListener("keydown", (event) => {
+        const top = openModals[openModals.length - 1];
+
+        if (!top) return;
+
+        if (event.key === "Escape") {
+            closeModal(top);
+            return;
+        }
+
+        if (event.key === "Tab") {
+            const focusable = [
+                ...top.querySelectorAll(
+                    "button,input,select,textarea,a[href]"
+                )
+            ].filter((element) =>
+                !element.disabled &&
+                !element.hidden &&
+                element.type !== "file" &&
+                element.offsetParent !== null
+            );
+
+            if (!focusable.length) return;
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === last
+            ) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
+    });
+
+    // =====================================================
+    // VIEW PRODUCT
+    // =====================================================
+
+    function openView(id, trigger) {
+        const product = products.find((item) => item.id === id);
+
+        if (!product) return;
+
+        viewing = product;
+
+        $("vStatus").textContent = product.status;
+
+        $("vStatus").className =
+            "status-pill-soft" +
+            (product.status === "Active"
+                ? ""
+                : " status-pill-soft--inactive");
+
+        $("vName").textContent = product.name;
+        $("vCat").textContent = product.cat || "Uncategorized";
+
+        $("vDesc").textContent =
+            product.desc || "No description provided.";
+
+        $("vImg").style.cssText = imageStyle(product);
+
+        $("vImgName").textContent = baseName(product);
+        $("vImgMeta").textContent = product.imageMeta || "";
+
+        $("vImgStatus").textContent =
+            product.status === "Active"
+                ? "● Active — Visible on catalog"
+                : "● Inactive — Hidden from catalog";
+
+        $("vCode").textContent = product.code;
+
+        $("vAdded").textContent = fmtDate(product.added);
+        $("vUpdated").textContent = fmtDate(product.updated);
+
+        $("vIngCount").textContent =
+            `${product.ingredients.length} Item${product.ingredients.length === 1 ? "" : "s"}`;
+
+        $("vIngs").innerHTML = product.ingredients.length
+            ? product.ingredients.map((ingredient) =>
+                `<span class="ing">${esc(ingredient)}</span>`
+            ).join("")
+            : '<span class="fine">No ingredients recorded.</span>';
+
+        $("vVerify").className =
+            "status-pill-soft status-pill-soft--grey";
+
+        $("vVerify").textContent = `Status: ${product.verify}`;
+
+        $("vVerify").classList.toggle(
+            "is-ok",
+            product.verify === "Verified"
+        );
+
+        $("vAlls").innerHTML = product.allergens.length
+            ? product.allergens.map((allergen) =>
+                `<span class="tagx tagx--red">&#10033; ${esc(allergen)}</span>`
+            ).join("")
+            : '<span class="tagx tagx--none">No allergens recorded</span>';
+
+        $("vCross").textContent =
+            product.cross || "No cross-contact information recorded.";
+
+        const servingMatch =
+            /^(.*?)\s*\((.*)\)$/.exec(product.serving || "");
+
+        $("vServ").textContent = servingMatch
+            ? servingMatch[1]
+            : product.serving || "—";
+
+        $("vServSub").textContent = servingMatch
+            ? servingMatch[2]
+            : "per portion";
+
+        $("vKcal").textContent =
+            has(product.kcal) ? product.kcal : "—";
+
+        $("vSugar").textContent =
+            has(product.sugar) ? `${product.sugar} g` : "—";
+            $("vProtein").textContent =
+    has(product.protein) ? product.protein : "—";
+
+$("vFat").textContent =
+    has(product.fat) ? product.fat : "—";
+
+$("vFiber").textContent =
+    has(product.fiber) ? product.fiber : "—";
+
+$("vSodium").textContent =
+    has(product.sodium) ? product.sodium : "—";
+
+        openModal($("viewModal"), trigger);
+
+        $("viewModal").querySelector(".modal-close-btn")?.focus();
+    }
+
+    $("vEdit").addEventListener("click", () => {
+        if (!viewing) return;
+
+        const id = viewing.id;
+        const opener = $("viewModal")._opener;
+
+        closeModal($("viewModal"));
+
+        openForm("edit", id, opener);
+    });
+
+    // =====================================================
+    // ADD / EDIT FORM
+    // =====================================================
+
+    function clearErrors() {
+        form.querySelectorAll(".field-error").forEach((element) => {
+            element.textContent = "";
+        });
+
+        form.querySelectorAll(".is-invalid").forEach((element) => {
+            element.classList.remove("is-invalid");
+        });
+    }
+
+    function setErr(key, message, inputId) {
+        const errorElement =
+            form.querySelector(`[data-err="${key}"]`);
+
+        if (errorElement) {
+            errorElement.textContent = message;
+        }
+
+        if (inputId) {
+            $(inputId)?.classList.add("is-invalid");
+        }
+    }
+
+    function renderChips() {
+        $("fIngs").innerHTML = fs.ingredients.length
+            ? fs.ingredients.map((ingredient, index) => `
+                <span class="chip">
+                    ${esc(ingredient)}
+                    <button type="button"
+                        data-rm-ing="${index}"
+                        aria-label="Remove ${esc(ingredient)}">
+                        &times;
+                    </button>
+                </span>
+            `).join("")
+            : `
+                <span class="empty-note">
+                    No ingredients added yet. Select from the master list above.
+                </span>
+            `;
+
+        $("fAlls").innerHTML = fs.allergens.length
+            ? fs.allergens.map((allergen, index) => `
+                <span class="chip chip--red">
+                    &#9888; ${esc(allergen)}
+                    <button type="button"
+                        data-rm-all="${index}"
+                        aria-label="Remove ${esc(allergen)}">
+                        &times;
+                    </button>
+                </span>
+            `).join("")
+            : '<span class="empty-note">No allergens selected.</span>';
+    }
+
+    function renderImage() {
+        const thumbnail = $("fThumb");
+
+        if (fs.previewUrl) {
+            thumbnail.style.backgroundImage =
+                `url("${fs.previewUrl}")`;
+
+            thumbnail.innerHTML = "";
+        } else if (fs.image) {
+            thumbnail.style.backgroundImage =
+                `url("${fs.image}")`;
+
+            thumbnail.innerHTML = "";
+        } else {
+            thumbnail.style.backgroundImage = "";
+            thumbnail.innerHTML = "<span>No photo</span>";
+        }
+
+        $("fChoose").innerHTML =
+            fs.image || fs.previewUrl
+                ? "&#8635; Replace"
+                : "&#8682; Choose Image";
+
+        $("fRemoveImg").hidden =
+            !fs.image && !fs.previewUrl;
+
+        $("fImgInfo").textContent =
+            fs.selectedFile
+                ? `${fs.selectedFile.name} · Preview only — image hosting not connected yet`
+                : fs.image
+                    ? [fs.imageName, fs.imageMeta].filter(Boolean).join(" · ")
+                    : "Supported formats: JPG, PNG, WebP · Max 5MB";
+    }
+
+    function openForm(mode, id, trigger) {
+        const product = mode === "edit"
+            ? products.find((item) => item.id === id)
+            : null;
+
+        if (mode === "edit" && !product) {
+            toast("Product not found.");
+            return;
+        }
+
+        form.reset();
+        clearErrors();
+
+        if (fs?.previewUrl) {
+            URL.revokeObjectURL(fs.previewUrl);
+        }
+
+        fs = {
+    mode,
+    id,
+    ingredients: [...(product?.ingredients || [])],
+    allergens: [...(product?.allergens || [])],
+    image: product?.image || "",
+    imageName: product?.imageName || "",
+    imageMeta: product?.imageMeta || "",
+    imageRemoved: false,
+    previewUrl: null,
+    selectedFile: null
+};
+
+        $("fTitle").firstChild.textContent =
+            mode === "edit"
+                ? "Edit Bread Details "
+                : "Add New Bread Product ";
+
+        $("fSku").hidden = mode !== "edit";
+
+        $("fSku").textContent =
+            mode === "edit"
+                ? `SKU #${product.code}`
+                : "";
+
+        $("fSub").textContent =
+            mode === "edit"
+                ? "Update the product information in the bread catalog."
+                : "Add a new product to the bread catalog.";
+
+        $("fSave").innerHTML =
+            SAVE_ICON +
+            `<span>${mode === "edit" ? "Save Changes" : "Save Product"}</span>`;
+
+        if (product) {
+            $("fName").value = product.name;
+            $("fCat").value = product.cat || "";
+            $("fDesc").value = product.desc || "";
+            $("fCross").value = product.cross || "";
+            $("fVerify").value = product.verify || "Unknown";
+
+            $("nServ").value = product.serving || "";
+
+            Object.entries(NUM_IDS).forEach(([key, id]) => {
+                $(id).value = has(product[key])
+                    ? product[key]
+                    : "";
+            });
+
+            const statusRadio = form.querySelector(
+                `[name="status"][value="${product.status}"]`
+            );
+
+            if (statusRadio) {
+                statusRadio.checked = true;
+            }
+        } else {
+            const activeRadio = form.querySelector(
+                '[name="status"][value="Active"]'
+            );
+
+            if (activeRadio) {
+                activeRadio.checked = true;
+            }
+        }
+
+        $("fIngInput").value = "";
+        $("fAllSel").value = "";
+        $("fFile").value = "";
+
+        renderChips();
+        renderImage();
+
+        openModal($("formModal"), trigger);
+
+        $("fName").focus();
+    }
+
+    // =====================================================
+    // INGREDIENT CHIPS
+    // =====================================================
+
+    function addIngredient() {
+        const raw = $("fIngInput").value.trim();
+
+        if (!raw) return;
+
+        const match = masterIngredients.find(
+            (ingredient) =>
+                ingredient.name.toLowerCase() === raw.toLowerCase()
+        );
+
+        if (!match) {
+            toast("Choose an ingredient from the database list.");
+            return;
+        }
+
+        if (!fs.ingredients.includes(match.name)) {
+            fs.ingredients.push(match.name);
+        }
+
+        $("fIngInput").value = "";
+
+        renderChips();
+
+        $("fIngInput").focus();
+    }
+
+    $("fIngAdd").addEventListener("click", addIngredient);
+
+    $("fIngInput").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            addIngredient();
+        }
+    });
+
+    // =====================================================
+    // ALLERGEN CHIPS
+    // =====================================================
+
+    $("fAllAdd").addEventListener("click", () => {
+        const value = $("fAllSel").value;
+
+        if (!value) {
+            toast("Select an allergen first.");
+            return;
+        }
+
+        if (!fs.allergens.includes(value)) {
+            fs.allergens.push(value);
+        }
+
+        $("fAllSel").value = "";
+
+        renderChips();
+    });
+
+    $("fIngs").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-rm-ing]");
+
+        if (!button) return;
+
+        fs.ingredients.splice(Number(button.dataset.rmIng), 1);
+
+        renderChips();
+    });
+
+    $("fAlls").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-rm-all]");
+
+        if (!button) return;
+
+        fs.allergens.splice(Number(button.dataset.rmAll), 1);
+
+        renderChips();
+    });
+
+    // =====================================================
+    // IMAGE PREVIEW
+    // Image hosting will be added later.
+    // =====================================================
+
+    $("fChoose").addEventListener("click", () => {
+        $("fFile").click();
+    });
+
+    $("fRemoveImg").addEventListener("click", () => {
+    if (fs.previewUrl) {
+        URL.revokeObjectURL(fs.previewUrl);
+        }
+            fs.image = "";
+            fs.imageName = "";
+            fs.imageMeta = "";
+            fs.imageRemoved = true;
+            fs.previewUrl = null;
+            fs.selectedFile = null;
+
+            $("fFile").value = "";
+
+        renderImage();
+        });
+
+    $("fFile").addEventListener("change", (event) => {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const errorElement =
+            form.querySelector('[data-err="image"]');
+
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+            setErr("image", "Use a JPG, PNG, or WebP image.");
+            event.target.value = "";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            setErr("image", "Image must be 5MB or smaller.");
+            event.target.value = "";
+            return;
+        }
+
+        if (fs.previewUrl) {
+            URL.revokeObjectURL(fs.previewUrl);
+        }
+
+        fs.selectedFile = file;
+        fs.previewUrl = URL.createObjectURL(file);
+
+        renderImage();
+
+        toast("Image preview loaded. Upload storage will be connected later.");
+    });
+
+    // =====================================================
+    // SAVE PRODUCT
+    // =====================================================
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!fs) return;
+
+        clearErrors();
+
+        const name = $("fName").value.trim();
+        const category = $("fCat").value;
+
+        let valid = true;
+
+        if (!name) {
+            setErr("name", "Enter the bread name.", "fName");
+            valid = false;
+        } else {
+            const duplicate = products.some((product) =>
+                product.name.toLowerCase() === name.toLowerCase() &&
+                product.id !== fs.id
+            );
+
+            if (duplicate) {
+                setErr(
+                    "name",
+                    "A product with this name already exists.",
+                    "fName"
+                );
+
+                valid = false;
+            }
+        }
+
+        if (!category) {
+            setErr("cat", "Select a category.", "fCat");
+            valid = false;
+        }
+
+        const nutrition = {};
+
+        for (const [key, id] of Object.entries(NUM_IDS)) {
+            const raw = $(id).value.trim();
+
+            if (raw === "") {
+                nutrition[key] = null;
+                continue;
+            }
+
+            const number = Number(raw);
+
+            if (!Number.isFinite(number) || number < 0) {
+                setErr(
+                    "nutri",
+                    "Nutrition values must be zero or greater.",
+                    id
+                );
+
+                valid = false;
+            } else {
+                nutrition[key] = number;
+            }
+        }
+
+        if (!valid) {
+            form.querySelector(".is-invalid")?.focus();
+            return;
+        }
+
+        const status = form.querySelector(
+            '[name="status"]:checked'
+        )?.value || "Active";
+
+        const categoryRecord = categories.find(
+            (item) => item.name === category
+        );
+
+        if (!categoryRecord) {
+            setErr("cat", "The selected category is unavailable.", "fCat");
+            return;
+        }
+
+        const payload = {
+            name,
+            categoryId: categoryRecord.id,
+            sub: fs.mode === "edit"
+                ? products.find((item) => item.id === fs.id)?.sub || ""
+                : "",
+            desc: $("fDesc").value.trim(),
+            ingredients: [...fs.ingredients],
+            allergens: [...fs.allergens],
+            image: fs.imageRemoved ? null : undefined,
+            imageName: fs.imageRemoved ? null : undefined,
+            imageMeta: fs.imageRemoved ? null : undefined,
+            cross: $("fCross").value.trim(),
+            verify: $("fVerify").value,
+            serving: $("nServ").value.trim(),
+            status,
+            ...nutrition
+        };
+
+        const saveButton = $("fSave");
+
+        saveButton.disabled = true;
+
+        const originalButtonHTML = saveButton.innerHTML;
+
+        saveButton.innerHTML = "Saving...";
+
+        try {
+            const isEditing = fs.mode === "edit";
+
+            const result = await apiRequest(
+                isEditing
+                    ? `/api/admin/products/${fs.id}`
+                    : "/api/admin/products",
+                {
+                    method: isEditing ? "PUT" : "POST",
+                    body: JSON.stringify(payload)
+                }
+            );
+
+            if (fs.previewUrl) {
+                URL.revokeObjectURL(fs.previewUrl);
+            }
+
+            closeModal($("formModal"));
+
+            state.sort = "updated";
+            state.page = 1;
+
+            $("fSort").value = "updated";
+
+            await loadProducts();
+
+            toast(
+                isEditing
+                    ? "Product changes saved to PostgreSQL."
+                    : "New product added to PostgreSQL."
+            );
+
+            if (fs.selectedFile) {
+                console.info(
+                    "Image preview was not uploaded. Image hosting is a later step."
+                );
+            }
+
+        } catch (error) {
+            console.error("Product save failed:", error);
+
+            toast(error.message || "Unable to save product.");
+
+        } finally {
+            saveButton.disabled = false;
+            saveButton.innerHTML = originalButtonHTML;
+        }
+    });
+
+    // =====================================================
+    // INITIAL PAGE LOAD
+    // =====================================================
+
+    try {
+        await loadCatalog();
+        await loadProducts();
+
+        console.log("Bread Management connected to PostgreSQL.");
+
+    } catch (error) {
+        console.error("Bread Management initialization failed:", error);
+
+        toast(
+            "Unable to load Bread Management. Check your Flask server and database connection."
+        );
+    }
 });

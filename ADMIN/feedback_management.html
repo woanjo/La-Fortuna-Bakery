@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feedback &amp; Inquiries | La Fortuna Bakeshop Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin_bread_management.css">
+  <link rel="stylesheet" href="../css/admin_feedback_management.css">
+</head>
+<body>
+  <div class="app-shell" style="visibility:hidden">
+    <header class="top-header">
+      <div class="brand-area">
+        <div class="brand-logo">LF<small>BAKE</small></div>
+        <div><div class="brand-title">La Fortuna Bakeshop</div><div class="brand-subtitle">ADMINISTRATION PORTAL</div></div>
+      </div>
+      <div class="header-right">
+        <div class="header-divider"></div>
+        <div class="admin-badge">
+          <div class="admin-badge-icon" aria-hidden="true">A</div>
+          <div class="admin-badge-info"><span class="admin-role" id="adminName">Administrator</span><span class="admin-dept">Bakery Management</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <nav class="sidebar-nav" aria-label="Admin navigation">
+          <a href="dashboard.html" class="nav-item">▦ <span>Dashboard</span></a>
+          <a href="bread_management.html" class="nav-item">▤ <span>Bread Management</span></a>
+          <a href="ingredient_management.html" class="nav-item">◈ <span>Ingredient Management</span></a>
+          <a href="feedback_management.html" class="nav-item active" aria-current="page">✉ <span>Feedback &amp; Inquiries</span></a>
+          <a href="account_settings.html" class="nav-item">⚙ <span>Account Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="#" id="logoutBtn" class="nav-item logout-item">↪ <span>Logout</span></a>
+        </div>
+      </aside>
+
+      <main class="main-wrapper">
+        <div class="main-content">
+          <div class="page-header page-header--row">
+            <div><h1 class="page-title">Feedback &amp; Inquiries</h1><p class="page-description">Review customer messages and manage their follow-up status.</p></div>
+          </div>
+
+          <section class="stat-grid feedback-stats" aria-label="Feedback summary">
+            <div class="info-tile"><span class="info-label">Total Messages</span><div class="stat-value" id="statTotal">—</div></div>
+            <div class="info-tile"><span class="info-label">Pending</span><div class="stat-value stat-bad" id="statPending">—</div></div>
+            <div class="info-tile"><span class="info-label">In Progress</span><div class="stat-value" id="statProgress">—</div></div>
+            <div class="info-tile"><span class="info-label">Resolved</span><div class="stat-value stat-ok" id="statResolved">—</div></div>
+          </section>
+
+          <section class="feedback-panel">
+            <div class="feedback-toolbar toolbar">
+              <div class="toolbar-search"><div class="input-with-icon"><span class="input-icon" aria-hidden="true">⌕</span><input id="searchInput" class="form-input has-icon" type="search" placeholder="Search name, email, subject, or message..."></div></div>
+              <select id="statusFilter" class="form-input toolbar-select" aria-label="Filter by status">
+                <option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Resolved</option>
+              </select>
+              <select id="categoryFilter" class="form-input toolbar-select" aria-label="Filter by category">
+                <option value="">All categories</option><option>Feedback</option><option>Inquiry</option><option>Complaint</option><option>Suggestion</option>
+              </select>
+              <button type="button" class="btn-outline" id="refreshBtn">↻ Refresh</button>
+            </div>
+
+            <div class="feedback-table-wrap table-wrap">
+              <table class="catalog-table feedback-table">
+                <thead><tr><th>Date</th><th>Customer</th><th>Category</th><th>Subject</th><th>Status</th><th class="ta-r">Action</th></tr></thead>
+                <tbody id="feedbackRows"><tr><td colspan="6" class="empty-state">Loading messages...</td></tr></tbody>
+              </table>
+            </div>
+            <div class="feedback-list-footer"><span id="resultCount">Loading submissions...</span><span>Newest messages appear first.</span></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="detailModal" aria-hidden="true">
+    <div class="modal-dialog feedback-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <div class="modal-header">
+        <div><h2 class="modal-title" id="detailTitle">Message Details</h2><p class="modal-subtitle" id="detailReference">Customer submission</p></div>
+        <button class="modal-close-btn" id="closeModalBtn" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body feedback-detail-body">
+        <div class="feedback-detail-grid">
+          <div><span class="info-label">Customer</span><p class="feedback-detail-value" id="detailName">—</p></div>
+          <div><span class="info-label">Email</span><p class="feedback-detail-value" id="detailEmail">—</p></div>
+          <div><span class="info-label">Category</span><p class="feedback-detail-value" id="detailCategory">—</p></div>
+          <div><span class="info-label">Submitted</span><p class="feedback-detail-value" id="detailDate">—</p></div>
+        </div>
+        <div class="feedback-detail-section"><span class="info-label">Subject</span><h3 id="detailSubject">—</h3></div>
+        <div class="feedback-detail-section"><span class="info-label">Message</span><p id="detailMessage" class="feedback-message-text"></p></div>
+        <div class="feedback-status-editor">
+          <label for="detailStatus">Update status</label>
+          <select id="detailStatus" class="form-input"><option>Pending</option><option>In Progress</option><option>Resolved</option></select>
+        </div>
+        <p class="feedback-modal-error" id="modalError" role="alert" hidden></p>
+      </div>
+      <div class="modal-footer modal-footer--end"><button type="button" class="btn-cancel" id="cancelModalBtn">Close</button><button type="button" class="btn-primary" id="saveStatusBtn">Save Status</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="../js/admin_feedback_management.js"></script>
+</body>
+</html>

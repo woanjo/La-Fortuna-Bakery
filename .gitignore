@@ -1,0 +1,31 @@
+﻿# Environment secrets
+.env
+**/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Python virtual environments
+venv/
+**/venv/
+.venv/
+**/.venv/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Editor settings
+.vscode/
+
+# Backup files
+*.bak
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db

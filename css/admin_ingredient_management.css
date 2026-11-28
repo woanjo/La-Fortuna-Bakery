@@ -1,0 +1,214 @@
+/* Ingredient Management page additions.
+   Shared admin colors, typography, table and modal foundations are loaded
+   from admin_bread_management.css. */
+
+.ingredient-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.ingredient-stat-card {
+    background: var(--white);
+    border: 1px solid #f4ebeb;
+    box-shadow: 0 4px 24px rgba(35, 24, 25, 0.04);
+    padding: 19px 20px;
+    min-width: 0;
+}
+
+.ingredient-stat-card .stat-value {
+    margin: 5px 0 3px;
+    font-size: 32px;
+}
+
+.ingredient-stat-card small {
+    color: var(--text-muted);
+    font-size: 11.5px;
+}
+
+.ingredient-panel {
+    background: var(--white);
+    border: 1px solid #f4ebeb;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(35, 24, 25, 0.035);
+}
+
+.ingredient-toolbar {
+    margin-bottom: 16px;
+}
+
+.ingredient-table {
+    min-width: 820px;
+}
+
+.ingredient-table td {
+    height: 70px;
+}
+
+.ingredient-name-cell b {
+    display: block;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.ingredient-name-cell small {
+    display: block;
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.usage-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--maroon-light-bg);
+    color: var(--maroon-dark);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.usage-count.is-zero {
+    background: #ece6e7;
+    color: #65585a;
+}
+
+.reference-status {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.reference-status.is-linked {
+    background: var(--green-bg);
+    color: var(--green-text);
+}
+
+.reference-status.is-unused {
+    background: #f4ecec;
+    color: #665558;
+}
+
+.ingredient-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.ingredient-actions .icon-btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+.ingredient-loading,
+.ingredient-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 34px 18px !important;
+}
+
+.ingredient-empty strong {
+    display: block;
+    color: var(--text-dark);
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.ingredient-pager {
+    margin-top: 17px;
+}
+
+.ingredient-modal {
+    max-width: 540px;
+}
+
+.ingredient-modal .modal-body {
+    gap: 20px;
+}
+
+.ingredient-info-note {
+    border: 1px solid #ead8da;
+    border-left: 4px solid var(--gold-accent);
+    background: var(--maroon-tile-bg);
+    border-radius: 8px;
+    padding: 13px 15px;
+}
+
+.ingredient-info-note strong {
+    display: block;
+    color: var(--maroon-dark);
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.ingredient-info-note p {
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+}
+
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #e6bfc0;
+    border-radius: 8px;
+    background: #fff7f7;
+    color: #a3262a;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #fdeceb;
+}
+
+.btn-danger:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+@media (max-width: 1150px) {
+    .ingredient-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .ingredient-panel {
+        padding: 14px;
+    }
+
+    .ingredient-stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ingredient-stat-card .stat-value {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ingredient-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ingredient-panel {
+        padding: 10px;
+    }
+}
