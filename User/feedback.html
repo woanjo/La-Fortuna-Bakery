@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#440010">
+  <title>Feedback & Inquiries | La Fortuna Bakeshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/user_feedback.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="topbar_brand">La Fortuna Bakeshop &bull; Traditional Chinese-Filipino Bakery &bull; Cebu City &bull; Est. 1953</span>
+    <span class="topbar_meta">Osmeña Blvd, Cebu City</span>
+  </div>
+
+  <header class="header">
+    <a class="brand" href="dashboard.html">
+      <span class="brand_mark" aria-hidden="true">LF</span>
+      <span>
+        <span class="brand_name">La Fortuna Bakeshop</span>
+        <span class="brand_tag">Tradition since 1953 &bull; Cebu</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="bread_comparison.html">Bread Collection<br>&amp; Comparison</a>
+      <a href="recommendations.html">Recommendations</a>
+      <a href="feedback.html" class="is-active" aria-current="page">Feedback</a>
+    </nav>
+
+    <a class="profile" href="profile_settings.html" aria-label="My profile">
+      <span class="profile_avatar">LF</span>
+      <span>
+        <span class="profile_name">My Account</span>
+        <span class="profile_sub">My Profile</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="feedback-page">
+    <section class="feedback-intro">
+      <p class="feedback-eyebrow">WE VALUE YOUR EXPERIENCE</p>
+      <h1>Feedback &amp; Inquiries</h1>
+      <p>Have a question, suggestion, or something you'd like us to know? Send our bakery team a message.</p>
+    </section>
+
+    <section class="feedback-layout" aria-label="Feedback submission">
+      <aside class="feedback-aside">
+        <div class="feedback-aside-mark" aria-hidden="true">LF</div>
+        <h2>Every message matters.</h2>
+        <p>Your feedback helps us improve our products, service, and the experience we share with our Cebu community.</p>
+        <div class="feedback-aside-note">
+          <strong>Before sending</strong>
+          <span>Please avoid including passwords, payment details, or other sensitive information.</span>
+        </div>
+      </aside>
+
+      <div class="feedback-card">
+        <div id="feedbackFormView">
+          <div class="feedback-card-heading">
+            <h2>Send us a message</h2>
+            <p>Fields marked with <span aria-hidden="true">*</span> are required.</p>
+          </div>
+
+          <form id="feedbackForm" novalidate>
+            <div class="feedback-form-grid">
+              <div class="feedback-field">
+                <label for="feedbackName">Full name <span>*</span></label>
+                <input id="feedbackName" name="name" type="text" maxlength="150" autocomplete="name" required placeholder="Your name">
+              </div>
+              <div class="feedback-field">
+                <label for="feedbackEmail">Email address <span>*</span></label>
+                <input id="feedbackEmail" name="email" type="email" maxlength="255" autocomplete="email" required placeholder="you@example.com">
+              </div>
+            </div>
+
+            <div class="feedback-field">
+              <label for="feedbackCategory">Message type <span>*</span></label>
+              <select id="feedbackCategory" name="category" required>
+                <option value="">Choose a category</option>
+                <option value="Feedback">General feedback</option>
+                <option value="Inquiry">Product or service inquiry</option>
+                <option value="Complaint">Concern or complaint</option>
+                <option value="Suggestion">Suggestion</option>
+              </select>
+            </div>
+
+            <div class="feedback-field">
+              <label for="feedbackSubject">Subject <span>*</span></label>
+              <input id="feedbackSubject" name="subject" type="text" maxlength="180" required placeholder="What is your message about?">
+            </div>
+
+            <div class="feedback-field">
+              <div class="feedback-label-row">
+                <label for="feedbackMessage">Your message <span>*</span></label>
+                <small><span id="messageCount">0</span>/5000</small>
+              </div>
+              <textarea id="feedbackMessage" name="message" rows="7" maxlength="5000" required placeholder="Write your message here..."></textarea>
+            </div>
+
+            <div class="feedback-honeypot" aria-hidden="true">
+              <label for="feedbackWebsite">Leave this field empty</label>
+              <input id="feedbackWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <p class="feedback-form-error" id="feedbackError" role="alert" hidden></p>
+            <div class="feedback-submit-row">
+              <p>Your message will be reviewed by our bakery team.</p>
+              <button class="feedback-submit" id="feedbackSubmit" type="submit">Send Message <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </div>
+
+        <div class="feedback-success" id="feedbackSuccess" hidden role="status" aria-live="polite">
+          <div class="feedback-success-icon" aria-hidden="true">✓</div>
+          <p class="feedback-eyebrow">MESSAGE RECEIVED</p>
+          <h2>Thank you for reaching out.</h2>
+          <p id="feedbackSuccessText">Your message has been sent to our bakery team.</p>
+          <button class="feedback-submit" id="sendAnotherFeedback" type="button">Send another message</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="feedback-footer">
+    <span>La Fortuna Bakeshop &bull; Est. 1953, Cebu City, Philippines</span>
+    <span>&copy; <span id="feedbackYear">2026</span> La Fortuna Bakeshop Inc.</span>
+  </footer>
+
+  <script src="../js/user_feedback.js"></script>
+</body>
+</html>

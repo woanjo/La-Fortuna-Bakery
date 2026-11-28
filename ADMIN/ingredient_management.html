@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5b141e" />
+    <title>Ingredient Management | La Fortuna Bakeshop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+    <!-- Reuse the established admin visual system, then add this page's styles. -->
+    <link rel="stylesheet" href="../css/admin_bread_management.css" />
+    <link rel="stylesheet" href="../css/admin_ingredient_management.css" />
+</head>
+<body>
+    <div class="app-shell" style="visibility: hidden;">
+        <header class="top-header">
+            <div class="brand-area">
+                <div class="brand-logo" aria-label="La Fortuna Bakeshop logo">
+                    <span>LA FORTUNA</span>
+                    <small>BAKESHOP</small>
+                </div>
+                <div>
+                    <div class="brand-title">La Fortuna Bakeshop</div>
+                    <div class="brand-subtitle">ADMINISTRATION PORTAL</div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="header-divider"></div>
+                <div class="admin-badge">
+                    <div class="admin-badge-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <div class="admin-badge-info">
+                        <span class="admin-role">Administrator</span>
+                        <span class="admin-dept">Management Console</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="workspace">
+            <aside class="sidebar">
+                <nav class="sidebar-nav" aria-label="Admin navigation">
+                    <a href="dashboard.html" class="nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="bread_management.html" class="nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 0 1 16 0v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10v2m4-4v3m4-1v2"/></svg>
+                        <span>Bread Management</span>
+                    </a>
+                    <a href="ingredient_management.html" class="nav-item active" aria-current="page">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 4-6 7.1-6 11a6 6 0 0 0 12 0c0-3.9-3-7-6-11Z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg>
+                        <span>Ingredient Management</span>
+                    </a>
+                    <a href="feedback_management.html" class="nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
+                        <span>Feedback &amp; Inquiries</span>
+                    </a>
+                    <a href="account_settings.html" class="nav-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a8 8 0 0 1 0 2Z"/></svg>
+                        <span>Account Settings</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#" id="logoutBtn" class="nav-item logout-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-wrapper">
+                <main class="main-content">
+                    <div class="page-header page-header--row">
+                        <div>
+                            <h1 class="page-title">Ingredient Management</h1>
+                            <p class="page-description">Manage the ingredient catalog used by bread products and customer dietary preferences.</p>
+                        </div>
+                        <button type="button" class="btn-primary" id="addBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                            Add Ingredient
+                        </button>
+                    </div>
+
+                    <section class="ingredient-stat-grid" aria-label="Ingredient statistics">
+                        <div class="info-tile ingredient-stat-card">
+                            <span class="info-label">Total Ingredients</span>
+                            <div class="stat-value" id="sTotal">—</div>
+                            <small>Catalog records</small>
+                        </div>
+                        <div class="info-tile ingredient-stat-card">
+                            <span class="info-label">Used in Products</span>
+                            <div class="stat-value stat-ok" id="sProducts">—</div>
+                            <small>Ingredients linked to bread</small>
+                        </div>
+                        <div class="info-tile ingredient-stat-card">
+                            <span class="info-label">Customer References</span>
+                            <div class="stat-value" id="sCustomers">—</div>
+                            <small>Ingredients customers avoid</small>
+                        </div>
+                        <div class="info-tile ingredient-stat-card">
+                            <span class="info-label">Unused</span>
+                            <div class="stat-value stat-bad" id="sUnused">—</div>
+                            <small>No product or customer links</small>
+                        </div>
+                    </section>
+
+                    <section class="ingredient-panel" aria-label="Ingredient catalog">
+                        <div class="toolbar ingredient-toolbar">
+                            <div class="toolbar-search">
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                                    <input type="search" id="search" class="form-input has-icon" placeholder="Search ingredients..." autocomplete="off" />
+                                </div>
+                            </div>
+                            <select id="fUsage" class="form-input toolbar-select" aria-label="Filter by usage">
+                                <option value="all">All ingredients</option>
+                                <option value="products">Used in products</option>
+                                <option value="unused">No references</option>
+                            </select>
+                            <select id="fSort" class="form-input toolbar-select" aria-label="Sort ingredients">
+                                <option value="az">Name: A–Z</option>
+                                <option value="za">Name: Z–A</option>
+                                <option value="most">Most referenced</option>
+                                <option value="least">Least referenced</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="catalog-table ingredient-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ingredient</th>
+                                        <th>Product usage</th>
+                                        <th>Customer references</th>
+                                        <th>Relationship status</th>
+                                        <th class="ta-r">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rows">
+                                    <tr><td colspan="5" class="ingredient-loading">Loading ingredients...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="pager ingredient-pager">
+                            <span id="showing">Loading catalog...</span>
+                            <div id="pages" aria-label="Ingredient catalog pages"></div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit modal -->
+    <div class="modal-backdrop" id="ingredientModal" aria-hidden="true">
+        <section class="modal-dialog ingredient-modal" role="dialog" aria-modal="true" aria-labelledby="fTitle">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="modal-header-icon" aria-hidden="true">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 4-6 7.1-6 11a6 6 0 0 0 12 0c0-3.9-3-7-6-11Z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg>
+                    </div>
+                    <div>
+                        <h2 class="modal-title" id="fTitle">Add Ingredient</h2>
+                        <p class="modal-subtitle" id="fSubtitle">Add a new item to the ingredient catalog.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" id="closeModalBtn" aria-label="Close dialog">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="ingredientForm" class="modal-body" novalidate>
+                <div class="form-group">
+                    <label for="fName">INGREDIENT NAME <span class="required">*</span></label>
+                    <input type="text" id="fName" class="form-input" maxlength="150" placeholder="e.g. Unbleached Bread Flour" autocomplete="off" required />
+                    <small class="field-error" id="fNameError" role="alert"></small>
+                    <small class="fine">Maximum 150 characters. Ingredient names must be unique.</small>
+                </div>
+
+                <div class="ingredient-info-note">
+                    <strong>Relationship protection</strong>
+                    <p>Renaming an ingredient keeps its existing product and customer preference links. An ingredient cannot be deleted while those links exist.</p>
+                </div>
+
+                <div class="modal-footer modal-footer--end">
+                    <button type="button" class="btn-cancel" id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary" id="fSave">Save Ingredient</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="../js/admin_ingredient_management.js" defer></script>
+</body>
+</html>

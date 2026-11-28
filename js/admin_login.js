@@ -1,260 +1,307 @@
+
 document.addEventListener('DOMContentLoaded', function () {
-    // 1. Dynamic Footer Year
+    // API address for local development.
+    const API_BASE = 'http://127.0.0.1:5000';
+
+    // --------------------------------------------------
+    // 1. DYNAMIC FOOTER YEAR
+    // --------------------------------------------------
+
     const yearSpan = document.getElementById('currentYear');
+
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // 2. Main Login Password Visibility Toggle Logic
-    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    // --------------------------------------------------
+    // 2. PASSWORD VISIBILITY TOGGLE
+    // --------------------------------------------------
+
+    function setupPasswordToggle(buttonId, inputId, iconId) {
+        const toggleButton = document.getElementById(buttonId);
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(iconId);
+
+        if (!toggleButton || !passwordInput || !eyeIcon) {
+            return;
+        }
+
+        toggleButton.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            eyeIcon.classList.toggle('fa-eye', !isPassword);
+            eyeIcon.classList.toggle('fa-eye-slash', isPassword);
+
+            toggleButton.setAttribute(
+                'aria-label',
+                isPassword ? 'Hide password' : 'Show password'
+            );
+        });
+    }
+
+    setupPasswordToggle(
+        'togglePasswordBtn',
+        'password',
+        'eyeIcon'
+    );
+
+    setupPasswordToggle(
+        'toggleNewPassBtn',
+        'newPass',
+        'newPassEye'
+    );
+
+    // --------------------------------------------------
+    // 3. ADMINISTRATOR LOGIN
+    // --------------------------------------------------
+
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+
+    const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    const eyeIcon = document.getElementById('eyeIcon');
+    const rememberMeInput = document.getElementById('rememberMe');
 
-    if (togglePasswordBtn && passwordInput && eyeIcon) {
-        togglePasswordBtn.addEventListener('click', function () {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
+    if (loginForm && loginBtn && usernameInput && passwordInput) {
+        const originalLoginButton = loginBtn.innerHTML;
+
+        loginForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+            const rememberMe = rememberMeInput
+                ? rememberMeInput.checked
+                : false;
+
+            if (!username || !password) {
+                showToast(
+                    'Enter your username and password.',
+                    'error'
+                );
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+
+            try {
+                const response = await fetch(
+                    `${API_BASE}/api/auth/admin/login`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            username: username,
+                            password: password,
+                            remember_me: rememberMe
+                        })
+                    }
+                );
+
+                let result;
+
+                try {
+                    result = await response.json();
+                } catch {
+                    throw new Error(
+                        'The server returned an invalid response.'
+                    );
+                }
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.message ||
+                        result.error ||
+                        'Administrator login failed.'
+                    );
+                }
+
+                showToast(
+                    'Welcome back, Administrator!',
+                    'success'
+                );
+
+                // Redirect to the administrator dashboard.
+                setTimeout(function () {
+                    window.location.assign('dashboard.html');
+                }, 500);
+
+            } catch (error) {
+                console.error(
+                    'Administrator login error:',
+                    error
+                );
+
+                let errorMessage = error.message;
+
+                if (
+                    error instanceof TypeError ||
+                    errorMessage === 'Failed to fetch'
+                ) {
+                    errorMessage =
+                        'Unable to connect to the server. Make sure the Flask backend is running.';
+                }
+
+                showToast(
+                    errorMessage || 'Unable to log in. Please try again.',
+                    'error'
+                );
+
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalLoginButton;
             }
         });
     }
 
-    // 3. New Password Visibility Toggle Logic (Modal)
-    const toggleNewPassBtn = document.getElementById('toggleNewPassBtn');
-    const newPassInput = document.getElementById('newPass');
-    const newPassEye = document.getElementById('newPassEye');
+    // --------------------------------------------------
+    // 4. FORGOT PASSWORD
+    // --------------------------------------------------
+    // Password recovery is intentionally disabled.
+    // The previous OTP process was only a frontend simulation.
+    // A real implementation requires backend verification,
+    // secure reset tokens, expiration, and email delivery.
 
-    if (toggleNewPassBtn && newPassInput && newPassEye) {
-        toggleNewPassBtn.addEventListener('click', function () {
-            if (newPassInput.type === 'password') {
-                newPassInput.type = 'text';
-                newPassEye.classList.remove('fa-eye');
-                newPassEye.classList.add('fa-eye-slash');
-            } else {
-                newPassInput.type = 'password';
-                newPassEye.classList.remove('fa-eye-slash');
-                newPassEye.classList.add('fa-eye');
-            }
-        });
-    }
-
-    // 4. Modal Visibility & Multi-step Logic
     const resetModal = document.getElementById('resetModal');
     const openForgotModalBtn = document.getElementById('openForgotModalBtn');
     const closeResetModalBtn = document.getElementById('closeResetModalBtn');
-    const resetEmailInput = document.getElementById('resetEmail');
 
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const step3 = document.getElementById('step3');
-
-    const dot1 = document.getElementById('dot1');
-    const dot2 = document.getElementById('dot2');
-    const dot3 = document.getElementById('dot3');
-
-    function goToStep(stepNum) {
-        step1.classList.remove('active');
-        step2.classList.remove('active');
-        step3.classList.remove('active');
-        dot1.classList.remove('active');
-        dot2.classList.remove('active');
-        dot3.classList.remove('active');
-
-        if (stepNum === 1) {
-            step1.classList.add('active');
-            dot1.classList.add('active');
-            if (resetEmailInput) resetEmailInput.focus();
-        } else if (stepNum === 2) {
-            step2.classList.add('active');
-            dot2.classList.add('active');
-            const firstOtp = document.querySelector('.otp-box');
-            if (firstOtp) firstOtp.focus();
-        } else if (stepNum === 3) {
-            step3.classList.add('active');
-            dot3.classList.add('active');
-            if (newPassInput) newPassInput.focus();
-        }
-    }
-
-    function openModal() {
-        if (resetModal) {
-            resetModal.classList.remove('hidden');
-            goToStep(1);
-        }
-    }
-
-    function closeModal() {
+    function closeResetModal() {
         if (resetModal) {
             resetModal.classList.add('hidden');
         }
     }
 
-    if (openForgotModalBtn) openForgotModalBtn.addEventListener('click', openModal);
-    if (closeResetModalBtn) closeResetModalBtn.addEventListener('click', closeModal);
+    if (openForgotModalBtn) {
+        openForgotModalBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            showToast(
+                'Password recovery is not available yet. Please contact your system administrator.',
+                'info'
+            );
+        });
+    }
+
+    if (closeResetModalBtn) {
+        closeResetModalBtn.addEventListener(
+            'click',
+            closeResetModal
+        );
+    }
 
     if (resetModal) {
-        resetModal.addEventListener('click', function (e) {
-            if (e.target === resetModal) {
-                closeModal();
+        resetModal.addEventListener('click', function (event) {
+            if (event.target === resetModal) {
+                closeResetModal();
             }
         });
     }
 
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && resetModal && !resetModal.classList.contains('hidden')) {
-            closeModal();
+    document.addEventListener('keydown', function (event) {
+        if (
+            event.key === 'Escape' &&
+            resetModal &&
+            !resetModal.classList.contains('hidden')
+        ) {
+            closeResetModal();
         }
     });
 
-    // 5. Form Submissions
-    // Login Form
-    const loginForm = document.getElementById('loginForm');
-    const loginBtn = document.getElementById('loginBtn');
+    // Prevent the old simulated reset forms from reporting success.
+    const resetFormIds = [
+        'emailForm',
+        'otpForm',
+        'newPasswordForm'
+    ];
 
-    if (loginForm && loginBtn) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...`;
+    resetFormIds.forEach(function (formId) {
+        const form = document.getElementById(formId);
 
-            setTimeout(() => {
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = `<span>Login</span> <i class="fa-solid fa-arrow-right-to-bracket btn-icon"></i>`;
-                showToast('Welcome back, Administrator! Logging in...', 'success');
-            }, 1200);
-        });
-    }
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-    // Step 1: Send Code
-    const emailForm = document.getElementById('emailForm');
-    const sendCodeBtn = document.getElementById('sendCodeBtn');
-    const sentEmailDisplay = document.getElementById('sentEmailDisplay');
-
-    if (emailForm) {
-        emailForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = resetEmailInput.value;
-            if (sentEmailDisplay) sentEmailDisplay.textContent = email;
-
-            sendCodeBtn.disabled = true;
-            sendCodeBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Sending...`;
-
-            setTimeout(() => {
-                sendCodeBtn.disabled = false;
-                sendCodeBtn.innerHTML = `<span>Send Verification Code</span> <i class="fa-regular fa-paper-plane"></i>`;
-                showToast(`Verification code sent to ${email}`, 'success');
-                goToStep(2);
-            }, 1000);
-        });
-    }
-
-    // OTP Box Navigation Logic
-    const otpBoxes = document.querySelectorAll('.otp-box');
-    otpBoxes.forEach((box, index) => {
-        box.addEventListener('input', (e) => {
-            if (e.target.value.length === 1 && index < otpBoxes.length - 1) {
-                otpBoxes[index + 1].focus();
-            }
-        });
-        box.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                otpBoxes[index - 1].focus();
-            }
-        });
+                showToast(
+                    'Password recovery is not configured yet.',
+                    'info'
+                );
+            });
+        }
     });
 
-    // Step 2: Verify OTP
-    const otpForm = document.getElementById('otpForm');
-    const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+    // --------------------------------------------------
+    // 5. BACK TO PUBLIC WEBSITE
+    // --------------------------------------------------
 
-    if (otpForm) {
-        otpForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            verifyOtpBtn.disabled = true;
-            verifyOtpBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Verifying...`;
+    const backToPublicLink = document.getElementById(
+        'backToPublicLink'
+    );
 
-            setTimeout(() => {
-                verifyOtpBtn.disabled = false;
-                verifyOtpBtn.innerHTML = `<span>Verify & Continue</span> <i class="fa-solid fa-arrow-right"></i>`;
-                showToast('Code verified successfully!', 'success');
-                goToStep(3);
-            }, 1000);
-        });
-    }
-
-    // Step 3: New Password Form
-    const newPasswordForm = document.getElementById('newPasswordForm');
-    const savePasswordBtn = document.getElementById('savePasswordBtn');
-    const confirmPass = document.getElementById('confirmPass');
-
-    if (newPasswordForm) {
-        newPasswordForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (newPassInput.value !== confirmPass.value) {
-                showToast('Passwords do not match!', 'error');
-                return;
-            }
-
-            savePasswordBtn.disabled = true;
-            savePasswordBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Updating...`;
-
-            setTimeout(() => {
-                savePasswordBtn.disabled = false;
-                savePasswordBtn.innerHTML = `<span>Reset Password</span> <i class="fa-solid fa-circle-check"></i>`;
-                closeModal();
-                showToast('Password updated successfully! You can now log in.', 'success');
-                emailForm.reset();
-                otpForm.reset();
-                newPasswordForm.reset();
-            }, 1200);
-        });
-    }
-
-    // Resend Code Link
-    const resendOtpBtn = document.getElementById('resendOtpBtn');
-    if (resendOtpBtn) {
-        resendOtpBtn.addEventListener('click', function () {
-            showToast('A new 6-digit security code has been sent.', 'info');
-        });
-    }
-
-    // Back to public site link
-    const backToPublicLink = document.getElementById('backToPublicLink');
     if (backToPublicLink) {
-        backToPublicLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            showToast('Redirecting to Public Website...', 'info');
-        });
+        if (backToPublicLink.tagName.toLowerCase() === 'a') {
+            backToPublicLink.href = '../User/index.html';
+        } else {
+            backToPublicLink.addEventListener('click', function () {
+                window.location.assign('../User/index.html');
+            });
+        }
     }
 });
 
-// Toast Notification System
+
+// --------------------------------------------------
+// 6. TOAST NOTIFICATION SYSTEM
+// --------------------------------------------------
+
 function showToast(message, type = 'info') {
     const container = document.getElementById('toastContainer');
-    if (!container) return;
+
+    if (!container) {
+        console.warn('Toast container was not found:', message);
+        return;
+    }
 
     const toast = document.createElement('div');
     toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
 
     let iconClass = 'fa-circle-info';
-    if (type === 'success') iconClass = 'fa-circle-check';
-    if (type === 'error') iconClass = 'fa-circle-exclamation';
-    
-    toast.innerHTML = `
-        <i class="fa-solid ${iconClass} toast-icon"></i>
-        <span class="toast-text">${message}</span>
-    `;
+
+    if (type === 'success') {
+        iconClass = 'fa-circle-check';
+    } else if (type === 'error') {
+        iconClass = 'fa-circle-exclamation';
+    }
+
+    const icon = document.createElement('i');
+    icon.className = `fa-solid ${iconClass} toast-icon`;
+
+    const text = document.createElement('span');
+    text.className = 'toast-text';
+
+    // textContent prevents HTML from being interpreted as markup.
+    text.textContent = message;
+
+    toast.appendChild(icon);
+    toast.appendChild(text);
 
     container.appendChild(toast);
 
-    setTimeout(() => {
+    setTimeout(function () {
         toast.style.opacity = '0';
         toast.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
+
+        setTimeout(function () {
+            toast.remove();
+        }, 300);
     }, 3500);
 }

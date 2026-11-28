@@ -1,38 +1,129 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Dashboard State (populate from your backend API)
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // =====================================================
+  // 1. CONFIGURATION AND AUTHENTICATION
+  // =====================================================
+
+  const API_BASE = "http://127.0.0.1:5000";
+  const appShell = document.querySelector(".app-shell");
+
+  // Hide dashboard until the administrator session is verified.
+  if (appShell) {
+    appShell.style.visibility = "hidden";
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/auth/me`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json"
+      }
+    });
+
+    if (response.status === 401 || response.status === 403) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Unable to verify administrator session.");
+    }
+
+    const data = await response.json();
+
+    if (data.user && data.user.role && data.user.role !== "admin") {
+      window.location.replace("login.html");
+      return;
+    }
+
+    // Authentication successful.
+    if (appShell) {
+      appShell.style.visibility = "visible";
+    }
+
+  } catch (error) {
+    console.error("Dashboard authentication error:", error);
+
+    document.body.innerHTML = `
+      <div style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        background: #f8f7f3;
+        color: #333;
+      ">
+        <div style="
+          max-width: 440px;
+          padding: 32px;
+          background: white;
+          border-radius: 12px;
+          text-align: center;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        ">
+          <h2>Unable to Load Dashboard</h2>
+          <p>
+            The administrator session could not be verified.
+            Please make sure the Flask backend is running.
+          </p>
+          <button
+            onclick="location.reload()"
+            style="
+              padding: 10px 20px;
+              border: none;
+              border-radius: 6px;
+              background: #315b42;
+              color: white;
+              cursor: pointer;
+            "
+          >
+            Try Again
+          </button>
+          <p>
+            <a href="login.html">Return to Admin Login</a>
+          </p>
+        </div>
+      </div>
+    `;
+
+    return;
+  }
+
+  // =====================================================
+  // 2. DASHBOARD STATE
+  // =====================================================
+
   const dashboardState = {
     totalProducts: 0,
     registeredUsers: 0,
     userFeedback: 0,
+
     categories: {
       hearth: 0,
       flaky: 0,
       steamed: 0,
       merienda: 0
     },
+
     activityDateRange: "—",
-    monthlyActivity: [
-      // Expected format: { month: "May", year: "2026", sessions: 0 }
-    ],
-    products: [
-      // Expected format:
-      // {
-      //   id: "product-id",
-      //   monogram: "HB",
-      //   name: "Product Name",
-      //   status: "INCOMPLETE" | "COMPLETE",
-      //   issue: "Missing field description",
-      //   category: "Category Name",
-      //   fieldLabel: "INPUT LABEL",
-      //   details: ""
-      // }
-    ]
+
+    monthlyActivity: [],
+
+    products: []
   };
 
-  // DOM References
+  // =====================================================
+  // 3. DOM REFERENCES
+  // =====================================================
+
   const mainWrapper = document.getElementById("mainWrapper");
   const productStatusList = document.getElementById("productStatusList");
   const attentionCountPill = document.getElementById("attentionCountPill");
+
   const kpiTotalProducts = document.getElementById("kpiTotalProducts");
   const kpiActiveProducts = document.getElementById("kpiActiveProducts");
   const kpiIncompleteProducts = document.getElementById("kpiIncompleteProducts");
@@ -40,16 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const kpiRegisteredUsers = document.getElementById("kpiRegisteredUsers");
   const kpiUserFeedback = document.getElementById("kpiUserFeedback");
 
-  // Category & Chart References
+  // Category and chart references
   const categoryTotalPill = document.getElementById("categoryTotalPill");
   const activityDateRange = document.getElementById("activityDateRange");
   const activityBars = document.getElementById("activityBars");
 
-  // Modal References
+  // Modal references
   const productModal = document.getElementById("productModal");
   const closeProductModalBtn = document.getElementById("closeProductModalBtn");
   const cancelProductModalBtn = document.getElementById("cancelProductModalBtn");
   const productStatusForm = document.getElementById("productStatusForm");
+
   const modalMonogram = document.getElementById("modalMonogram");
   const productModalTitle = document.getElementById("productModalTitle");
   const productModalCategory = document.getElementById("productModalCategory");
@@ -59,53 +151,109 @@ document.addEventListener("DOMContentLoaded", () => {
   const productDetailsField = document.getElementById("productDetailsField");
   const saveProductModalBtn = document.getElementById("saveProductModalBtn");
 
-  // Toast References
+  // Toast references
   const toastNotification = document.getElementById("toastNotification");
   const toastMessage = document.getElementById("toastMessage");
+
   let toastTimer = null;
   let activeProductId = null;
 
-  function showToast(msg) {
-    toastMessage.textContent = msg;
+  // =====================================================
+  // 4. TOAST NOTIFICATION
+  // =====================================================
+
+  function showToast(message) {
+    if (!toastNotification || !toastMessage) {
+      console.log(message);
+      return;
+    }
+
+    toastMessage.textContent = message;
     toastNotification.classList.add("is-visible");
+
     clearTimeout(toastTimer);
+
     toastTimer = setTimeout(() => {
       toastNotification.classList.remove("is-visible");
     }, 3000);
   }
 
-  // Render Category Distribution
+  // =====================================================
+  // 5. RENDER CATEGORY DISTRIBUTION
+  // =====================================================
+
   function renderCategories() {
-    const { hearth, flaky, steamed, merienda } = dashboardState.categories;
+    if (!categoryTotalPill) return;
+
+    const {
+      hearth,
+      flaky,
+      steamed,
+      merienda
+    } = dashboardState.categories;
+
     const total = hearth + flaky + steamed + merienda;
+
     categoryTotalPill.textContent = `${total} Total Items`;
 
     const entries = [
-      { key: "hearth", label: "Hearth Breads", count: hearth, metaId: "catMetaHearth" },
-      { key: "flaky", label: "Flaky Pastries", count: flaky, metaId: "catMetaFlaky" },
-      { key: "steamed", label: "Steamed & Glutinous", count: steamed, metaId: "catMetaSteamed" },
-      { key: "merienda", label: "Sweet Merienda", count: merienda, metaId: "catMetaMerienda" }
+      {
+        key: "hearth",
+        label: "Hearth Breads",
+        count: hearth,
+        metaId: "catMetaHearth"
+      },
+      {
+        key: "flaky",
+        label: "Flaky Pastries",
+        count: flaky,
+        metaId: "catMetaFlaky"
+      },
+      {
+        key: "steamed",
+        label: "Steamed & Glutinous",
+        count: steamed,
+        metaId: "catMetaSteamed"
+      },
+      {
+        key: "merienda",
+        label: "Sweet Merienda",
+        count: merienda,
+        metaId: "catMetaMerienda"
+      }
     ];
 
     entries.forEach(({ key, label, count, metaId }) => {
-      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+      const pct = total > 0
+        ? Math.round((count / total) * 100)
+        : 0;
+
       const barWidth = total > 0 ? pct : 25;
 
-      const segment = document.querySelector(`.bar-segment[data-cat="${key}"]`);
+      const segment = document.querySelector(
+        `.bar-segment[data-cat="${key}"]`
+      );
+
       if (segment) {
         segment.style.width = `${barWidth}%`;
         segment.title = `${label}: ${pct}% (${count} items)`;
       }
 
       const metaEl = document.getElementById(metaId);
+
       if (metaEl) {
-        metaEl.innerHTML = `${pct}% &bull; ${count} items`;
+        metaEl.textContent = `${pct}% • ${count} items`;
       }
     });
   }
 
-  // Render Recommendation Activity Chart
+  // =====================================================
+  // 6. RENDER RECOMMENDATION ACTIVITY CHART
+  // =====================================================
+
   function renderActivityChart() {
+    if (!activityDateRange || !activityBars) return;
+
     activityDateRange.textContent = dashboardState.activityDateRange;
     activityBars.innerHTML = "";
 
@@ -113,216 +261,489 @@ document.addEventListener("DOMContentLoaded", () => {
       activityBars.style.display = "flex";
       activityBars.style.alignItems = "center";
       activityBars.style.justifyContent = "center";
-      activityBars.innerHTML = `<p style="font-size: 13px; color: var(--text-muted);">No recommendation activity recorded yet.</p>`;
+
+      const message = document.createElement("p");
+
+      message.textContent = "No recommendation activity recorded yet.";
+      message.style.fontSize = "13px";
+      message.style.color = "var(--text-muted)";
+
+      activityBars.appendChild(message);
       return;
     }
 
     activityBars.style.display = "grid";
-    const maxSessions = Math.max(...dashboardState.monthlyActivity.map((m) => m.sessions), 1);
+
+    const maxSessions = Math.max(
+      ...dashboardState.monthlyActivity.map((month) => month.sessions),
+      1
+    );
 
     dashboardState.monthlyActivity.forEach((entry, index) => {
-      const heightPct = Math.round((entry.sessions / maxSessions) * 85);
-      const isLast = index === dashboardState.monthlyActivity.length - 1;
+      const heightPct = Math.round(
+        (entry.sessions / maxSessions) * 85
+      );
+
+      const isLast =
+        index === dashboardState.monthlyActivity.length - 1;
 
       const col = document.createElement("div");
+
       col.className = `bar-col${isLast ? " is-active" : ""}`;
       col.dataset.month = entry.month;
       col.dataset.year = entry.year || "";
       col.dataset.sessions = entry.sessions;
 
-      col.innerHTML = `
-        <span class="bar-value-label">${entry.sessions}</span>
-        <div class="bar-visual" style="height: ${heightPct}%;"></div>
-        <span class="bar-month">${entry.month}</span>
-      `;
+      const valueLabel = document.createElement("span");
+      valueLabel.className = "bar-value-label";
+      valueLabel.textContent = entry.sessions;
+
+      const visual = document.createElement("div");
+      visual.className = "bar-visual";
+      visual.style.height = `${heightPct}%`;
+
+      const monthLabel = document.createElement("span");
+      monthLabel.className = "bar-month";
+      monthLabel.textContent = entry.month;
+
+      col.append(valueLabel, visual, monthLabel);
 
       col.addEventListener("click", () => {
-        document.querySelectorAll(".bar-col").forEach((c) => c.classList.remove("is-active"));
+        document.querySelectorAll(".bar-col").forEach((bar) => {
+          bar.classList.remove("is-active");
+        });
+
         col.classList.add("is-active");
-        const period = entry.year ? `${entry.month} ${entry.year}` : entry.month;
-        showToast(`${period}: ${entry.sessions} recommendation sessions`);
+
+        const period = entry.year
+          ? `${entry.month} ${entry.year}`
+          : entry.month;
+
+        showToast(
+          `${period}: ${entry.sessions} recommendation sessions`
+        );
       });
 
       activityBars.appendChild(col);
     });
   }
 
-  // Render Product List & Sync KPI Counters
+  // =====================================================
+  // 7. RENDER PRODUCT LIST AND KPI COUNTERS
+  // =====================================================
+
   function renderProductList() {
+    if (!productStatusList) return;
+
     productStatusList.innerHTML = "";
 
-    kpiRegisteredUsers.textContent = dashboardState.registeredUsers.toLocaleString();
-    kpiUserFeedback.textContent = dashboardState.userFeedback.toLocaleString();
+    if (kpiRegisteredUsers) {
+      kpiRegisteredUsers.textContent =
+        dashboardState.registeredUsers.toLocaleString();
+    }
+
+    if (kpiUserFeedback) {
+      kpiUserFeedback.textContent =
+        dashboardState.userFeedback.toLocaleString();
+    }
 
     let incompleteCount = 0;
 
     if (!dashboardState.products.length) {
-      productStatusList.innerHTML = `
-        <div class="product-row" style="justify-content: center; padding: 28px 18px;">
-          <p style="font-size: 13px; color: var(--text-muted);">No product records available.</p>
-        </div>
-      `;
+      const emptyRow = document.createElement("div");
+
+      emptyRow.className = "product-row";
+      emptyRow.style.justifyContent = "center";
+      emptyRow.style.padding = "28px 18px";
+
+      const message = document.createElement("p");
+
+      message.textContent = "No product records available.";
+      message.style.fontSize = "13px";
+      message.style.color = "var(--text-muted)";
+
+      emptyRow.appendChild(message);
+      productStatusList.appendChild(emptyRow);
+
     } else {
       dashboardState.products.forEach((item) => {
         const isComplete = item.status === "COMPLETE";
-        if (!isComplete) incompleteCount++;
+
+        if (!isComplete) {
+          incompleteCount++;
+        }
 
         const row = document.createElement("div");
         row.className = "product-row";
 
-        row.innerHTML = `
-          <div class="product-left">
-            <div class="product-monogram ${isComplete ? "monogram-complete" : "monogram-incomplete"}">
-              ${item.monogram}
-            </div>
-            <div class="product-info">
-              <div class="product-name">${item.name}</div>
-              <span class="status-tag ${isComplete ? "tag-complete" : "tag-incomplete"}">
-                ${item.status}
-              </span>
-              <div class="product-issue ${isComplete ? "issue-complete" : "issue-incomplete"}">
-                ${item.issue}
-              </div>
-              <div class="product-category">Category: ${item.category}</div>
-            </div>
-          </div>
-          <button type="button" class="btn-row-action" data-id="${item.id}">
-            ${isComplete ? "View" : "Edit"}
-          </button>
-        `;
+        const left = document.createElement("div");
+        left.className = "product-left";
 
+        const monogram = document.createElement("div");
+
+        monogram.className =
+          `product-monogram ${
+            isComplete ? "monogram-complete" : "monogram-incomplete"
+          }`;
+
+        monogram.textContent = item.monogram || "PR";
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const name = document.createElement("div");
+        name.className = "product-name";
+        name.textContent = item.name || "Unnamed Product";
+
+        const status = document.createElement("span");
+
+        status.className =
+          `status-tag ${
+            isComplete ? "tag-complete" : "tag-incomplete"
+          }`;
+
+        status.textContent = item.status || "INCOMPLETE";
+
+        const issue = document.createElement("div");
+
+        issue.className =
+          `product-issue ${
+            isComplete ? "issue-complete" : "issue-incomplete"
+          }`;
+
+        issue.textContent = item.issue || "";
+
+        const category = document.createElement("div");
+        category.className = "product-category";
+        category.textContent = `Category: ${item.category || "Uncategorized"}`;
+
+        info.append(name, status, issue, category);
+        left.append(monogram, info);
+
+        const action = document.createElement("button");
+
+        action.type = "button";
+        action.className = "btn-row-action";
+        action.dataset.id = item.id;
+        action.textContent = isComplete ? "View" : "Edit";
+
+        row.append(left, action);
         productStatusList.appendChild(row);
       });
     }
 
-    const total = Math.max(dashboardState.totalProducts, dashboardState.products.length);
+    const total = Math.max(
+      dashboardState.totalProducts,
+      dashboardState.products.length
+    );
+
     const active = Math.max(0, total - incompleteCount);
 
-    kpiTotalProducts.textContent = total.toLocaleString();
-    kpiIncompleteProducts.textContent = incompleteCount.toLocaleString();
-    kpiActiveProducts.textContent = active.toLocaleString();
+    if (kpiTotalProducts) {
+      kpiTotalProducts.textContent = total.toLocaleString();
+    }
 
-    if (incompleteCount === 0) {
-      kpiIncompleteProducts.classList.remove("is-alert");
-      kpiReviewBadge.classList.add("is-clear");
-      kpiReviewBadge.innerHTML = "ALL<br />VERIFIED";
-      attentionCountPill.textContent = "ALL ITEMS VERIFIED";
-      attentionCountPill.classList.add("all-complete");
+    if (kpiIncompleteProducts) {
+      kpiIncompleteProducts.textContent =
+        incompleteCount.toLocaleString();
+    }
+
+    if (kpiActiveProducts) {
+      kpiActiveProducts.textContent = active.toLocaleString();
+    }
+
+    if (
+      incompleteCount === 0
+    ) {
+      if (kpiIncompleteProducts) {
+        kpiIncompleteProducts.classList.remove("is-alert");
+      }
+
+      if (kpiReviewBadge) {
+        kpiReviewBadge.classList.add("is-clear");
+        kpiReviewBadge.innerHTML = "ALL<br>VERIFIED";
+      }
+
+      if (attentionCountPill) {
+        attentionCountPill.textContent = "ALL ITEMS VERIFIED";
+        attentionCountPill.classList.add("all-complete");
+      }
+
     } else {
-      kpiIncompleteProducts.classList.add("is-alert");
-      kpiReviewBadge.classList.remove("is-clear");
-      kpiReviewBadge.innerHTML = "NEEDS<br />REVIEW";
-      attentionCountPill.textContent = `${incompleteCount} ITEMS NEED ATTENTION`;
-      attentionCountPill.classList.remove("all-complete");
+      if (kpiIncompleteProducts) {
+        kpiIncompleteProducts.classList.add("is-alert");
+      }
+
+      if (kpiReviewBadge) {
+        kpiReviewBadge.classList.remove("is-clear");
+        kpiReviewBadge.innerHTML = "NEEDS<br>REVIEW";
+      }
+
+      if (attentionCountPill) {
+        attentionCountPill.textContent =
+          `${incompleteCount} ITEMS NEED ATTENTION`;
+
+        attentionCountPill.classList.remove("all-complete");
+      }
     }
   }
 
-  // Open Product Modal (Scoped Blur)
+  // =====================================================
+  // 8. PRODUCT MODAL
+  // =====================================================
+
   function openProductModal(productId) {
-    const product = dashboardState.products.find((p) => p.id === productId);
-    if (!product) return;
+    const product = dashboardState.products.find(
+      (item) => String(item.id) === String(productId)
+    );
+
+    if (!product || !productModal) return;
 
     activeProductId = productId;
+
     const isComplete = product.status === "COMPLETE";
 
-    modalMonogram.textContent = product.monogram;
-    productModalTitle.textContent = product.name;
-    productModalCategory.textContent = `Category: ${product.category}`;
-    modalIssuePrompt.textContent = product.issue;
-    modalIssuePrompt.style.color = isComplete ? "#1e6b43" : "#a81c2b";
+    if (modalMonogram) {
+      modalMonogram.textContent = product.monogram || "PR";
+    }
 
-    modalStatusPill.textContent = product.status;
-    modalStatusPill.className = `status-tag ${isComplete ? "tag-complete" : "tag-incomplete"}`;
+    if (productModalTitle) {
+      productModalTitle.textContent = product.name || "Unnamed Product";
+    }
 
-    productFieldLabel.textContent = product.fieldLabel || "CATALOG SPECIFICATION DETAILS";
-    productDetailsField.value = product.details || "";
-    productDetailsField.readOnly = isComplete;
-    saveProductModalBtn.style.display = isComplete ? "none" : "inline-flex";
+    if (productModalCategory) {
+      productModalCategory.textContent =
+        `Category: ${product.category || "Uncategorized"}`;
+    }
 
-    mainWrapper.classList.add("modal-open");
+    if (modalIssuePrompt) {
+      modalIssuePrompt.textContent = product.issue || "";
+
+      modalIssuePrompt.style.color = isComplete
+        ? "#1e6b43"
+        : "#a81c2b";
+    }
+
+    if (modalStatusPill) {
+      modalStatusPill.textContent = product.status || "INCOMPLETE";
+
+      modalStatusPill.className =
+        `status-tag ${
+          isComplete ? "tag-complete" : "tag-incomplete"
+        }`;
+    }
+
+    if (productFieldLabel) {
+      productFieldLabel.textContent =
+        product.fieldLabel || "CATALOG SPECIFICATION DETAILS";
+    }
+
+    if (productDetailsField) {
+      productDetailsField.value = product.details || "";
+      productDetailsField.readOnly = isComplete;
+    }
+
+    if (saveProductModalBtn) {
+      saveProductModalBtn.style.display =
+        isComplete ? "none" : "inline-flex";
+    }
+
+    if (mainWrapper) {
+      mainWrapper.classList.add("modal-open");
+    }
+
     productModal.classList.add("is-visible");
     productModal.setAttribute("aria-hidden", "false");
   }
 
   function closeProductModal() {
-    mainWrapper.classList.remove("modal-open");
-    productModal.classList.remove("is-visible");
-    productModal.setAttribute("aria-hidden", "true");
+    if (mainWrapper) {
+      mainWrapper.classList.remove("modal-open");
+    }
+
+    if (productModal) {
+      productModal.classList.remove("is-visible");
+      productModal.setAttribute("aria-hidden", "true");
+    }
+
     activeProductId = null;
   }
 
-  // Event Delegation for Edit/View buttons
-  productStatusList.addEventListener("click", (e) => {
-    const btn = e.target.closest(".btn-row-action");
-    if (btn) {
-      openProductModal(btn.getAttribute("data-id"));
-    }
-  });
+  // =====================================================
+  // 9. PRODUCT LIST EVENT DELEGATION
+  // =====================================================
 
-  closeProductModalBtn.addEventListener("click", closeProductModal);
-  cancelProductModalBtn.addEventListener("click", closeProductModal);
+  if (productStatusList) {
+    productStatusList.addEventListener("click", (event) => {
+      const button = event.target.closest(".btn-row-action");
 
-  productModal.addEventListener("click", (e) => {
-    if (e.target === productModal) closeProductModal();
-  });
+      if (button) {
+        openProductModal(button.dataset.id);
+      }
+    });
+  }
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && productModal.classList.contains("is-visible")) {
+  if (closeProductModalBtn) {
+    closeProductModalBtn.addEventListener(
+      "click",
+      closeProductModal
+    );
+  }
+
+  if (cancelProductModalBtn) {
+    cancelProductModalBtn.addEventListener(
+      "click",
+      closeProductModal
+    );
+  }
+
+  if (productModal) {
+    productModal.addEventListener("click", (event) => {
+      if (event.target === productModal) {
+        closeProductModal();
+      }
+    });
+  }
+
+  // Correct keyboard event handler.
+  document.addEventListener("DOMContentLoaded", async () => {
+    if (
+      event.key === "Escape" &&
+      productModal &&
+      productModal.classList.contains("is-visible")
+    ) {
       closeProductModal();
     }
   });
 
-  // Handle Saving Product Details
-  productStatusForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!activeProductId) return;
+  // =====================================================
+  // 10. SAVE PRODUCT DETAILS
+  // =====================================================
 
-    const product = dashboardState.products.find((p) => p.id === activeProductId);
-    const val = productDetailsField.value.trim();
-    if (!product || !val) return;
+  if (productStatusForm) {
+    productStatusForm.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-    product.details = val;
-    product.status = "COMPLETE";
-    product.issue = "All catalog details verified";
+      if (!activeProductId || !productDetailsField) {
+        return;
+      }
 
-    renderProductList();
-    closeProductModal();
-    showToast(`${product.name} marked as COMPLETE.`);
-  });
+      const product = dashboardState.products.find(
+        (item) => String(item.id) === String(activeProductId)
+      );
 
-  // Interactive Category Highlight Sync
-  const categoryTiles = document.querySelectorAll(".category-tile");
-  const barSegments = document.querySelectorAll(".bar-segment");
+      const value = productDetailsField.value.trim();
 
-  function highlightCategory(catKey) {
-    categoryTiles.forEach((t) => {
-      t.classList.toggle("is-highlighted", t.getAttribute("data-cat") === catKey);
+      if (!product || !value) {
+        showToast("Please enter the required product details.");
+        return;
+      }
+
+      product.details = value;
+      product.status = "COMPLETE";
+      product.issue = "All catalog details verified";
+
+      renderProductList();
+      closeProductModal();
+
+      showToast(`${product.name} marked as COMPLETE.`);
     });
   }
 
-  barSegments.forEach((seg) => {
-    seg.addEventListener("mouseenter", () => highlightCategory(seg.getAttribute("data-cat")));
-    seg.addEventListener("mouseleave", () => highlightCategory(null));
+  // =====================================================
+  // 11. CATEGORY HIGHLIGHT INTERACTIONS
+  // =====================================================
+
+  const categoryTiles = document.querySelectorAll(".category-tile");
+  const barSegments = document.querySelectorAll(".bar-segment");
+
+  function highlightCategory(categoryKey) {
+    categoryTiles.forEach((tile) => {
+      tile.classList.toggle(
+        "is-highlighted",
+        tile.getAttribute("data-cat") === categoryKey
+      );
+    });
+  }
+
+  barSegments.forEach((segment) => {
+    segment.addEventListener("mouseenter", () => {
+      highlightCategory(segment.getAttribute("data-cat"));
+    });
+
+    segment.addEventListener("mouseleave", () => {
+      highlightCategory(null);
+    });
   });
 
-  // Sidebar Navigation Preview Feedback
+  // =====================================================
+  // 12. SIDEBAR NAVIGATION PREVIEW
+  // =====================================================
+
+  // Sidebar Navigation
+const adminPageRoutes = {
+  "dashboard": "dashboard.html",
+  "bread management": "bread_management.html",
+  "account settings": "account_settings.html"
+};
+ // Only prevent navigation for unfinished placeholder links.
   document.querySelectorAll(".sidebar-nav .nav-item").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      const section = item.getAttribute("data-nav");
-      if (section !== "Dashboard") {
-        showToast(`Viewing ${section} (Admin Dashboard preview active)`);
+    item.addEventListener("click", (event) => {
+      const href = item.getAttribute("href");
+
+      if (!href || href.trim() === "" || href.trim() === "#") {
+        event.preventDefault();
+        showToast("This section has not been implemented yet.");
       }
     });
   });
 
-  document.getElementById("logoutNavBtn").addEventListener("click", (e) => {
-    e.preventDefault();
-    showToast("Logout clicked.");
-  });
+  // =====================================================
+  // 13. ADMIN LOGOUT
+  // =====================================================
 
-  // Initial Render
+  const logoutNavBtn = document.getElementById("logoutNavBtn");
+
+  if (logoutNavBtn) {
+    logoutNavBtn.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      logoutNavBtn.style.pointerEvents = "none";
+
+      try {
+        const response = await fetch(
+          `${API_BASE}/api/auth/logout`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              Accept: "application/json"
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Logout failed. Please try again.");
+        }
+
+        window.location.replace("login.html");
+
+      } catch (error) {
+        console.error("Logout error:", error);
+
+        showToast(error.message || "Unable to log out.");
+
+        logoutNavBtn.style.pointerEvents = "";
+      }
+    });
+  }
+
+  // =====================================================
+  // 14. INITIAL DASHBOARD RENDER
+  // =====================================================
+
   renderCategories();
   renderActivityChart();
   renderProductList();
+
 });
